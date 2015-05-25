@@ -21,14 +21,17 @@ export default class Scanner {
 	}
 	
 	hasNext() {
-		return this.sourceIndex < this.sourceLength;
+		return this.sourceIndex < this.sourceEofIndex;
 	}
 	
-	// Disallow negative skips? May cause endless loops.
+	peek() {
+		return this.hasNext() ? this.sourceString.charAt(this.sourceIndex) : null;
+	}
+	
 	skip(offset: number = 1) {
-		if(this.sourceIndex - offset < 0)
-			throw Error("Can not skip to a negative index.")
+		if(offset < 1) throw Error("offset must be > 0");
 		var newPosition = this.sourceIndex + offset;
 		this.sourceIndex = newPosition >= this.sourceEofIndex ? this.sourceEofIndex : newPosition; 
 	}
+	
 }
