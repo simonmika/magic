@@ -1,22 +1,23 @@
+///<reference path='../../typings/node/node.d.ts' />
+///<reference path='../../typings/colors/colors.d.ts' />
+import fs = require('fs');
+import colors = require('colors'); // npm install colors
+
 import Lexer from './Tokens/Lexer';
-import Scanner from './Tokens/Scanner';
 
-var sourceString = "for(i in 1..10) {\n\tcompute(i);\n}";
-var sourceStringComment = "//Compute something using i\nfor(i in 1..10) {\n\tcompute(i);\n}";
-
+var filename = "../../test/comments.ooc";
+var sourceString = fs.readFileSync(filename, "utf-8");
 var lexer = new Lexer(sourceString);
-var scanner = new Scanner("abc");
 
-console.log(scanner.peek());
-scanner.skip();
-console.log(scanner.peek());
-scanner.skip();
-console.log(scanner.peek());
-scanner.skip();
-console.log(scanner.peek());
+function test() {
+	try {
+		lexer.test();
+	} catch(Error) {
+		var where = filename + ":[" + lexer.getLineNumber() + ", " + lexer.getColumnNumber() + "]";
+		console.log(colors.yellow(where));
+		console.log(colors.red("\t%s"), Error.message);
+		test();
+	}	
+}
 
-
-
-/*while(scanner.hasNext()) {
-	console.log(scanner.getNext());
-}*/
+test();

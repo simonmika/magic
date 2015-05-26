@@ -1,23 +1,34 @@
-export default class Scanner {	
+export default class Scanner {
+	
 	private sourceLength: number;
 	private sourceIndex: number;
 	private sourceEofIndex: number;
-	private currentChar: string;
+	private currentColumn: number;
+	private currentLine: number;
 	
 	constructor(private sourceString: string) {
 		this.sourceIndex = 0;
 		this.sourceLength = sourceString.length;
 		this.sourceEofIndex = sourceString.length;
+		this.currentColumn = 1;
+		this.currentLine = 1;
 	}
 	
 	getNext() {
+		var currentChar: string;
 		if(!this.hasNext())
-			this.currentChar = null;
+			currentChar = null;
 		else {
-			this.currentChar = this.sourceString.charAt(this.sourceIndex);
+			currentChar = this.sourceString.charAt(this.sourceIndex);
+			if(currentChar === "\n") {
+				this.currentLine++;
+				this.currentColumn = 1;
+			} else {
+				this.currentColumn++;
+			}
 			this.sourceIndex++;
 		}
-		return this.currentChar;
+		return currentChar;
 	}
 	
 	hasNext() {
@@ -28,10 +39,12 @@ export default class Scanner {
 		return this.hasNext() ? this.sourceString.charAt(this.sourceIndex) : null;
 	}
 	
-	skip(offset: number = 1) {
-		if(offset < 1) throw Error("offset must be > 0");
-		var newPosition = this.sourceIndex + offset;
-		this.sourceIndex = newPosition >= this.sourceEofIndex ? this.sourceEofIndex : newPosition; 
+	getCurrentColumn() {
+		return this.currentColumn;
 	}
 	
+	getCurrentLine() {
+		return this.currentLine;
+	}
+		
 }
