@@ -8,7 +8,7 @@ export enum WhitespaceCharacters {
 	Space = 32
 }
 
-export class Whitespace extends Token {
+export default class Whitespace extends Token {
 	
 	constructor(value: string) {
 		super(value);

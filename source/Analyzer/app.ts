@@ -5,8 +5,12 @@ import colors = require('colors'); // npm install colors
 
 import Lexer from './Tokens/Lexer';
 
-var filename = "../../test/comments.ooc";
+var filename = "../../test/simple.ooc";
 var sourceString = fs.readFileSync(filename, "utf-8");
+
+/*import Comma from './Tokens/Comma';
+var c = new Comma();*/
+
 var lexer = new Lexer(sourceString);
 
 function test() {

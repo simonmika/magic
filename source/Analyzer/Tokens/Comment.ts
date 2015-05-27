@@ -1,8 +1,13 @@
 
-export default class Comment {
-	constructor(private text: string, private blockComment: boolean) { }
+import Token from './Token'
+
+export default class Comment extends Token {
 	
-	getValue() {
+	constructor(private text: string, private blockComment: boolean) {
+		super(text); // <-- format text with comment delimeters?
+	}
+	
+	getText() {
 		return this.text;
 	}
 	

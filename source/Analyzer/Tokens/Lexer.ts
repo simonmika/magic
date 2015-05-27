@@ -1,9 +1,9 @@
 import Scanner from './Scanner';
 import Token from './Token';
-import Keyword from './Keyword';
 import Separator from './Separator';
+import Keyword from './Keyword';
 import Comment from './Comment';
-import * as Ws from './Whitespace'
+import Whitespace from './Whitespace'
 
 export default class Lexer {
 	
@@ -13,22 +13,42 @@ export default class Lexer {
 		this.scanner = new Scanner(sourceString);
 	}
 	
+	getColumnNumber() {
+		return this.scanner.getCurrentColumn();
+	}
+	
+	getLineNumber() {
+		return this.scanner.getCurrentLine();
+	}
+	
 	test() {
 		var currentChar: string;
 		var currentCharCode: number;
 		while(this.scanner.hasNext()) {
 			currentChar = this.scanner.getNext();
 			currentCharCode = currentChar.charCodeAt(0);
-			if(currentChar === "/" && (this.scanner.peek() === "/" || this.scanner.peek() === "*")) {
-				console.log(this.handleComment());
-			} else if(this.isWhitespace(currentCharCode))
+			if(currentChar === "/" && (this.scanner.peek() === "/" || this.scanner.peek() === "*"))
+				console.log(this.handleComment().toString());
+			else if(this.isWhitespace(currentCharCode))
 				this.handleWhitespace(currentChar);
-			//else { console.log("unknown"); }
+			/*else if(this.isSeparator(currentChar))
+				this.handleSeparator(currentChar);
+			else if(this.isLetter(currentCharCode))
+				this.handleIdentifier(currentChar);
+			else { console.log("unknown"); }*/
 		}
 	}
 	
+	private handleIdentifier(value: string) {
+		return null;
+	}
+	
+	private handleSeparator(value: string) {
+		return Separator.resolve(value);
+	}
+	
 	private handleWhitespace(value: string) {
-		return new Ws.Whitespace(value);
+		return new Whitespace(value);
 	}
 	
 	private handleComment() {
@@ -38,9 +58,8 @@ export default class Lexer {
 	private handleLineComment() {
 		var currentChar: string;
 		var commentText: string = "";
-		while((currentChar = this.scanner.getNext()) !== "\n" && currentChar !== null) {
+		while((currentChar = this.scanner.getNext()) !== "\n" && currentChar !== null)
 			commentText += currentChar;
-		}
 		return new Comment(commentText, false);
 	}
 	
@@ -61,16 +80,12 @@ export default class Lexer {
 		return new Comment(commentText, true);
 	}
 	
-	getColumnNumber() {
-		return this.scanner.getCurrentColumn();
-	}
-	
-	getLineNumber() {
-		return this.scanner.getCurrentLine();
+	private isSeparator(value: string) {
+		return Separator.isSeparator(value);
 	}
 	
 	private isWhitespace(charCode: number) {
-		return Ws.Whitespace.isWhitespace(charCode);
+		return Whitespace.isWhitespace(charCode);
 	}
 	
 	private isLetter(charCode: number) {

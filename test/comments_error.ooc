@@ -8,7 +8,7 @@ if (off) /* turn on! */ turnOn()
 if (stressed) {
     breatheIn()	/* breathe in */
     breatheOut() /* breathe out */
-} else if/* we are probably tired /(tired) {
+} else if/* we are probably tired */(tired) {
     rest()	/* we're tired, so lets rest */
 } else {
     allGood() /* Seems we're all good... /

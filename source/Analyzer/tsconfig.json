@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "emitDecoratorMetadata": true,
-        "module":  "commonjs",
         "target":  "ES5",
+        "module":  "commonjs",
         "outDir":  "../../out/Analyzer",
         "rootDir": ".",
         "sourceMap": true,

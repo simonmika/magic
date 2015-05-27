@@ -46,5 +46,4 @@ export default class Scanner {
 	getCurrentLine() {
 		return this.currentLine;
 	}
-		
 }
