@@ -1,0 +1,7 @@
+
+class ParseTree
+{
+	
+}
+
+export = ParseTree;
