@@ -58,3 +58,5 @@ class Whitespace extends Token
 		}
 	}	
 }
+
+export = Whitespace;

@@ -1,5 +1,3 @@
-import CharacterCodes = require("./../CharacterCodes");
-
 enum WhitespaceCharacters
 {
 	Null,
