@@ -4,6 +4,7 @@ import WhitespaceCharacters = require("./WhitespaceCharacters");
 class Whitespace extends Token
 {
 	private kind: WhitespaceCharacters;
+	private kindString: string;
 	
 	constructor(whitespace: string) {
 		super(whitespace);
@@ -15,43 +16,30 @@ class Whitespace extends Token
 	}
 	
 	toString() {
-		var result: string;
-		switch(this.kind) {
-			case WhitespaceCharacters.Null:
-				result = "Null";
-				break;
-			case WhitespaceCharacters.Tab:
-				result = "Tab";
-				break;
-			case WhitespaceCharacters.LF:
-				result = "LF";
-				break;
-			case WhitespaceCharacters.CR:
-				result = "CR";
-				break;
-			case WhitespaceCharacters.Space:
-				result = "Space";
-				break;
-		}
-		return result;
+		return this.kindString;
 	}
 	
 	private setKind(charCode: number) {
 		switch(charCode) {
 			case 0:
 				this.kind = WhitespaceCharacters.Null;
+				this.kindString = "Null";
 				break;
 			case 9:
 				this.kind = WhitespaceCharacters.Tab;
+				this.kindString = "Tab";
 				break;
 			case 10:
 				this.kind = WhitespaceCharacters.LF;
+				this.kindString = "LF";
 				break;
 			case 13:
 				this.kind = WhitespaceCharacters.CR;
+				this.kindString = "CR";
 				break;
 			case 32:
 				this.kind = WhitespaceCharacters.Space;
+				this.kindString = "Space";
 				break;
 			default:
 				throw new Error("Unknown whitespace character, character code: " + charCode);				

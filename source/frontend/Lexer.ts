@@ -1,10 +1,15 @@
 import Scanner = require("./Scanner");
 
 import Token = require("./Tokens/Token");
+import Eof = require("./Tokens/Eof");
 import Comment = require("./Tokens/Comment");
 import Operator = require("./Tokens/Operator");
 import Separator = require("./Tokens/Separator");
 import Whitespace = require("./Tokens/Whitespace");
+import Keyword = require("./Tokens/Keyword");
+import Identifier = require("./Tokens/Identifier");
+import NumericLiteral = require("./Tokens/NumericLiteral");
+import StringLiteral = require("./Tokens/StringLiteral");
 
 class Lexer
 {
@@ -15,32 +20,67 @@ class Lexer
 	}
 	
 	getNextToken() {
-		var result: Token;
+		var result: Token = null;
 		
 		if(this.scanner.hasNext()) {
-			
+				
 			var current = this.scanner.getNext();
 			var peekChar = this.scanner.peek();
 			
-			// Check for whitespace
+			// Whitespace
 			if(this.isWhitespace(current)) {
 				result = this.handleWhitespace(current);
 			}
-			// Check for operator
-			else if(Operator.isOperator(current)) {
-				result = this.handleOperator(current);
-			}
-			// Check for separator. DotDot is a special case since float literals
-			// may begin with a dot.
-			else if(current === "." || Separator.isSeparator(current)) {
-				result = this.handleSeparator(current);
-			}
-			// Check for comment
+			// Comment
 			else if(current === "/" && (peekChar === "/" || peekChar === "*")) {
 				result = this.handleComment();
 			}
+			// Operator.
+			else if(Operator.isOperator(current) || (current === "." && peekChar === ".")) {
+				result = this.handleOperator(current);
+			}
+			// Keyword and Identifier
+			else if(this.isValidIdentifierCharacter(current, true)) {
+				result = this.handleIdentifier(current);
+			}
+			// Separator
+			else if(Separator.isSeparator(current)) {
+				result = this.handleSeparator(current);
+			}
+			// Numeric literal
+			else if(this.isDigit(current)) {
+				result = this.handleNumericLiteral(current);
+			}
+			// String literal
+			else if(current === "\"") {
+				result = this.handleStringLiteral();
+			}
+			// Source line break (treat as Token?)
+			else if(current === "\\") {
+				result = this.getNextToken();
+			}
+			// We should never reach this point.
+			else {
+				throw new Error("Unknown token: '" + current + "'");
+			}
+		} else {
+			result = new Eof();
 		}
 		return result;
+	}
+	
+	//
+	// first can be a single character or something like "../"
+	//
+	private handleIdentifier(first: string) {
+		var word = first;
+		while(this.scanner.hasNext()) {
+			if(!this.nextIsAlphaNumeric(true)) {
+				break;
+			}
+			word += this.scanner.getNext();
+		}
+		return Keyword.isKeyword(word) ? new Keyword(word) : new Identifier(word);
 	}
 	
 	private handleWhitespace(whitespace: string) {
@@ -48,52 +88,70 @@ class Lexer
 	}
 	
 	private handleOperator(firstChar: string) {
+		var result: Token;
 		var op = firstChar;
 		while(this.scanner.hasNext()) {
-			if(this.nextIsAlphaNumeric(true) || this.nextIsWhitespace()) {
+			if(this.nextIsAlphaNumeric(true) || this.nextIsWhitespace() || this.nextIsSeparator()) {
 				break;
 			}
 			op += this.scanner.getNext();
 		}
 		// Leave this check here for now...
-		if(!Operator.isOperator(op))
-			throw new Error("Parsed operator is not an operator, op: '" + op + "'");
-
-		return new Operator(op);
+		if(!Operator.isOperator(op)) {
+			// Consider the case where op = "../"
+			if(op === "../") {
+				result = this.handleIdentifier(op);
+			} else {
+				throw new Error("Parsed operator is not an operator, op: '" + op + "'");
+			}
+		} else {
+			result = new Operator(op);
+		}
+		return result;
 	}
 	
 	private handleSeparator(firstChar: string) {
 		var result: Token;
-		
-		// Check for FloatLiteral
-		if(this.nextIsDigit()) {
-			result = this.handleNumericLiteral(firstChar);
-		}
-		// Check for DotDot
-		else if(firstChar == "." && this.scanner.peek() == ".") {
-			firstChar += this.scanner.getNext();
-			result = Separator.create(firstChar);
-		}
 		// Check for operator. Colon is a separator, but it can
 		// also be part of an operator, such as := and :==.
 		// It's much cheaper to peek, but we'll do it like this
-		// for now.
-		else if(Operator.isOperator(this.scanner.peek())) {
+		// for now. We also need to consider the case '(=someVariable'
+		if(firstChar !== "(" && this.nextIsOperator()) {
 			result = this.handleOperator(firstChar);
-		}
-		// Looks like we got a separator
-		else {
+		} else {
 			result = Separator.create(firstChar);
 		}
 		return result;
 	}
 	
 	private handleNumericLiteral(firstNumberLiteral: string) {
-		return null;
+		var literal = firstNumberLiteral;
+		while(this.scanner.hasNext()) {
+			if(!this.nextIsDigit(true)) {
+				break;
+			}
+			literal += this.scanner.getNext();
+		}
+		if(NumericLiteral.isFloat(literal)) {
+			this.scanner.ignoreNext(); // Ignore trailing 'f'
+		}
+		return NumericLiteral.create(literal);
+	}
+	
+	private handleStringLiteral() {
+		var literal = "";
+		while(this.scanner.hasNext()) {
+			if(this.scanner.peek() === "\"") {
+				break;
+			}
+			literal += this.scanner.getNext();
+		}
+		this.scanner.ignoreNext(); // Ignore trailing "
+		return new StringLiteral(literal);
 	}
 	
 	private handleComment() {
-		// We can safely assume that the next character is either "/" or "*".
+		// We know that the next character is either "/" or "*".
 		return this.scanner.getNext() === "/" ? this.handleLineComment() : this.handleBlockComment();
 	}
 	
@@ -127,8 +185,9 @@ class Lexer
 		return new Comment(text, true);
 	}
 	
-	private nextIsDigit() {
-		return this.isDigit(this.scanner.peek());
+	private nextIsDigit(includeDecimalPoint = false) {
+		return 	this.isDigit(this.scanner.peek()) ||
+				(includeDecimalPoint ? this.scanner.peek() == "." : false);
 	}
 	
 	private nextIsLetter() {
@@ -141,6 +200,14 @@ class Lexer
 	
 	private nextIsWhitespace() {
 		return this.isWhitespace(this.scanner.peek());
+	}
+	
+	private nextIsSeparator() {
+		return Separator.isSeparator(this.scanner.peek());
+	}
+	
+	private nextIsOperator() {
+		return Operator.isOperator(this.scanner.peek());
 	}
 	
 	private nextIsAlphaNumeric(includeUnderscore: boolean = false) {
@@ -156,7 +223,7 @@ class Lexer
 	}
 	
 	private isWhitespace(c: string) {
-		return c === " " || c === "\t" || c === "\n" || c === "\r" || c === " ";
+		return c === " " || c === "\t" || c === "\r" || c === "\n" || c === " ";
 	}
 	
 	private isDigit(c: string) {
@@ -170,7 +237,6 @@ class Lexer
 				(charCode > 96 && charCode < 123) ||
 				(acceptUnderscore ? charCode === 95 : false);
 	}
-	
 }
 
 export = Lexer;

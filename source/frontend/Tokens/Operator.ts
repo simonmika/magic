@@ -37,11 +37,12 @@ class Operator extends Token
 		">",		/* */
 		"<=>",		/* */
 		"~",		/* */
-		"implicit",	/* */
-		"as",		/* */
 		"->",		/* */
 		"=>",		/* */
-		"?"			/* */
+		"?",		/* */
+		"..",		/* */
+		":=",		/* */
+		":=="		/* */
 	);
 	
 	constructor(op: string) {
@@ -49,9 +50,8 @@ class Operator extends Token
 	}
 	
 	static isOperator(op: string) {
-		return Operator.operators.indexOf(op);
-	}
-	
+		return Operator.operators.indexOf(op) > -1;
+	}	
 }
 
 export = Operator;

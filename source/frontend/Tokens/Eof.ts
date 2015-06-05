@@ -1,10 +1,10 @@
 import Token = require("./Token");
 
-class DotDot extends Token
+class Eof extends Token
 {
 	constructor() {
-		super("..");
+		super("EOF");
 	}
 }
 
-export = DotDot;
+export = Eof;
