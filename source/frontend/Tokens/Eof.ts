@@ -1,9 +1,10 @@
 import Token = require("./Token");
+import TokenKind = require("./TokenKind");
 
 class Eof extends Token
 {
 	constructor() {
-		super("EOF");
+		super("EOF", TokenKind.Eof);
 	}
 }
 

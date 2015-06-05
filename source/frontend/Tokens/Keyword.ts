@@ -1,4 +1,5 @@
 import Token = require("./Token");
+import TokenKind = require("./TokenKind");
 
 class Keyword extends Token 
 {
@@ -49,7 +50,7 @@ class Keyword extends Token
 	);
 	
 	constructor(keyword: string) {
-		super(keyword);
+		super(keyword, TokenKind.Keyword);
 	}
 
 	static isKeyword(keyword: string) {

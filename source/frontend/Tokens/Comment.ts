@@ -1,9 +1,10 @@
 import Token = require("./Token");
+import TokenKind = require("./TokenKind");
 
 class Comment extends Token
 {
 	constructor(private text: string, private blockComment: boolean) {
-		super(text);
+		super(text, TokenKind.Comment);
 	}
 
 	getText() {

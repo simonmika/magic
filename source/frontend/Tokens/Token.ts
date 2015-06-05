@@ -1,10 +1,16 @@
-class Token 
+import TokenKind = require("./TokenKind");
+
+class Token
 {
-	constructor(private tokenString: string) { }
+	constructor(private tokenValue: string, private tokenKind: TokenKind) { }
+	
+	getKind() {
+		return this.tokenKind;
+	}
 	
 	toString() {
-		return this.tokenString;
-	}	
+		return this.tokenValue;
+	}
 }
 
 export = Token;

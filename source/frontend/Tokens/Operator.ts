@@ -1,4 +1,5 @@
 import Token = require("./Token");
+import TokenKind = require("./TokenKind");
 
 class Operator extends Token
 {
@@ -46,7 +47,7 @@ class Operator extends Token
 	);
 	
 	constructor(op: string) {
-		super(op);
+		super(op, TokenKind.Operator);
 	}
 	
 	static isOperator(op: string) {

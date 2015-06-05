@@ -1,9 +1,10 @@
 import Token = require("./Token");
+import TokenKind = require("./TokenKind");
 
 class LeftParanthesis extends Token
 {
 	constructor() {
-		super("(");
+		super("(", TokenKind.SeparatorLeftParanthesis);
 	}
 }
 
