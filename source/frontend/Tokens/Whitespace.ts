@@ -1,10 +1,8 @@
 import Token = require("./Token");
 import TokenKind = require("./TokenKind");
-import WhitespaceCharacters = require("./WhitespaceCharacters");
 
 class Whitespace extends Token
 {
-	private kind: WhitespaceCharacters;
 	private kindString: string;
 	
 	constructor(whitespace: string) {

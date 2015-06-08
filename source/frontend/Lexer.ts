@@ -180,7 +180,7 @@ class Lexer
 				text += c;
 			}
 		}
-		// Throw away trailing "/"
+		// Throw away trailing /
 		this.scanner.ignoreNext();
 		return new Comment(text, true);
 	}
