@@ -1,1 +1,1 @@
-init: func (=_vector3D, =_settings) {
+init: func (=_vector3D, =_settings) {}

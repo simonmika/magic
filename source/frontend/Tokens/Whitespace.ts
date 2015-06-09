@@ -40,7 +40,7 @@ class Whitespace extends Token
 				throw new Error("Unknown whitespace character, character code: " + charCode);				
 		}
 		return result;
-	}	
+	}
 }
 
 export = Whitespace;

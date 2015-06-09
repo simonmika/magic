@@ -4,20 +4,57 @@ enum TokenKind
 	Comment,
 	Identifier,
 	Keyword,
-	/* insert keywords here */
-	SeparatorColon,
-	SeparatorComma,
-	SeparatorLeftBrace,
-	SeparatorLeftBracket,
-	SeparatorLeftParanthesis,
-	SeparatorRightBrace,
-	SeparatorRightBracket,
-	SeparatorRightParanthesis,
+	// Separators
+	SeparatorColon,					/*	:	*/
+	SeparatorComma,					/*	,	*/
+	SeparatorLeftBrace,				/*	{	*/
+	SeparatorLeftBracket,			/*	[	*/
+	SeparatorLeftParanthesis,		/*	(	*/
+	SeparatorRightBrace,			/*	}	*/
+	SeparatorRightBracket,			/*	]	*/
+	SeparatorRightParanthesis,		/*	)	*/
+	// Operators
 	Operator,
-	/* insert operators here */
+	OperatorDereference,			/*	@	*/
+	OperatorAdd,					/*  + 	*/
+	OperatorSubtract,				/*  - 	*/
+	OperatorMultiply,				/*  * 	*/
+	OperatorDivide,					/*  / 	*/
+	OperatorExponent,				/*	**	*/			
+	OperatorLeftShift,				/*	<<	*/
+	OperatorRightShift,				/*	>>	*/
+	OperatorBinaryXor,				/*	^	*/
+	OperatorBinaryAnd,				/*	&	*/
+	OperatorBinaryOr,				/*	|	*/
+	OperatorLogicalOr,				/*	||	*/
+	OperatorLogicalAnd,				/*	&&	*/
+	OperatorAddAssign,				/*	+=	*/
+	OperatorSubtractAssign,			/*	-*	*/
+	OperatorMultiplyAssign,			/*	*=	*/
+	OperatorDivideAssign,			/*	/=	*/
+	OperatorExponentAssign,			/*	**=	*/
+	OperatorLeftShiftAssign,		/*	<<=	*/
+	OperatorRightShiftAssign,		/*	>>=	*/
+	OperatorBinaryXorAssign,		/*	^=	*/
+	OperatorBinaryAndAssign,		/*	&=	*/
+	OperatorBinaryOrAssign,			/*	|=	*/
+	OperatorModulo,					/*	%	*/
+	OperatorAssign,					/*	=	*/
+	OperatorEquals,					/*	==	*/
+	OperatorLessThanOrEqual,		/*	<=	*/
+	OperatorGreaterThanOrEqual,		/*	>=	*/
+	OperatorNotEqual,				/*	!=	*/
+	OperatorNot,					/*	!	*/
+	OperatorLessThan,				/*	<	*/
+	OperatorGreaterThan,			/*	>	*/
+	OperatorComparison,				/* <==> */
+	OperatorNegation,				/*	~	*/
+	OperatorDeclareAssign,			/*	:=	*/
+	// Literals
 	LiteralFloat,
 	LiteralInteger,
 	LiteralString,
+	// Whitespaces
 	WhitespaceNull,
 	WhitespaceTab,
 	WhitespaceLineFeed,
