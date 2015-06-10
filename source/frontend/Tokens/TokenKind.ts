@@ -4,6 +4,7 @@ enum TokenKind
 	Comment,
 	Identifier,
 	Keyword,
+	/* Insert keywords here? */
 	// Separators
 	SeparatorColon,					/*	:	*/
 	SeparatorComma,					/*	,	*/

@@ -1,9 +1,10 @@
 import Token = require("./../Tokens/Token");
 import TokenKind = require("./../Tokens/TokenKind");
+import Parser = require("./../Parser");
 
 class Expression
 {
-	constructor(private operator: Token, private kind: TokenKind) {}
+	
 }
 
 export = Expression;

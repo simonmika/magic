@@ -13,10 +13,10 @@ class Parser
 		var source = fs.readFileSync(this.sourceFile, "utf-8");
 		var lexer = new Lexer(source);
 		var t: Token;
-		
 		while(((t = lexer.getNextToken()).getKind() !== TokenKind.Eof)) {
-			// ...
-			console.log(TokenKind[t.getKind()]);
+			switch(t.getKind()) {
+				
+			}
 		}
 	}
 	
