@@ -91,6 +91,7 @@ class Lexer
 		var result: Token;
 		var op = firstChar;
 		while(this.scanner.hasNext()) {
+			// TODO: handle ::=
 			if(this.nextIsAlphaNumeric(true) || this.nextIsWhitespace() || this.nextIsSeparator()) {
 				break;
 			}
@@ -113,7 +114,7 @@ class Lexer
 	private handleSeparator(firstChar: string) {
 		var result: Token;
 		// Check for operator. Colon is a separator, but it can
-		// also be part of an operator, such as := and :==.
+		// also be part of an operator, such as ::=, := and :==.
 		// It's much cheaper to peek, but we'll do it like this
 		// for now. We also need to consider the case '(=someVariable'
 		if(firstChar !== "(" && this.nextIsOperator()) {

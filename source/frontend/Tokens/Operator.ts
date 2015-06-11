@@ -42,8 +42,9 @@ class Operator extends Token
 		"=>",		/* */
 		"?",		/* */
 		"..",		/* */
-		":=",		/* */
-		":=="		/* */
+		":=",		/* declare and assign */
+		":==",		/* */
+		"::="		/* create get-property */
 	);
 	
 	constructor(op: string) {
