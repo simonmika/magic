@@ -51,7 +51,8 @@ enum TokenKind
 	OperatorComparison,				/* <==> */
 	OperatorNegation,				/*	~	*/
 	OperatorDeclareAssign,			/*	:=	*/
-	OperatorCreateGetter,			/*	::= */
+	OperatorDeclareCompare,			/*	:== */
+	OperatorDeclareCreateGetter,	/*	::= */
 	// Literals
 	LiteralFloat,
 	LiteralInteger,

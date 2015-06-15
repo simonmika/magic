@@ -2,7 +2,7 @@ import Token = require("./../Tokens/Token");
 import TokenKind = require("./../Tokens/TokenKind");
 import Parser = require("./../Parser");
 
-class Expression
+interface Expression
 {
 	
 }

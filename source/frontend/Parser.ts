@@ -14,9 +14,7 @@ class Parser
 		var lexer = new Lexer(source);
 		var t: Token;
 		while(((t = lexer.getNextToken()).getKind() !== TokenKind.Eof)) {
-			switch(t.getKind()) {
-				
-			}
+			console.log(TokenKind[t.getKind()] + "'" + t.toString() + "'");
 		}
 	}
 	

@@ -163,6 +163,12 @@ class Operator extends Token
 			case ":=":
 				result = TokenKind.OperatorDeclareAssign;
 				break;
+			case ":==":
+				result = TokenKind.OperatorDeclareCompare;
+				break;
+			case "::=":
+				result = TokenKind.OperatorDeclareCreateGetter;
+				break;
 			default:
 				throw new Error("Invalid operator: '" + op + "'");
 		}

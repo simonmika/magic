@@ -1,0 +1,4 @@
+Handle operator ::=
+	This is currently not handled well since the peek char is a separator.
+	If we were to consume the peek char (and thus be able to peek into the next =), we'd break the lexer.
+	This process needs to be redesigned. Currently, ::= is handled as SEPARATOR OPERATOR, i.e. ':' ':='.	

@@ -91,7 +91,9 @@ class Lexer
 		var result: Token;
 		var op = firstChar;
 		while(this.scanner.hasNext()) {
+			//
 			// TODO: handle ::=
+			//
 			if(this.nextIsAlphaNumeric(true) || this.nextIsWhitespace() || this.nextIsSeparator()) {
 				break;
 			}
