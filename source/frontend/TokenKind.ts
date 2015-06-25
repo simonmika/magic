@@ -5,6 +5,7 @@ enum TokenKind
 	LineComment,
 	BlockComment,
 	Identifier,
+	PathComponent,				/*	../	*/
 	// Keywords
 	KeywordOnHeap,
 	KeywordThis,
@@ -98,7 +99,11 @@ enum TokenKind
 	OperatorDeclareAssign,			/*	:=	*/
 	OperatorDeclareCompare,			/*	:== */
 	OperatorDeclareCreateProperty,	/*	::= */
+	OperatorConditional,			/*	?	*/
+	OperatorRange,					/*	..	*/
+	OperatorReturnType,				/*	->	*/
 	// Literals
+	LiteralNumber,
 	LiteralFloat,
 	LiteralInteger,
 	LiteralString,
@@ -107,7 +112,7 @@ enum TokenKind
 	WhitespaceTab,
 	WhitespaceLineFeed,
 	WhitespaceCarriageReturn,
-	WhitespaceSpace
+	WhitespaceSpace,
 }
 
 export = TokenKind;

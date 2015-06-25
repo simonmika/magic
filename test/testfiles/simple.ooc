@@ -23,6 +23,5 @@ fib: Int = Classics fibonacci_2(10)
 "%d" printfln(fib)
 
 // Testing source line break
-testSourceLineBreak: Int = \
-	Classics fibonacci_2(10)
+testSourceLineBreak: Int = Classics fibonacci_2(10)
 "Fib result = %d" printfln(fib)

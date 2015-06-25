@@ -1,2 +1,1 @@
-//init: func (=_vector3D, =_settings) { /* a block comment */ }
-func(=_vector)
+init: func (=_vector3D, =_settings){_settings[0] = 0.321f}

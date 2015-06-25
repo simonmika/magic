@@ -39,7 +39,10 @@ class Operator
 		">>": TokenKind.OperatorRightShift,
 		">>=": TokenKind.OperatorRightShiftAssign,
 		"-": TokenKind.OperatorSubtract,
-		"-=": TokenKind.OperatorSubtractAssign
+		"-=": TokenKind.OperatorSubtractAssign,
+		"?": TokenKind.OperatorConditional,
+		"..": TokenKind.OperatorRange,
+		"->": TokenKind.OperatorReturnType
 	};
 	
 	static isOperator(operator: string) {
