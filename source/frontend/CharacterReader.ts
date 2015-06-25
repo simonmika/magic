@@ -1,4 +1,4 @@
-class Scanner
+class CharacterReader
 {
 	public static NullCharacter: string = "\0";
 	public static LineFeedCharacter: string = "\n";
@@ -8,7 +8,7 @@ class Scanner
 	constructor(private sourceText: string) {}
 	
 	peek() {
-		return this.hasNext() ? this.sourceText.charAt(this.index) : Scanner.NullCharacter
+		return this.hasNext() ? this.sourceText.charAt(this.index) : CharacterReader.NullCharacter
 	}
 	
 	rewind(characters: number) {
@@ -26,7 +26,7 @@ class Scanner
 	getNext() {
 		var next: string;
 		if(!this.hasNext())
-			next = Scanner.NullCharacter;
+			next = CharacterReader.NullCharacter;
 		else {
 			next = this.sourceText.charAt(this.index);
 			this.index++
@@ -35,4 +35,4 @@ class Scanner
 	}
 }
 
-export = Scanner;
+export = CharacterReader;

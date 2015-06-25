@@ -1,21 +1,66 @@
 enum TokenKind
 {
+	Unknown,
 	Eof,
-	Comment,
+	LineComment,
+	BlockComment,
 	Identifier,
-	Keyword,
-	/* Insert keywords here? */
+	// Keywords
+	KeywordOnHeap,
+	KeywordThis,
+	KeywordStaticThis,
+	KeywordVirtual,
+	KeywordOverride,
+	KeywordBreak,
+	KeywordContinue,
+	KeywordReturn,
+	KeywordFunc,
+	KeywordClass,
+	KeywordCover,
+	KeywordEnum,
+	KeywordInterface,
+	KeywordFrom,
+	KeywordAbstract,
+	KeywordFinal,
+	KeywordStatic,
+	KeywordInline,
+	KeywordExtends,
+	KeywordExtern,
+	KeywordUnmangled,
+	KeywordImplements,
+	KeywordImplicit,
+	KeywordImport,
+	KeywordInclude,
+	KeywordUse,
+	KeywordIf,
+	KeywordElse,
+	KeywordFor,
+	KeywordWhile,
+	KeywordMatch,
+	KeywordCase,
+	KeywordAs,
+	KeywordIn,
+	KeywordInto,
+	KeywordProto,
+	KeywordTry,
+	KeywordCatch,
+	KeywordSet,
+	KeywordGet,
+	KeywordOperator,
+	KeywordConst,
+	KeywordTrue,
+	KeywordFalse,
+	KeywordNull,
 	// Separators
 	SeparatorColon,					/*	:	*/
 	SeparatorComma,					/*	,	*/
-	SeparatorLeftBrace,				/*	{	*/
+	SeparatorLeftCurly,				/*	{	*/
 	SeparatorLeftBracket,			/*	[	*/
 	SeparatorLeftParanthesis,		/*	(	*/
-	SeparatorRightBrace,			/*	}	*/
+	SeparatorRightCurly,			/*	}	*/
 	SeparatorRightBracket,			/*	]	*/
 	SeparatorRightParanthesis,		/*	)	*/
 	// Operators
-	Operator,
 	OperatorDereference,			/*	@	*/
 	OperatorAdd,					/*  + 	*/
 	OperatorSubtract,				/*  - 	*/
@@ -24,9 +69,9 @@ enum TokenKind
 	OperatorExponent,				/*	**	*/			
 	OperatorLeftShift,				/*	<<	*/
 	OperatorRightShift,				/*	>>	*/
-	OperatorBinaryXor,				/*	^	*/
-	OperatorBinaryAnd,				/*	&	*/
-	OperatorBinaryOr,				/*	|	*/
+	OperatorBitwiseXor,				/*	^	*/
+	OperatorBitwiseAnd,				/*	&	*/
+	OperatorBitwiseOr,				/*	|	*/
 	OperatorLogicalOr,				/*	||	*/
 	OperatorLogicalAnd,				/*	&&	*/
 	OperatorAddAssign,				/*	+=	*/
@@ -36,9 +81,9 @@ enum TokenKind
 	OperatorExponentAssign,			/*	**=	*/
 	OperatorLeftShiftAssign,		/*	<<=	*/
 	OperatorRightShiftAssign,		/*	>>=	*/
-	OperatorBinaryXorAssign,		/*	^=	*/
-	OperatorBinaryAndAssign,		/*	&=	*/
-	OperatorBinaryOrAssign,			/*	|=	*/
+	OperatorBitwiseXorAssign,		/*	^=	*/
+	OperatorBitwiseAndAssign,		/*	&=	*/
+	OperatorBitwiseOrAssign,		/*	|=	*/
 	OperatorModulo,					/*	%	*/
 	OperatorAssign,					/*	=	*/
 	OperatorEquals,					/*	==	*/
@@ -49,10 +94,10 @@ enum TokenKind
 	OperatorLessThan,				/*	<	*/
 	OperatorGreaterThan,			/*	>	*/
 	OperatorComparison,				/* <==> */
-	OperatorNegation,				/*	~	*/
+	OperatorNegate,					/*	~	*/
 	OperatorDeclareAssign,			/*	:=	*/
 	OperatorDeclareCompare,			/*	:== */
-	OperatorDeclareCreateGetter,	/*	::= */
+	OperatorDeclareCreateProperty,	/*	::= */
 	// Literals
 	LiteralFloat,
 	LiteralInteger,
