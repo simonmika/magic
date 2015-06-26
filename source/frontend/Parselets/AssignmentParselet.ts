@@ -11,9 +11,9 @@ class AssignmentParselet implements InfixParselet
 	constructor() {}
 	
 	parse(parser: Parser, left: Expression, token: Token) {
-		if(!(left instanceof IdentifierExpression)) {
-			parser.throwError("expected identifier");
-		}
+		// 
+		// How to deal with whitespaces here?
+		//
 		var right = parser.parse(this.getPrecedence() - 1);
 		var identifier = (<IdentifierExpression>left).getValue();
 		return new AssignmentExpression(identifier, right);

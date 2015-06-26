@@ -55,6 +55,7 @@ class Lexer
 		} else {
 			result = new Token("\0", TokenKind.Eof);
 		}
+		console.log("Lexer '" + result.getValue() + "'");
 		return result;
 	}
 	

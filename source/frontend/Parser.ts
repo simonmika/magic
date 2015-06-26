@@ -106,8 +106,10 @@ class Parser
 	
 	private registerPrefixParselets() {
 		
-		// Custom parselets
+		// Custom parselets, such as identifier, whitespaces and literals
+		this.prefixParselets[TokenKind.WhitespaceTab] = new PrefixWhitespaceParselet(TokenKind.WhitespaceTab);
 		this.prefixParselets[TokenKind.WhitespaceSpace] = new PrefixWhitespaceParselet(TokenKind.WhitespaceSpace);
+		this.prefixParselets[TokenKind.WhitespaceLineFeed] = new PrefixWhitespaceParselet(TokenKind.WhitespaceLineFeed);
 		this.prefixParselets[TokenKind.Identifier] = new IdentifierParselet();
 		this.prefixParselets[TokenKind.LiteralNumber] = new NumericLiteralParselet();
 		this.prefixParselets[TokenKind.LiteralBoolean] = new BooleanLiteralParselet();
@@ -117,7 +119,7 @@ class Parser
 		this.prefixParselets[TokenKind.OperatorNot] = new PrefixOperatorParselet(TokenKind.OperatorNot, Precedence.Prefix);
 		this.prefixParselets[TokenKind.OperatorNegate] = new PrefixOperatorParselet(TokenKind.OperatorNegate, Precedence.Prefix);
 		this.prefixParselets[TokenKind.OperatorDereference] = new PrefixOperatorParselet(TokenKind.OperatorDereference, Precedence.Prefix);
-		this.prefixParselets[TokenKind.OperatorAssign] = new PrefixOperatorParselet(TokenKind.OperatorAssign, Precedence.Prefix);;
+		this.prefixParselets[TokenKind.OperatorAssign] = new PrefixOperatorParselet(TokenKind.OperatorAssign, Precedence.Prefix);
 	}
 	
 	private registerInfixParselets() {
@@ -125,6 +127,8 @@ class Parser
 		// Custom parselets
 		//
 		this.infixParselets[TokenKind.OperatorConditional] = new ConditionalParselet();
+		// NOTE: The assignment parser does not currently check if the left expression is an identifier.
+		//		 Where do we do this? When we're walking the tree?
 		this.infixParselets[TokenKind.OperatorAssign] = new AssignmentParselet();
 		
 		//
@@ -169,12 +173,12 @@ class Parser
 		this.infixParselets[TokenKind.OperatorComparison] = new InfixOperatorParselet(TokenKind.OperatorComparison, Precedence.Comparison);
 		this.infixParselets[TokenKind.OperatorDeclareCompare] = new InfixOperatorParselet(TokenKind.OperatorDeclareCompare, Precedence.Comparison);
 		
+		// Range
+		this.infixParselets[TokenKind.OperatorRange] = new InfixOperatorParselet(TokenKind.OperatorRange, Precedence.Range);
+		
 		//
 		// Right-associative operators
 		//
-		
-		// Range
-		this.infixParselets[TokenKind.OperatorRange] = new InfixOperatorParselet(TokenKind.OperatorRange, Precedence.Range, false);
 		
 		// Exponent
 		this.infixParselets[TokenKind.OperatorExponent] = new InfixOperatorParselet(TokenKind.OperatorExponent, Precedence.Exponent, true);
@@ -185,7 +189,9 @@ class Parser
 	}
 	
 	private registerPostfixParselets() {
+		this.infixParselets[TokenKind.WhitespaceTab] = new PostfixWhitespaceParselet(TokenKind.WhitespaceTab);
 		this.infixParselets[TokenKind.WhitespaceSpace] = new PostfixWhitespaceParselet(TokenKind.WhitespaceSpace);
+		this.infixParselets[TokenKind.WhitespaceLineFeed] = new PostfixWhitespaceParselet(TokenKind.WhitespaceLineFeed);
 	}
 	
 }
