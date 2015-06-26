@@ -1,6 +1,6 @@
 import Expression = require("./Expression");
 
-class IdentifierExpression implements Expression
+class BooleanLiteralExpression implements Expression
 {
 	constructor(private value: string) {}
 	
@@ -13,4 +13,4 @@ class IdentifierExpression implements Expression
 	}	
 }
 
-export = IdentifierExpression;
+export = BooleanLiteralExpression;

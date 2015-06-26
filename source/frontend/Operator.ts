@@ -15,7 +15,7 @@ class Operator
 		"<==>": TokenKind.OperatorComparison,
 		":=": TokenKind.OperatorDeclareAssign,
 		":==": TokenKind.OperatorDeclareCompare,
-		"::=": TokenKind.OperatorDeclareCreateProperty,
+		"::=": TokenKind.OperatorDeclarePropertyAssign,
 		"@": TokenKind.OperatorDereference,
 		"/": TokenKind.OperatorDivide,
 		"/=": TokenKind.OperatorDivideAssign,

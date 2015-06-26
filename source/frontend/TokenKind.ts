@@ -98,7 +98,7 @@ enum TokenKind
 	OperatorNegate,					/*	~	*/
 	OperatorDeclareAssign,			/*	:=	*/
 	OperatorDeclareCompare,			/*	:== */
-	OperatorDeclareCreateProperty,	/*	::= */
+	OperatorDeclarePropertyAssign,	/*	::= */
 	OperatorConditional,			/*	?	*/
 	OperatorRange,					/*	..	*/
 	OperatorReturnType,				/*	->	*/
@@ -107,6 +107,7 @@ enum TokenKind
 	LiteralFloat,
 	LiteralInteger,
 	LiteralString,
+	LiteralBoolean,
 	// Whitespaces
 	WhitespaceNull,
 	WhitespaceTab,

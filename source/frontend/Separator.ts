@@ -1,6 +1,6 @@
 import TokenKind = require("./TokenKind");
 
-class Separator 
+class Separator
 {
 	private static separators: { [key: string]: TokenKind; } = {
 		":": TokenKind.SeparatorColon,

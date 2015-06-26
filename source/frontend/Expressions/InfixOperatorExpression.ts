@@ -21,7 +21,7 @@ class InfixOperatorExpression implements Expression
 	}
 		
 	toString() {
-		return this.left.toString() + Operator.toString(this.operator) + this.right.toString();
+		return "(" + this.left.toString() + Operator.toString(this.operator) + this.right.toString() + ")";
 	}
 	
 }

@@ -27,7 +27,7 @@ class InfixOperatorParselet implements InfixParselet
 	
 	isRightAssociative() {
 		return this.rightAssociative;
-	}	
+	}
 }
 
 export = InfixOperatorParselet;

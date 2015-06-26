@@ -14,6 +14,7 @@ class Whitespace
 		return Whitespace.toKind(whitespace) !== TokenKind.Unknown;
 	}
 	
+	// Make this a switch instead?
 	static toString(whitespace: TokenKind) {
 		var result: string = null;
 		for(var key in Whitespace.whitespaceCharacters) {

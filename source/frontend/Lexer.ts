@@ -28,9 +28,9 @@ class Lexer
 			else if(current === "/" && (peek === "/" || peek === "*")) {
 				result = this.handleComment();
 			}
-			// Keyword or identifier
+			// Keyword, identifier or boolean literal
 			else if(this.isValidIdentifierCharacter(current, true)) {
-				result = this.handleIdentifier(current);
+				result = this.handleWord(current);
 			}
 			// Operator
 			else if(Operator.isOperator(current) || (current === "." && peek === ".")) {
@@ -70,17 +70,31 @@ class Lexer
 		return new Token(literal, TokenKind.LiteralString);
 	}
 	
+	//
+	// TODO: Check for hexadecimal/binary notation?
+	//
 	private handleNumericLiteral(firstChar: string) {
 		var literal = firstChar;
 		var peek: string;
-		while(this.reader.hasNext()) {
+		var next: string;
+		var foundDot = false;
+		while(this.reader.hasNext() && this.nextIsDigit(!foundDot)) {
+			next = this.reader.getNext();
 			peek = this.reader.peek();
-			if(!this.nextIsDigit() && peek !== ".") {
-				break;
+			if(next === ".") {
+				// See if we're in fact dealing with the range operator '..'.
+				// This will currently be the case if we have an expression such as 'for(i in 0..n)'
+				if(peek === ".") {
+					// Re-position reader so that the range operator '..' can be captured.
+					this.reader.rewind(1);
+					break;
+				}
+				foundDot = true;
 			}
-			literal += this.reader.getNext();
+			literal += next;
 		}
 		if(peek === "f") {
+			// Throw away trailing float literal suffix.
 			this.reader.ignoreNext();
 		} 
 		return new Token(literal, TokenKind.LiteralNumber);
@@ -117,7 +131,8 @@ class Lexer
 		return result;
 	}
 	
-	private handleIdentifier(firstChar: string) {
+	private handleWord(firstChar: string) {
+		var result: Token;
 		var word = firstChar;
 		while(this.reader.hasNext()) {
 			if(!this.nextIsValidIdentifierCharacter(false)) {
@@ -125,7 +140,23 @@ class Lexer
 			}
 			word += this.reader.getNext();
 		}
-		return Keyword.isKeyword(word) ? new Token(word, Keyword.toKind(word)) : new Token(word, TokenKind.Identifier);
+		var keywordKind = Keyword.toKind(word);
+		if(keywordKind != TokenKind.Unknown) {
+			// If word is keyword 'true' or 'false', we'll demote it to a boolean literal.
+			// This will probably simplify the parsing process a bit (open for investigation).
+			switch(keywordKind) {
+				case TokenKind.KeywordTrue:
+				case TokenKind.KeywordFalse:
+					result = new Token(word, TokenKind.LiteralBoolean);
+					break;
+				default:
+					result = new Token(word, keywordKind);
+					break;
+			}
+		} else {
+			result = new Token(word, TokenKind.Identifier);
+		}
+		return result;
 	}
 
 	private handleComment() {
@@ -160,8 +191,8 @@ class Lexer
 		return new Token(text, TokenKind.BlockComment);
 	}
 	
-	private nextIsDigit() {
-		return this.isDigit(this.reader.peek());
+	private nextIsDigit(acceptDot = false) {
+		return this.isDigit(this.reader.peek(), acceptDot);
 	}
 	
 	private nextIsAlphaNumeric(acceptUnderscore = false) {
@@ -190,9 +221,9 @@ class Lexer
 		return (charCode > 64 && charCode < 91)  || (charCode > 96 && charCode < 123)
 	}
 	
-	private isDigit(c: string) {
+	private isDigit(c: string, acceptDot = false) {
 		var charCode = c.charCodeAt(0);
-		return charCode > 47 && charCode < 58;
+		return (charCode > 47 && charCode < 58) || (acceptDot ? c == "." : false);
 	}
 }
 
