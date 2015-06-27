@@ -1,10 +1,10 @@
+import Expression = require("./Expression");
 import Token = require("./../Token");
 import Parser = require("./../Parser");
-import Expression = require("./../Expressions/Expression");
 
-interface PrefixParselet
+interface PrefixExpression extends Expression
 {
 	parse(parser: Parser, token: Token): Expression;
 }
 
-export = PrefixParselet;
+export = PrefixExpression;

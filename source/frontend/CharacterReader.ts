@@ -29,7 +29,7 @@ class CharacterReader
 			next = CharacterReader.NullCharacter;
 		else {
 			next = this.sourceText.charAt(this.index);
-			this.index++
+			this.index++;
 		}
 		return next;
 	}

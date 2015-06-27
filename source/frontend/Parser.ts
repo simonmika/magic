@@ -3,50 +3,50 @@ import fs = require("fs");
 import Lexer = require("./Lexer");
 import Token = require("./Token");
 import TokenKind = require("./TokenKind");
-import Expression = require("./Expressions/Expression");
 import Precedence = require("./Precedence");
-import PrefixParselet = require("./Parselets/PrefixParselet");
-import InfixParselet = require("./Parselets/InfixParselet");
-import IdentifierParselet = require("./Parselets/IdentifierParselet");
-import PrefixOperatorParselet = require("./Parselets/PrefixOperatorParselet");
-import InfixOperatorParselet = require("./Parselets/InfixOperatorParselet");
-import PostfixOperatorParselet = require("./Parselets/PostfixOperatorParselet");
-import PrefixWhitespaceParselet = require("./Parselets/PrefixWhitespaceParselet");
-import PostfixWhitespaceParselet = require("./Parselets/PostfixWhitespaceParselet");
-import NumericLiteralParselet = require("./Parselets/NumericLiteralParselet");
-import ConditionalParselet = require("./Parselets/ConditionalParselet");
-import BooleanLiteralParselet = require("./Parselets/BooleanLiteralParselet");
-import ClosedGroupParselet = require("./Parselets/ClosedGroupParselet");
-import AssignmentParselet = require("./Parselets/AssignmentParselet");
+import Expression = require("./Expressions/Expression");
+import PrefixExpression = require("./Expressions/PrefixExpression");
+import InfixExpression = require("./Expressions/InfixExpression");
+import PrefixOperatorExpression = require("./Expressions/PrefixOperatorExpression");
+import InfixOperatorExpression = require("./Expressions/InfixOperatorExpression");
+import PrefixWhitespaceExpression = require("./Expressions/PrefixWhitespaceExpression");
+import PostfixWhitespaceExpression = require("./Expressions/PostfixWhitespaceExpression");
+import NumericLiteralExpression = require("./Expressions/NumericLiteralExpression");
+import IdentifierExpression = require("./Expressions/IdentifierExpression");
+import ConditionalExpression = require("./Expressions/ConditionalExpression");
+import ClosedGroupExpression = require("./Expressions/ClosedGroupExpression");
+import AssignExpression = require("./Expressions/AssignExpression");
+import DeclareExpression = require("./Expressions/DeclareExpression");
+import DeclareAssignExpression = require("./Expressions/DeclareAssignExpression");
 
 class Parser
 {
 	private lexer: Lexer;	
 	private lookaheadToken: Token; // LL(1)
 	
-	private prefixParselets: { [key: number]: PrefixParselet; } = {};
-	private infixParselets: { [key: number]: InfixParselet; } = {};
+	private prefixExpressions: { [key: number]: PrefixExpression; } = {};
+	private infixExpressions: { [key: number]: InfixExpression; } = {};
 		
 	constructor(private sourceFile: string) {
 		// TODO:
 		//	We should probably keep a static repository of all the 
-		//	registered parselets, otherwise we have to perform registration
+		//	registered expressions, otherwise we have to perform registration
 		//	for each parser instance (currently one per file)
-		this.registerParselets();
+		this.registerExpressions();
 		this.initializeLexer();
 		this.lookaheadToken = this.lexer.getNextToken();
 	}
 	
 	parse(precedence: number = 0) {
 		var token = this.advance();
-		var prefix: PrefixParselet = this.getPrefixParselet(token.getKind());
+		var prefix: PrefixExpression = this.getPrefixExpression(token.getKind());
 		if(prefix === null) {
 			this.throwError("unable to parse '" + token + "'");
 		}
 		var left = prefix.parse(this, token);
 		while(precedence < this.getNextTokenPrecedence()) {
 			token = this.advance();
-			var infix = this.getInfixParselet(token.getKind());
+			var infix = this.getInfixExpression(token.getKind());
 			left = infix.parse(this, left, token);
 		}
 		return left;
@@ -56,7 +56,8 @@ class Parser
 		var token = this.lookaheadToken;
 		var found = token.getKind();
 		if(found != expected) {
-			this.throwError("expected '" + TokenKind[expected] + "' but found '" + TokenKind[found] + "'.");
+			this.throwError("expected '" + TokenKind[expected] +
+							"' but found '" + TokenKind[found] + "' ('" + token.getValue() + "')");
 		}
 		return advance ? this.advance() : token;
 	}
@@ -81,117 +82,124 @@ class Parser
 	
 	private getNextTokenPrecedence() {
 		var result = 0;
-		var infix = this.getInfixParselet(this.lookaheadToken.getKind());
+		var infix = this.getInfixExpression(this.lookaheadToken.getKind());
 		if(infix !== null) {
 			result = infix.getPrecedence();
 		}
 		return result;
 	}
 	
-	private getPrefixParselet(kind: TokenKind) {
-		var result = this.prefixParselets[kind];
+	private getPrefixExpression(kind: TokenKind) {
+		var result = this.prefixExpressions[kind];
 		return result !== undefined ? result : null;
 	}
 	
-	private getInfixParselet(kind: TokenKind) {
-		var result = this.infixParselets[kind];
+	private getInfixExpression(kind: TokenKind) {
+		var result = this.infixExpressions[kind];
 		return result !== undefined ? result : null;
 	}
 	
-	private registerParselets() {
-		this.registerPrefixParselets();
-		this.registerInfixParselets();
-		this.registerPostfixParselets();
+	private registerExpressions() {
+		this.registerPrefixExpressions();
+		this.registerInfixExpressions();
+		this.registerPostfixExpressions();
 	}
 	
-	private registerPrefixParselets() {
+	private registerPrefixExpressions() {
+		/*	
+		this.prefixExpressions[TokenKind.LiteralBoolean] = new BooleanLiteralExpression();
 		
-		// Custom parselets, such as identifier, whitespaces and literals
-		this.prefixParselets[TokenKind.WhitespaceTab] = new PrefixWhitespaceParselet(TokenKind.WhitespaceTab);
-		this.prefixParselets[TokenKind.WhitespaceSpace] = new PrefixWhitespaceParselet(TokenKind.WhitespaceSpace);
-		this.prefixParselets[TokenKind.WhitespaceLineFeed] = new PrefixWhitespaceParselet(TokenKind.WhitespaceLineFeed);
-		this.prefixParselets[TokenKind.Identifier] = new IdentifierParselet();
-		this.prefixParselets[TokenKind.LiteralNumber] = new NumericLiteralParselet();
-		this.prefixParselets[TokenKind.LiteralBoolean] = new BooleanLiteralParselet();
-		this.prefixParselets[TokenKind.SeparatorLeftParanthesis] = new ClosedGroupParselet(TokenKind.SeparatorRightParanthesis);
+		*/
+		
+		// Custom Expressions, such as identifier, whitespaces and literals
+		this.prefixExpressions[TokenKind.WhitespaceTab] = new PrefixWhitespaceExpression(TokenKind.WhitespaceTab);
+		this.prefixExpressions[TokenKind.WhitespaceSpace] = new PrefixWhitespaceExpression(TokenKind.WhitespaceSpace);
+
+
+		this.prefixExpressions[TokenKind.LiteralNumber] = new NumericLiteralExpression();
+		this.prefixExpressions[TokenKind.Identifier] = new IdentifierExpression();
+		this.prefixExpressions[TokenKind.SeparatorLeftParanthesis] = new ClosedGroupExpression(TokenKind.SeparatorRightParanthesis);
 		
 		// Prefix operators
-		this.prefixParselets[TokenKind.OperatorNot] = new PrefixOperatorParselet(TokenKind.OperatorNot, Precedence.Prefix);
-		this.prefixParselets[TokenKind.OperatorNegate] = new PrefixOperatorParselet(TokenKind.OperatorNegate, Precedence.Prefix);
-		this.prefixParselets[TokenKind.OperatorDereference] = new PrefixOperatorParselet(TokenKind.OperatorDereference, Precedence.Prefix);
-		this.prefixParselets[TokenKind.OperatorAssign] = new PrefixOperatorParselet(TokenKind.OperatorAssign, Precedence.Prefix);
+		this.prefixExpressions[TokenKind.OperatorNot] = new PrefixOperatorExpression(TokenKind.OperatorNot, Precedence.Prefix);
+		this.prefixExpressions[TokenKind.OperatorNegate] = new PrefixOperatorExpression(TokenKind.OperatorNegate, Precedence.Prefix);
+		this.prefixExpressions[TokenKind.OperatorDereference] = new PrefixOperatorExpression(TokenKind.OperatorDereference, Precedence.Prefix);
+		// Should this have a custom expression, init: func(=someMember).
+		this.prefixExpressions[TokenKind.OperatorAssign] = new PrefixOperatorExpression(TokenKind.OperatorAssign, Precedence.Prefix);
 	}
 	
-	private registerInfixParselets() {
+	private registerInfixExpressions() {
 		//
-		// Custom parselets
+		// Custom Expressions
 		//
-		this.infixParselets[TokenKind.OperatorConditional] = new ConditionalParselet();
+		this.infixExpressions[TokenKind.OperatorConditional] = new ConditionalExpression();
 		// NOTE: The assignment parser does not currently check if the left expression is an identifier.
 		//		 Where do we do this? When we're walking the tree?
-		this.infixParselets[TokenKind.OperatorAssign] = new AssignmentParselet();
+		this.infixExpressions[TokenKind.OperatorAssign] = new AssignExpression();
+		//this.infixExpressions[TokenKind.SeparatorColon] = new DeclareExpression();
+		this.infixExpressions[TokenKind.OperatorDeclareAssign] = new DeclareAssignExpression();
 		
 		//
 		// Left-associative operators
 		//
 		
 		// Arithmetic
-		this.infixParselets[TokenKind.OperatorAdd] = new InfixOperatorParselet(TokenKind.OperatorAdd, Precedence.Sum);
-		this.infixParselets[TokenKind.OperatorSubtract] = new InfixOperatorParselet(TokenKind.OperatorSubtract, Precedence.Sum);
-		this.infixParselets[TokenKind.OperatorMultiply] = new InfixOperatorParselet(TokenKind.OperatorMultiply, Precedence.Product);
-		this.infixParselets[TokenKind.OperatorDivide] = new InfixOperatorParselet(TokenKind.OperatorDivide, Precedence.Product);
-		this.infixParselets[TokenKind.OperatorModulo] = new InfixOperatorParselet(TokenKind.OperatorModulo, Precedence.Product);
+		this.infixExpressions[TokenKind.OperatorAdd] = new InfixOperatorExpression(TokenKind.OperatorAdd, Precedence.Sum);
+		this.infixExpressions[TokenKind.OperatorSubtract] = new InfixOperatorExpression(TokenKind.OperatorSubtract, Precedence.Sum);
+		this.infixExpressions[TokenKind.OperatorMultiply] = new InfixOperatorExpression(TokenKind.OperatorMultiply, Precedence.Product);
+		this.infixExpressions[TokenKind.OperatorDivide] = new InfixOperatorExpression(TokenKind.OperatorDivide, Precedence.Product);
+		this.infixExpressions[TokenKind.OperatorModulo] = new InfixOperatorExpression(TokenKind.OperatorModulo, Precedence.Product);
 		
 		// Bitwise
-		this.infixParselets[TokenKind.OperatorBitwiseXor] = new InfixOperatorParselet(TokenKind.OperatorBitwiseXor, Precedence.Bitwise);
-		this.infixParselets[TokenKind.OperatorBitwiseAnd] = new InfixOperatorParselet(TokenKind.OperatorBitwiseAnd, Precedence.Bitwise);
-		this.infixParselets[TokenKind.OperatorBitwiseOr] = new InfixOperatorParselet(TokenKind.OperatorBitwiseOr, Precedence.Bitwise);
-		this.infixParselets[TokenKind.OperatorRightShift] = new InfixOperatorParselet(TokenKind.OperatorRightShift, Precedence.Bitwise);
-		this.infixParselets[TokenKind.OperatorLeftShift] = new InfixOperatorParselet(TokenKind.OperatorLeftShift, Precedence.Bitwise);
+		this.infixExpressions[TokenKind.OperatorBitwiseXor] = new InfixOperatorExpression(TokenKind.OperatorBitwiseXor, Precedence.Bitwise);
+		this.infixExpressions[TokenKind.OperatorBitwiseAnd] = new InfixOperatorExpression(TokenKind.OperatorBitwiseAnd, Precedence.Bitwise);
+		this.infixExpressions[TokenKind.OperatorBitwiseOr] = new InfixOperatorExpression(TokenKind.OperatorBitwiseOr, Precedence.Bitwise);
+		this.infixExpressions[TokenKind.OperatorRightShift] = new InfixOperatorExpression(TokenKind.OperatorRightShift, Precedence.Bitwise);
+		this.infixExpressions[TokenKind.OperatorLeftShift] = new InfixOperatorExpression(TokenKind.OperatorLeftShift, Precedence.Bitwise);
 		
 		// Assignment
-		this.infixParselets[TokenKind.OperatorAddAssign] = new InfixOperatorParselet(TokenKind.OperatorAddAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorSubtractAssign] = new InfixOperatorParselet(TokenKind.OperatorSubtractAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorMultiplyAssign] = new InfixOperatorParselet(TokenKind.OperatorMultiplyAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorDivideAssign] = new InfixOperatorParselet(TokenKind.OperatorDivideAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorExponentAssign] = new InfixOperatorParselet(TokenKind.OperatorExponentAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorLeftShiftAssign] = new InfixOperatorParselet(TokenKind.OperatorLeftShiftAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorRightShiftAssign] = new InfixOperatorParselet(TokenKind.OperatorRightShiftAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorBitwiseXorAssign] = new InfixOperatorParselet(TokenKind.OperatorBitwiseXorAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorBitwiseAndAssign] = new InfixOperatorParselet(TokenKind.OperatorBitwiseAndAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorBitwiseOrAssign] = new InfixOperatorParselet(TokenKind.OperatorBitwiseOrAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorDeclareAssign] = new InfixOperatorParselet(TokenKind.OperatorDeclareAssign, Precedence.Assignment);
-		this.infixParselets[TokenKind.OperatorDeclarePropertyAssign] = new InfixOperatorParselet(TokenKind.OperatorDeclarePropertyAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorAddAssign] = new InfixOperatorExpression(TokenKind.OperatorAddAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorSubtractAssign] = new InfixOperatorExpression(TokenKind.OperatorSubtractAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorMultiplyAssign] = new InfixOperatorExpression(TokenKind.OperatorMultiplyAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorDivideAssign] = new InfixOperatorExpression(TokenKind.OperatorDivideAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorExponentAssign] = new InfixOperatorExpression(TokenKind.OperatorExponentAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorLeftShiftAssign] = new InfixOperatorExpression(TokenKind.OperatorLeftShiftAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorRightShiftAssign] = new InfixOperatorExpression(TokenKind.OperatorRightShiftAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorBitwiseXorAssign] = new InfixOperatorExpression(TokenKind.OperatorBitwiseXorAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorBitwiseAndAssign] = new InfixOperatorExpression(TokenKind.OperatorBitwiseAndAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorBitwiseOrAssign] = new InfixOperatorExpression(TokenKind.OperatorBitwiseOrAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorDeclareAssign] = new InfixOperatorExpression(TokenKind.OperatorDeclareAssign, Precedence.Assignment);
+		this.infixExpressions[TokenKind.OperatorDeclarePropertyAssign] = new InfixOperatorExpression(TokenKind.OperatorDeclarePropertyAssign, Precedence.Assignment);
 		
 		// Comparison
-		this.infixParselets[TokenKind.OperatorEquals] = new InfixOperatorParselet(TokenKind.OperatorEquals, Precedence.Comparison);
-		this.infixParselets[TokenKind.OperatorLessThanOrEqual] = new InfixOperatorParselet(TokenKind.OperatorLessThanOrEqual, Precedence.Comparison);
-		this.infixParselets[TokenKind.OperatorGreaterThanOrEqual] = new InfixOperatorParselet(TokenKind.OperatorGreaterThanOrEqual, Precedence.Comparison);
-		this.infixParselets[TokenKind.OperatorNotEqual] = new InfixOperatorParselet(TokenKind.OperatorNotEqual, Precedence.Comparison);
-		this.infixParselets[TokenKind.OperatorLessThan] = new InfixOperatorParselet(TokenKind.OperatorLessThan, Precedence.Comparison);
-		this.infixParselets[TokenKind.OperatorGreaterThan] = new InfixOperatorParselet(TokenKind.OperatorGreaterThan, Precedence.Comparison);
-		this.infixParselets[TokenKind.OperatorComparison] = new InfixOperatorParselet(TokenKind.OperatorComparison, Precedence.Comparison);
-		this.infixParselets[TokenKind.OperatorDeclareCompare] = new InfixOperatorParselet(TokenKind.OperatorDeclareCompare, Precedence.Comparison);
+		this.infixExpressions[TokenKind.OperatorEquals] = new InfixOperatorExpression(TokenKind.OperatorEquals, Precedence.Comparison);
+		this.infixExpressions[TokenKind.OperatorLessThanOrEqual] = new InfixOperatorExpression(TokenKind.OperatorLessThanOrEqual, Precedence.Comparison);
+		this.infixExpressions[TokenKind.OperatorGreaterThanOrEqual] = new InfixOperatorExpression(TokenKind.OperatorGreaterThanOrEqual, Precedence.Comparison);
+		this.infixExpressions[TokenKind.OperatorNotEqual] = new InfixOperatorExpression(TokenKind.OperatorNotEqual, Precedence.Comparison);
+		this.infixExpressions[TokenKind.OperatorLessThan] = new InfixOperatorExpression(TokenKind.OperatorLessThan, Precedence.Comparison);
+		this.infixExpressions[TokenKind.OperatorGreaterThan] = new InfixOperatorExpression(TokenKind.OperatorGreaterThan, Precedence.Comparison);
+		this.infixExpressions[TokenKind.OperatorComparison] = new InfixOperatorExpression(TokenKind.OperatorComparison, Precedence.Comparison);
+		this.infixExpressions[TokenKind.OperatorDeclareCompare] = new InfixOperatorExpression(TokenKind.OperatorDeclareCompare, Precedence.Comparison);
 		
 		// Range
-		this.infixParselets[TokenKind.OperatorRange] = new InfixOperatorParselet(TokenKind.OperatorRange, Precedence.Range);
+		this.infixExpressions[TokenKind.OperatorRange] = new InfixOperatorExpression(TokenKind.OperatorRange, Precedence.Range);
 		
 		//
 		// Right-associative operators
 		//
 		
 		// Exponent
-		this.infixParselets[TokenKind.OperatorExponent] = new InfixOperatorParselet(TokenKind.OperatorExponent, Precedence.Exponent, true);
+		this.infixExpressions[TokenKind.OperatorExponent] = new InfixOperatorExpression(TokenKind.OperatorExponent, Precedence.Exponent, true);
 		
 		// Logical
-		this.infixParselets[TokenKind.OperatorLogicalOr] = new InfixOperatorParselet(TokenKind.OperatorLogicalOr, Precedence.Logical, true);
-		this.infixParselets[TokenKind.OperatorLogicalAnd] = new InfixOperatorParselet(TokenKind.OperatorLogicalAnd, Precedence.Logical, true);
+		this.infixExpressions[TokenKind.OperatorLogicalOr] = new InfixOperatorExpression(TokenKind.OperatorLogicalOr, Precedence.Logical, true);
+		this.infixExpressions[TokenKind.OperatorLogicalAnd] = new InfixOperatorExpression(TokenKind.OperatorLogicalAnd, Precedence.Logical, true);
 	}
 	
-	private registerPostfixParselets() {
-		this.infixParselets[TokenKind.WhitespaceTab] = new PostfixWhitespaceParselet(TokenKind.WhitespaceTab);
-		this.infixParselets[TokenKind.WhitespaceSpace] = new PostfixWhitespaceParselet(TokenKind.WhitespaceSpace);
-		this.infixParselets[TokenKind.WhitespaceLineFeed] = new PostfixWhitespaceParselet(TokenKind.WhitespaceLineFeed);
+	private registerPostfixExpressions() {
+		this.infixExpressions[TokenKind.WhitespaceTab] = new PostfixWhitespaceExpression(TokenKind.WhitespaceTab);
+		this.infixExpressions[TokenKind.WhitespaceSpace] = new PostfixWhitespaceExpression(TokenKind.WhitespaceSpace);
+		this.infixExpressions[TokenKind.WhitespaceLineFeed] = new PostfixWhitespaceExpression(TokenKind.WhitespaceLineFeed);
 	}
 	
 }

@@ -1,5 +1,6 @@
 interface Expression
 {
+	getPrecedence(): number;
 	toString(): string;
 }
 

@@ -1,8 +1,9 @@
 class Precedence 
 {
 	public static Zero = 0;
+	public static Declaration = 5;
 	public static Range = 10;
-	public static Assignment = 20
+	public static Assignment = 20;
 	public static Comparison = 40;
 	public static Conditional = 60;
 	public static Bitwise = 80;

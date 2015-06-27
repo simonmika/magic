@@ -55,7 +55,6 @@ class Lexer
 		} else {
 			result = new Token("\0", TokenKind.Eof);
 		}
-		console.log("Lexer '" + result.getValue() + "'");
 		return result;
 	}
 	
@@ -117,7 +116,8 @@ class Lexer
 		var op = firstChar;
 		var result: Token;
 		while(this.reader.hasNext()) {
-			if(this.nextIsAlphaNumeric(true) || this.nextIsWhitespace()) {
+			var peek = this.reader.peek();
+			if(this.isAlphaNumeric(peek, true) || this.isWhitespace(peek) || peek === "(") {
 				break;
 			}
 			op += this.reader.getNext();
@@ -206,6 +206,10 @@ class Lexer
 	
 	private nextIsWhitespace() {
 		return Whitespace.isWhitespace(this.reader.peek());
+	}
+	
+	private isWhitespace(c: string) {
+		return Whitespace.isWhitespace(c);
 	}
 	
 	// Identifiers must start with a letter or an underscore.

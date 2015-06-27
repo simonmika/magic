@@ -1,34 +1,51 @@
 import Expression = require("./Expression");
+import InfixExpression = require("./InfixExpression");
+import Parser = require("./../Parser");
+import Token = require("./../Token");
+import TokenKind = require("./../TokenKind");
+import Precedence = require("./../Precedence");
 
-//
-// Represents a ternary if.
-// Example: condition ? true : false
-//
-class ConditionalExpression implements Expression
+class ConditionalExpression implements InfixExpression
 {
-	constructor(private condition: Expression,
-				private thenExpression: Expression,
-				private elseExpression: Expression)
+	constructor(private conditionExpression: Expression = null,
+				private thenExpression: Expression = null,
+				private elseExpression: Expression = null)
 	{}
-		
-	getCondition() {
-		return this.condition;
+	
+	parse(parser: Parser, left: Expression, token: Token) {
+		var thenExpression = parser.parse();
+		parser.expect(TokenKind.SeparatorColon);
+		var elseExpression = parser.parse();
+		return new ConditionalExpression(left, thenExpression, elseExpression);
 	}
 	
-	getThen() {
-		return this.thenExpression;
+	getLeftExpression() {
+		return null;
 	}
 	
-	getElse() {
+	getRightExpression() {
+		return null;
+	}
+	
+	getConditionExpression() {
+		return this.conditionExpression;
+	}
+	
+	getThenExpression() {
+		return this.getThenExpression;
+	}
+	
+	getElseExpression() {
 		return this.elseExpression;
 	}
 	
-	toString() {
-		return  this.condition.toString() + "?" +
-				this.thenExpression.toString() + ":" +
-				this.elseExpression.toString();
+	getPrecedence() {
+		return Precedence.Conditional;
 	}
 	
+	toString() {
+		return this.conditionExpression + "?" + this.thenExpression + ":" + this.elseExpression;
+	}
 }
 
 export = ConditionalExpression;

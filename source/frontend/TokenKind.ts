@@ -6,7 +6,9 @@ enum TokenKind
 	BlockComment,
 	Identifier,
 	PathComponent,				/*	../	*/
+	Datatype,
 	// Keywords
+	Keyword,
 	KeywordOnHeap,
 	KeywordThis,
 	KeywordStaticThis,
@@ -53,6 +55,7 @@ enum TokenKind
 	KeywordFalse,
 	KeywordNull,
 	// Separators
+	Separator,
 	SeparatorColon,					/*	:	*/
 	SeparatorComma,					/*	,	*/
 	SeparatorLeftCurly,				/*	{	*/
@@ -62,6 +65,7 @@ enum TokenKind
 	SeparatorRightBracket,			/*	]	*/
 	SeparatorRightParanthesis,		/*	)	*/
 	// Operators
+	Operator,
 	OperatorDereference,			/*	@	*/
 	OperatorAdd,					/*  + 	*/
 	OperatorSubtract,				/*  - 	*/
