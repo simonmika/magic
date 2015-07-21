@@ -2,19 +2,19 @@ class CharacterReader
 {
 	public static NullCharacter: string = "\0";
 	public static LineFeedCharacter: string = "\n";
-	
+
 	private index: number = 0;
-	
+
 	constructor(private sourceText: string) {}
-	
+
 	peek() {
 		return this.hasNext() ? this.sourceText.charAt(this.index) : CharacterReader.NullCharacter
 	}
-	
+
 	rewind(characters: number) {
 		this.index -= characters;
 	}
-	
+
 	ignoreNext() {
 		this.index++;
 	}
@@ -22,7 +22,7 @@ class CharacterReader
 	hasNext() {
 		return this.index < this.sourceText.length;
 	}
-	
+
 	getNext() {
 		var next: string;
 		if(!this.hasNext())
