@@ -2,21 +2,21 @@ import fs = require("fs");
 import TokenLocation = require("./TokenLocation");
 
 class CharacterReader {
-	public static NullCharacter: string = "\0";
+	private nullChar = "\0";
 	private currentPosition: number = 0;
 	private sourceText: string;
 
 	constructor(private sourceFile: string) {
 		this.sourceText = this.readFile(sourceFile);
 	}
-	get location() {
-		return new TokenLocation(this.sourceFile, 0, 0);
-	}
-	get hasNext() {
-		return this.currentPosition < this.sourceText.length;
-	}
+
+	get nullCharacter() { return this.nullChar; }
+	set nullCharacter(nullChar: string) { this.nullChar = nullChar; }
+	get location() { return new TokenLocation(this.sourceFile, 0, 0); }
+	get hasNext() {	return this.currentPosition < this.sourceText.length; }
+
 	peek() {
-		return this.hasNext ? this.sourceText[this.currentPosition] : CharacterReader.NullCharacter;
+		return this.hasNext ? this.sourceText[this.currentPosition] : this.nullCharacter;
 	}
 	rewind(characters: number = 1) {
 		this.currentPosition -= characters;
@@ -27,13 +27,14 @@ class CharacterReader {
 	getNext() {
 		var next: string;
 		if (!this.hasNext)
-			next = CharacterReader.NullCharacter;
+			next = this.nullCharacter;
 		else {
 			next = this.sourceText.charAt(this.currentPosition);
 			this.currentPosition++;
 		}
 		return next;
 	}
+
 	private readFile(sourceFile: string) {
 		try {
 			return fs.readFileSync(sourceFile, "utf-8");
