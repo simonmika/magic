@@ -1,3 +1,4 @@
+import StringUtils = require("./../utilities/StringUtils");
 import CharacterReader = require("./CharacterReader");
 import Glossary = require("./Glossary");
 import Token = require("./Token");
@@ -192,10 +193,6 @@ class Lexer {
 		var comment = "";
 		while (this.reader.hasNext) {
 			var c = this.reader.getNext();
-			if (c == "\n") {
-				this.line++;
-				this.column = 1;
-			}
 			if (c === "*" && this.reader.peek() === "/") {
 				break;
 			}
@@ -206,11 +203,20 @@ class Lexer {
 	}
 
 	private updateLocation(lastToken: Token) {
-		if (lastToken.kind == TokenKind.WhitespaceLineFeed) {
-			this.line++;
-			this.column = 1;
-		} else {
-			this.column += lastToken.length;
+		switch(lastToken.kind) {
+			case TokenKind.WhitespaceLineFeed:
+				this.line++;
+				this.column = 1;
+				break;
+			case TokenKind.WhitespaceTab:
+				this.column += 4;
+				break;
+			case TokenKind.BlockComment:
+				this.line += StringUtils.subStringCount(lastToken.value, "\n");
+				break;
+			default:
+				this.column += lastToken.length;
+				break;
 		}
 	}
 

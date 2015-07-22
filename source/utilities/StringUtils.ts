@@ -13,6 +13,14 @@ class StringUtils {
 		}
 		return padLeft ? padding + str : str + padding;
 	}
+	static subStringCount(source: string, substr: string) {
+		var i = 0;
+		var count = 0;
+		while ((i = source.indexOf(substr, ++i)) > -1) {
+			count++;
+		}
+		return count;
+	}
 }
 
 export = StringUtils;

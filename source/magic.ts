@@ -4,19 +4,18 @@ import Reader = require("./frontend/CharacterReader");
 import Lexer = require("./frontend/Lexer");
 import Glossary = require("./frontend/Glossary");
 import Dictionary = require("./utilities/Dictionary");
-import Token = require("./frontend/Token");
-import TokenKind = require("./frontend/TokenKind");
 
-try {
-	var glossary = new Glossary();
-	var lexer = new Lexer("./../test/ooc/BuildParams.ooc", glossary);
-	var t: Token;
-	while ((t = lexer.getNextToken()).kind != TokenKind.Eof) {
-		if (glossary.isWhitespace(t.value)) {
-			continue;
-		}
-		console.log(t.toString());
+class Magic {
+
+	private glossary = new Glossary();
+
+	constructor(cmd: string[]) {
+		this.parseCommandLine(cmd);
 	}
-} catch (Error) {
-	console.log("[" + Error.filename + "] -> " + Error.toString());
+
+	parseCommandLine(cmd: string[]) {
+		console.log(cmd[0]);
+	}
 }
+
+var magic = new Magic(process.argv);

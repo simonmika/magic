@@ -9,15 +9,6 @@ class Token {
 	// calculates the total length of the token, including pre/postfix characters.
 	// For example, a line comment is of length '//' + value.
 	get length() {
-		/*var n: number;
-		switch (this._kind) {
-			case TokenKind.LineComment:
-				n = 2; break;
-			case TokenKind.BlockComment:
-				n = 4; break;
-			default:
-				n = 0; break;
-		}*/
 		return this._value.length + this._addToLength;
 	}
 	toString() {
