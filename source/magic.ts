@@ -9,11 +9,14 @@ import TokenKind = require("./frontend/TokenKind");
 
 try {
 	var glossary = new Glossary();
-	var lexer = new Lexer("./../test/ooc/comment.ooc", glossary);
+	var lexer = new Lexer("./../test/ooc/BuildParams.ooc", glossary);
 	var t: Token;
-	while((t = lexer.getNextToken()).kind != TokenKind.Eof) {
+	while ((t = lexer.getNextToken()).kind != TokenKind.Eof) {
+		if (glossary.isWhitespace(t.value)) {
+			continue;
+		}
 		console.log(t.toString());
 	}
-} catch(Error) {
+} catch (Error) {
 	console.log("[" + Error.filename + "] -> " + Error.toString());
 }

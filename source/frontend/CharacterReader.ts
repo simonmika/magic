@@ -2,39 +2,36 @@ import fs = require("fs");
 import TokenLocation = require("./TokenLocation");
 
 class CharacterReader {
-	private nullChar = "\0";
-	private currentPosition: number = 0;
-	private sourceText: string;
+
+	private _sourceText: string;
+	private _eofCharacter = "\0";
+	private _currentPosition = 0;
 
 	constructor(private sourceFile: string) {
-		this.sourceText = this.readFile(sourceFile);
+		this._sourceText = this.readFile(sourceFile);
 	}
 
-	get nullCharacter() { return this.nullChar; }
-	set nullCharacter(nullChar: string) { this.nullChar = nullChar; }
-	get location() { return new TokenLocation(this.sourceFile, 0, 0); }
-	get hasNext() {	return this.currentPosition < this.sourceText.length; }
+	get eofCharacter() { return this._eofCharacter; }
+	set eofCharacter(eofChar: string) { this._eofCharacter = eofChar; }
+	get hasNext() { return this._currentPosition < this._sourceText.length; }
 
 	peek() {
-		return this.hasNext ? this.sourceText[this.currentPosition] : this.nullCharacter;
+		return this.hasNext ? this._sourceText[this._currentPosition] : this.eofCharacter;
 	}
 	rewind(characters: number = 1) {
-		this.currentPosition -= characters;
+		this._currentPosition -= characters;
 	}
 	advance() {
-		this.currentPosition++;
+		this._currentPosition++;
 	}
 	getNext() {
-		var next: string;
-		if (!this.hasNext)
-			next = this.nullCharacter;
-		else {
-			next = this.sourceText.charAt(this.currentPosition);
-			this.currentPosition++;
+		var result = this._eofCharacter;
+		if (this.hasNext) {
+			result = this._sourceText[this._currentPosition];
+			this._currentPosition++;
 		}
-		return next;
+		return result;
 	}
-
 	private readFile(sourceFile: string) {
 		try {
 			return fs.readFileSync(sourceFile, "utf-8");

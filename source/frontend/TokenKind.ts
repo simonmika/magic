@@ -54,7 +54,9 @@ enum TokenKind {
 	KeywordNull,
 	// Separators
 	Separator,
+	SeparatorDot,					/*	.	*/
 	SeparatorColon,					/*	:	*/
+	SeparatorSemicolon,				/*	;	*/
 	SeparatorComma,					/*	,	*/
 	SeparatorLeftCurly,				/*	{	*/
 	SeparatorLeftBracket,			/*	[	*/
@@ -65,8 +67,8 @@ enum TokenKind {
 	// Operators
 	Operator,
 	OperatorDereference,			/*	@	*/
-	OperatorAdd,					/*  + 	*/
-	OperatorSubtract,				/*  - 	*/
+	OperatorPlus,					/*  + 	*/
+	OperatorMinus,					/*  - 	*/
 	OperatorMultiply,				/*  * 	*/
 	OperatorDivide,					/*  / 	*/
 	OperatorExponent,				/*	**	*/
@@ -104,12 +106,17 @@ enum TokenKind {
 	OperatorConditional,			/*	?	*/
 	OperatorRange,					/*	..	*/
 	OperatorReturnType,				/*	->	*/
+	OperatorDoubleArrow,			/*	=>	*/
 	// Literals
 	LiteralNumber,
 	LiteralFloat,
 	LiteralInteger,
+	LiteralChar,
 	LiteralString,
 	LiteralBoolean,
+	LiteralBinary,
+	LiteralOctal,
+	LiteralHexadecimal,
 	// Whitespaces
 	WhitespaceNull,
 	WhitespaceTab,
