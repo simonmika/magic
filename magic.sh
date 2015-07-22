@@ -19,4 +19,5 @@ else
 	if [[ ! -d "build/." ]]; then
 		./build_magic.sh
 	fi
+	node build/magic.js $@
 fi
