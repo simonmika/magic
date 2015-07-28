@@ -6,11 +6,8 @@ Very, very early alpha stage.
 * The analyzer must work with a proper parse tree instead of a list of tokens, which will allow for more complete checks.
 
 #requirements
-* node.js
-http://nodejs.org/
-
-* Typescript compiler
-http://www.typescriptlang.org/
+* [node.js](http://nodejs.org/)
+* [Typescript compiler](http://www.typescriptlang.org/)
 
 #shell scripts
 * __build_magic.sh__ builds magic
@@ -19,6 +16,9 @@ http://www.typescriptlang.org/
 
 #usage
 ./magic.sh [TARGET_DIRECTORY]
-Example: ./magic.sh ~/projects/my_awesome_project/source
+Example:
+```
+./magic.sh ~/projects/my_awesome_project/source
+```
 
 # credits
