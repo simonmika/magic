@@ -1,6 +1,6 @@
 #magic
 
-Code analyzer for [ooc](ooc-lang.org)
+Code analyzer for [ooc](http://ooc-lang.org)
 
 #very much readme
 Very, very early alpha stage.
