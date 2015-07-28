@@ -1,4 +1,4 @@
-# magic
+#magic
 
 Very, very early alpha stage.
 * The lexer must be improved and streamlined.
@@ -12,11 +12,12 @@ http://nodejs.org/
 * Typescript compiler
 http://www.typescriptlang.org/
 
-# shell scripts
+#shell scripts
 * __build_magic.sh__ builds magic
 * __clean_magic.sh__ removes the compiled files
 * __magic.sh__ magic app entry point
 
-foobar
+#usage
+./magic.sh [TARGET_DIRECTORY]
 
 # credits
