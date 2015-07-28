@@ -9,7 +9,6 @@ Very, very early alpha stage.
 * The analyzer will work with a proper parse tree, once implemented.
 This will enable more complex checks. Right now, a limited set of checks has been hacked together using the
 token list generated from each file.
-* Certain parts of the code need refactoring.
 * Command line arguments are not implemented.
 
 #requirements
