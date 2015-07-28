@@ -19,5 +19,6 @@ http://www.typescriptlang.org/
 
 #usage
 ./magic.sh [TARGET_DIRECTORY]
+Example: ./magic.sh ~/projects/my_awesome_project/source
 
 # credits
