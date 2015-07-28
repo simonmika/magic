@@ -14,7 +14,7 @@ class SeparatorSpacingRule implements Rule {
 				case TokenKind.SeparatorComma:
 					if(t.kind != TokenKind.WhitespaceSpace && t.kind != TokenKind.WhitespaceLineFeed) {
 						report.addViolation(new Violation(t.location,
-							"missing space after punctuation '" + previous.value + "'", RuleKind.Separator));
+							"missing space after separator '" + previous.value + "'", RuleKind.Separator));
 					}
 					break;
 			}

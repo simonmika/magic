@@ -8,7 +8,6 @@ import RuleKind = require("./../RuleKind");
 class KeywordSpacingRule implements Rule {
 	constructor() { }
 	run(tokens: Array<Token>, report: Report) {
-		var linefeed = false;
 		for (var i = 0; i < tokens.length; i++) {
 			var t = tokens[i];
 			if (TokenKind[t.kind].indexOf("Keyword") > -1) {

@@ -27,6 +27,7 @@ class Lexer {
 		while ((t = this.getNextToken()).kind != TokenKind.Eof) {
 			list.push(t);
 		}
+		list.push(t);
 		return list;
 	}
 

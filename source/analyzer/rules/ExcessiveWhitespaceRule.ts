@@ -8,21 +8,17 @@ import RuleKind = require("./../RuleKind");
 class ExcessiveWhitespaceRule implements Rule {
 	constructor() { }
 	run(tokens: Array<Token>, report: Report) {
-		var previous = Token.empty;
 		var offset = 0;
 		var linefeeds = 0;
 		var spaces = 0;
 		for (var i = 0; i < tokens.length; i++) {
-			while (TokenKind[tokens[i].kind].indexOf("Whitespace") > -1) {
+			while (tokens[i].kind != TokenKind.Eof && TokenKind[tokens[i].kind].indexOf("Whitespace") > -1) {
 				if (tokens[i].kind == TokenKind.WhitespaceLineFeed) {
 					linefeeds++;
 				} else if (tokens[i].kind == TokenKind.WhitespaceSpace) {
 					spaces++;
 				}
 				i++;
-				if (tokens.length <= i) {
-					break;
-				}
 			}
 			if ((--linefeeds) >= 2) {
 				report.addViolation(new Violation(tokens[i - 1].location,
@@ -37,7 +33,6 @@ class ExcessiveWhitespaceRule implements Rule {
 			}
 			linefeeds = 0;
 			spaces = 0;
-			previous = tokens[i];
 		}
 	}
 }

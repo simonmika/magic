@@ -15,8 +15,8 @@ class OperatorSpacingRule implements Rule {
 			t = tokens[i];
 			if (TokenKind[t.kind].indexOf("Operator") > -1) {
 				switch (t.kind) {
-					// Leave the following operators alone, as they mean
-					// different things depending on the context, or are problematic
+					// Leave the following operators alone, as they could mean
+					// different things depending on the context, or are too much of a hassle
 					// to work with when reading a token list instead of a parse tree.
 					case TokenKind.KeywordOperator:
 					case TokenKind.OperatorDereference:
