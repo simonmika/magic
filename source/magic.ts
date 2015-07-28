@@ -78,7 +78,7 @@ class Magic {
 		reports.forEach(r => {
 			console.log("\n" + r.violations[0].location.filename);
 			r.violations.forEach(violation => {
-				console.log("\t" + StringUtils.padRight(violation.location.toString(), ".", 14) + violation.message);
+				console.log("    " + StringUtils.padRight(violation.location.toString(), ".", 14) + violation.message);
 			});
 		});
 

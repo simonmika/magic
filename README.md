@@ -22,6 +22,11 @@ Known to work on Linux, status on other platforms unknown.
 ```
 ./magic.sh ~/projects/my_awesome_project/source
 ```
-The target directory will be processed recursively.
+The target directory is processed recursively.
+The analyzer output (if any) is currently directed to the console. For projects
+with a lot of violations, redirecting to a file is recommended.
+```
+./magic.sh ~/projects/my_awesome_project/source > violations.txt
+```
 
 # credits

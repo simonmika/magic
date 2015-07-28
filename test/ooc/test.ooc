@@ -1,2 +1,5 @@
-**=
-*-
+moobar
+
+
+foo   bar
+foobar
