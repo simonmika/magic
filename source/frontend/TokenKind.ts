@@ -5,6 +5,8 @@ enum TokenKind {
 	BlockComment,
 	Identifier,
 	Datatype,
+	Import,
+	LineBreak,
 	// Keywords
 	Keyword,
 	KeywordOnHeap,
@@ -52,6 +54,7 @@ enum TokenKind {
 	KeywordTrue,
 	KeywordFalse,
 	KeywordNull,
+	KeywordNew,
 	// Separators
 	Separator,
 	SeparatorDot,					/*	.	*/

@@ -16,7 +16,9 @@ class StringUtils {
 	static subStringCount(source: string, substr: string) {
 		var i = 0;
 		var count = 0;
-		while ((i = source.indexOf(substr, ++i)) > -1) {
+		var index = 0;
+		while ((i = source.indexOf(substr, index)) > -1) {
+			index = i + substr.length;
 			count++;
 		}
 		return count;

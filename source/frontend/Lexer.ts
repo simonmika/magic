@@ -11,9 +11,23 @@ class Lexer {
 	private column = 1;
 
 	private reader: CharacterReader;
+	// Currently, we want to treat the entire use/import/include line as a single token,
+	// minus the actual keyword. So, use collections/generic == [KeywordUse] [Import]
+	// This quick-fix should be removed once the analyzer works with a proper parse tree rather
+	// than a list of tokens.
+	private nextIsImport = false;
 
 	constructor(private sourceFile: string, private glossary: Glossary) {
 		this.reader = new CharacterReader(sourceFile);
+	}
+
+	getTokenList() {
+		var t: Token;
+		var list = [];
+		while ((t = this.getNextToken()).kind != TokenKind.Eof) {
+			list.push(t);
+		}
+		return list;
 	}
 
 	getNextToken() {
@@ -24,6 +38,12 @@ class Lexer {
 			// Whitespace
 			if (this.isWhitespace(next)) {
 				result = new Token(this.location, this.glossary.getWhitespaceKind(next), next);
+			}
+			else if (next == "\\") {
+				result = new Token(this.location, TokenKind.LineBreak, next);
+			}
+			else if (this.nextIsImport) {
+				result = this.handleImport(next);
 			}
 			// Comment
 			else if (next === "/" && (peek === "/" || peek === "*")) {
@@ -51,14 +71,22 @@ class Lexer {
 				result = this.handleOperatorOrSeparator(next);
 			}
 			else {
-				// throw error here
-				result = new Token(this.location, TokenKind.Unknown, next);
+				throw new Error("-> [Lexer] unable to handle '" + next + "' (peek = '" + peek + "')");
 			}
 		} else {
 			result = new Token(this.location, TokenKind.Eof, "\0");
 		}
 		this.updateLocation(result);
 		return result;
+	}
+
+	private handleImport(firstChar: string) {
+		var result = firstChar;
+		while (this.reader.hasNext && this.reader.peek() !== "\n") {
+			result += this.reader.getNext();
+		}
+		this.nextIsImport = false;
+		return new Token(this.location, TokenKind.Import, result);
 	}
 
 	private handleStringLiteral() {
@@ -137,14 +165,24 @@ class Lexer {
 	private handleOperator(firstChar: string) {
 		var op = firstChar;
 		var peek: string;
+		var result: Token;
 		while (this.reader.hasNext) {
 			peek = this.reader.peek();
-			if (this.isValidIdentifierCharacter(peek) || this.isSeparator(peek) || this.isWhitespace(peek)) {
+			if (this.isValidIdentifierCharacter(peek) || this.isSeparator(peek) || this.isWhitespace(peek) || peek === "\"") {
 				break;
 			}
 			op += this.reader.getNext();
 		}
-		return new Token(this.location, this.glossary.getOperatorKind(op), op);
+		if(this.glossary.isOperator(op)) {
+			result = new Token(this.location, this.glossary.getOperatorKind(op), op);
+		} else {
+			// HACK: This is for the cases where two operators are next to each other,
+			// such as >* or *- etc. This needs a more robust solution ASAP.
+			op = op.slice(0, op.length - 1);
+			result = new Token(this.location, this.glossary.getOperatorKind(op), op);
+			this.reader.rewind();
+		}
+		return result;
 	}
 
 	private handleOperatorOrSeparator(firstChar: string) {
@@ -154,9 +192,13 @@ class Lexer {
 		// check manually for these here. We also check for the range operator "..".
 		if (this.isOperator(firstChar)) {
 			result = this.handleOperator(firstChar);
-		} else if ((firstChar === ":" && (peek === ":" || peek === "=")) || (firstChar === "." && peek === ".")) {
+		} else if (firstChar === ":" && (peek === ":" || peek === "=")) {
 			result = this.handleOperator(firstChar + this.reader.getNext());
-		} else {
+		} else if (firstChar === "." && peek === ".") {
+			result = new Token(this.location, this.glossary.getOperatorKind(".."), "..");
+			this.reader.advance()
+		}
+		else {
 			result = new Token(this.location, this.glossary.getSeparatorKind(firstChar), firstChar);
 		}
 		return result;
@@ -169,8 +211,21 @@ class Lexer {
 			word += this.reader.getNext();
 		}
 		if (this.isKeyword(word)) {
-			// Should we demote true|false to a boolean literal here?
-			result = new Token(this.location, this.glossary.getKeywordKind(word), word);
+			var kind = this.glossary.getKeywordKind(word);
+
+			switch (kind) {
+				case TokenKind.KeywordTrue:
+				case TokenKind.KeywordFalse:
+					result = new Token(this.location, TokenKind.LiteralBoolean, word);
+					break;
+				case TokenKind.KeywordUse:
+				case TokenKind.KeywordImport:
+				case TokenKind.KeywordInclude:
+					this.nextIsImport = true;
+				default:
+					result = new Token(this.location, kind, word);
+					break;
+			}
 		} else {
 			result = new Token(this.location, TokenKind.Identifier, word);
 		}
@@ -203,12 +258,13 @@ class Lexer {
 	}
 
 	private updateLocation(lastToken: Token) {
-		switch(lastToken.kind) {
+		switch (lastToken.kind) {
 			case TokenKind.WhitespaceLineFeed:
 				this.line++;
 				this.column = 1;
 				break;
 			case TokenKind.WhitespaceTab:
+				// TODO: Make tab width a setting and not hard-coded
 				this.column += 4;
 				break;
 			case TokenKind.BlockComment:

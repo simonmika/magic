@@ -1,6 +1,8 @@
 import Dictionary = require("./../utilities/Dictionary");
 import TokenKind = require("./TokenKind");
-
+//
+// Glossary over ooc operators, keywords, separators and valid whitespace.
+//
 class Glossary {
 
 	private whitespaces = new Dictionary<string, TokenKind>();
@@ -37,7 +39,7 @@ class Glossary {
 	}
 	private getTokenKind(dictionary: Dictionary<string, TokenKind>, key: string, dict: string) {
 		if (!dictionary.containsKey(key)) {
-			throw new Error("-> Glossary [The specified key '" + key + "' was not found in " + dict + " glossary]");
+			throw new Error("-> [Glossary] the specified key '" + key + "' was not found in " + dict + " glossary");
 		}
 		return dictionary.getValue(key);
 	}
@@ -143,6 +145,7 @@ class Glossary {
 		this.keywords.setValue("true", TokenKind.KeywordTrue);
 		this.keywords.setValue("false", TokenKind.KeywordFalse);
 		this.keywords.setValue("null", TokenKind.KeywordNull);
+		this.keywords.setValue("new", TokenKind.KeywordNew);
 	}
 	private initializeSeparators() {
 		this.separators.setValue(".", TokenKind.SeparatorDot);

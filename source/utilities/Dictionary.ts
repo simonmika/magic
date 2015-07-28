@@ -18,7 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// Taken from: https://github.com/basarat/typescript-collections
+// This is a modified version, the original can be found here:
+// 	https://github.com/basarat/typescript-collections
 
 interface IDictionaryPair<K, V> {
 	key: K;
