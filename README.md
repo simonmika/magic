@@ -17,6 +17,8 @@ Very, very early alpha stage.
 #usage
 ```
 ./magic.sh [TARGET DIRECTORY]
+```
+```
 ./magic.sh ~/projects/my_awesome_project/source
 ```
 
