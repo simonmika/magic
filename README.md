@@ -15,9 +15,8 @@ Very, very early alpha stage.
 * __magic.sh__ magic app entry point
 
 #usage
-./magic.sh [TARGET_DIRECTORY]
-Example:
 ```
+./magic.sh [TARGET DIRECTORY]
 ./magic.sh ~/projects/my_awesome_project/source
 ```
 
