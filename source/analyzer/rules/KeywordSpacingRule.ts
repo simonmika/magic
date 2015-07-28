@@ -3,6 +3,7 @@ import Token = require("./../../frontend/Token");
 import TokenKind = require("./../../frontend/TokenKind");
 import Report = require("./../Report");
 import Violation = require("./../Violation");
+import RuleKind = require("./../RuleKind");
 
 class KeywordSpacingRule implements Rule {
 	constructor() { }
@@ -42,7 +43,7 @@ class KeywordSpacingRule implements Rule {
 							continue;
 						}
 						if (right.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceTab && right.kind != TokenKind.WhitespaceLineFeed) {
-							report.addViolation(new Violation(t.location, "missing space after keyword '" + t.value + "'", "KeywordSpacing"));
+							report.addViolation(new Violation(t.location, "missing space after keyword '" + t.value + "'", RuleKind.Keyword));
 						}
 						break;
 				}

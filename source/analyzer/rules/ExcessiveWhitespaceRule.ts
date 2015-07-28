@@ -3,6 +3,7 @@ import Token = require("./../../frontend/Token");
 import TokenKind = require("./../../frontend/TokenKind");
 import Report = require("./../Report");
 import Violation = require("./../Violation");
+import RuleKind = require("./../RuleKind");
 
 class ExcessiveWhitespaceRule implements Rule {
 	constructor() { }
@@ -24,14 +25,15 @@ class ExcessiveWhitespaceRule implements Rule {
 				}
 			}
 			if ((--linefeeds) >= 2) {
-				report.addViolation(new Violation(tokens[i - 1].location, "too many empty lines: " + linefeeds, "ExcessiveWhitespace"));
+				report.addViolation(new Violation(tokens[i - 1].location,
+					"too many empty lines: " + linefeeds, RuleKind.Whitespace));
 			}
 			if (spaces >= 2) {
 				var message = "too many consecutive space characters: " + spaces;
 				if(spaces > 3) {
 					message += " (did you mean to tab here?)"
 				}
-				report.addViolation(new Violation(tokens[i].location, message, "ExcessiveWhitespace"));
+				report.addViolation(new Violation(tokens[i].location, message, RuleKind.Whitespace));
 			}
 			linefeeds = 0;
 			spaces = 0;

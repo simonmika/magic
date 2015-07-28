@@ -3,6 +3,7 @@ import Token = require("./../../frontend/Token");
 import TokenKind = require("./../../frontend/TokenKind");
 import Report = require("./../Report");
 import Violation = require("./../Violation");
+import RuleKind = require("./../RuleKind");
 
 class OperatorSpacingRule implements Rule {
 	constructor() { }
@@ -14,6 +15,9 @@ class OperatorSpacingRule implements Rule {
 			t = tokens[i];
 			if (TokenKind[t.kind].indexOf("Operator") > -1) {
 				switch (t.kind) {
+					// Leave the following operators alone, as they mean
+					// different things depending on the context, or are problematic
+					// to work with when reading a token list instead of a parse tree.
 					case TokenKind.KeywordOperator:
 					case TokenKind.OperatorDereference:
 					case TokenKind.OperatorLessThan:
@@ -28,15 +32,16 @@ class OperatorSpacingRule implements Rule {
 					case TokenKind.OperatorMultiply:
 					case TokenKind.OperatorBitwiseAnd:
 					case TokenKind.OperatorBitwiseOr:
+					case TokenKind.OperatorLogicalOr:
 						break;
 					default:
 						var left = previous;
 						var right = tokens[i + 1];
 						if(left.kind != TokenKind.WhitespaceSpace) {
-							report.addViolation(new Violation(t.location, "missing space before operator '" + t.value + "'", "OperatorSpacing"));
+							report.addViolation(new Violation(t.location, "missing space before operator '" + t.value + "'", RuleKind.Operator));
 						}
 						if(right.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
-							report.addViolation(new Violation(right.location, "missing space after operator '" + t.value + "'", "OperatorSpacing"));
+							report.addViolation(new Violation(right.location, "missing space after operator '" + t.value + "'", RuleKind.Operator));
 						}
 						break;
 				}

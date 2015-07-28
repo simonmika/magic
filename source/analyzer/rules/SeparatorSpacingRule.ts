@@ -3,8 +3,9 @@ import Token = require("./../../frontend/Token");
 import TokenKind = require("./../../frontend/TokenKind");
 import Report = require("./../Report");
 import Violation = require("./../Violation");
+import RuleKind = require("./../RuleKind");
 
-class PunctuationSpacingRule implements Rule {
+class SeparatorSpacingRule implements Rule {
 	constructor() { }
 	run(tokens: Array<Token>, report: Report) {
 		var previous = Token.empty;
@@ -12,7 +13,8 @@ class PunctuationSpacingRule implements Rule {
 			switch(previous.kind) {
 				case TokenKind.SeparatorComma:
 					if(t.kind != TokenKind.WhitespaceSpace && t.kind != TokenKind.WhitespaceLineFeed) {
-						report.addViolation(new Violation(t.location, "missing space after punctuation '" + previous.value + "'", "PunctuationSpacing"));
+						report.addViolation(new Violation(t.location,
+							"missing space after punctuation '" + previous.value + "'", RuleKind.Separator));
 					}
 					break;
 			}
@@ -21,4 +23,4 @@ class PunctuationSpacingRule implements Rule {
 	}
 }
 
-export = PunctuationSpacingRule;
+export = SeparatorSpacingRule;

@@ -13,7 +13,7 @@ import ExcessiveWhitespaceRule = require("./analyzer/rules/ExcessiveWhitespaceRu
 import LineLengthRule = require("./analyzer/rules/LineLengthRule");
 import KeywordSpacingRule = require("./analyzer/rules/KeywordSpacingRule");
 import OperatorSpacingRule = require("./analyzer/rules/OperatorSpacingRule");
-import PunctuationSpacingRule = require("./analyzer/rules/PunctuationSpacingRule");
+import SeparatorSpacingRule = require("./analyzer/rules/SeparatorSpacingRule");
 
 
 class Magic {
@@ -55,11 +55,12 @@ class Magic {
 		}
 
 		var rules = [];
+
 		rules.push(new ExcessiveWhitespaceRule());
 		rules.push(new LineLengthRule(160));
 		rules.push(new KeywordSpacingRule());
 		rules.push(new OperatorSpacingRule());
-		rules.push(new PunctuationSpacingRule());
+		rules.push(new SeparatorSpacingRule());
 
 		this.getFiles(folder).forEach(file => {
 			this.analyze(folder, file, rules);
@@ -78,7 +79,7 @@ class Magic {
 		reports.forEach(r => {
 			console.log("\n" + r.violations[0].location.filename);
 			r.violations.forEach(violation => {
-				console.log("    " + StringUtils.padRight(violation.location.toString(), ".", 14) + violation.message);
+				console.log("  " + StringUtils.padRight(violation.location.toString(), ".", 14) + violation.message);
 			});
 		});
 

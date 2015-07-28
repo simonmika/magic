@@ -1,12 +1,19 @@
 #magic
 
+Code analyzer for [ooc](ooc-lang.org)
+
+#very much readme
 Very, very early alpha stage.
 * The lexer must be improved and streamlined.
 * A parse tree is yet to be implemented.
-* The analyzer must work with a proper parse tree instead of a list of tokens, which will allow for more complete checks.
+* The analyzer will work with a proper parse tree, once implemented.
+This will enable more complex checks. Right now, a limited set of checks has been hacked together using the
+token list generated from each file.
+* Certain parts of the code need refactoring.
+* Command line arguments are not implemented.
 
 #requirements
-Known to work on Linux, status on other platforms unknown.
+Known to work on Linux, status on other platforms is unknown.
 * [node.js](http://nodejs.org/)
 * [Typescript compiler](http://www.typescriptlang.org/)
 
@@ -22,8 +29,8 @@ Known to work on Linux, status on other platforms unknown.
 ```
 ./magic.sh ~/projects/my_awesome_project/source
 ```
-The target directory is processed recursively.
-The analyzer output (if any) is currently directed to the console. For projects
+* The target directory is processed recursively.
+* The analyzer output (if any) is currently directed to the console. For projects
 with a lot of violations, redirecting to a file is recommended.
 ```
 ./magic.sh ~/projects/my_awesome_project/source > violations.txt
