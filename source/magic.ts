@@ -39,9 +39,13 @@ class Magic {
 					}
 				}
 			} else {
-				if (file.lastIndexOf(".ooc") > -1) {
+				// ignore files suchs as 'foo.ooc~'
+				if (file.slice(file.length - 4) === ".ooc") {
 					sourceFiles.push(fs.realpathSync(folder + "/" + file));
 				}
+				/*if (file.lastIndexOf(".ooc") > -1) {
+					sourceFiles.push(fs.realpathSync(folder + "/" + file));
+				}*/
 			}
 		});
 		return sourceFiles;
