@@ -48,11 +48,6 @@ class Magic {
 	}
 
 	parseCommandLine(cmd: string[]) {
-		var folder = cmd[0];
-
-		if (folder.charAt(folder.length - 1) === "/") {
-			folder = folder.slice(0, folder.length - 1);
-		}
 
 		var rules = [];
 
@@ -62,9 +57,17 @@ class Magic {
 		rules.push(new OperatorSpacingRule());
 		rules.push(new SeparatorSpacingRule());
 
-		this.getFiles(folder).forEach(file => {
-			this.analyze(folder, file, rules);
-		});
+		if (cmd[0] === "-f") {
+			this.analyze(".", cmd[1], rules);
+		} else {
+			var folder = cmd[0];
+			if (folder.charAt(folder.length - 1) === "/") {
+				folder = folder.slice(0, folder.length - 1);
+			}
+			this.getFiles(folder).forEach(file => {
+				this.analyze(folder, file, rules);
+			});
+		}
 	}
 
 	analyze(baseDir: string, file: string, rules: Rule[]) {
@@ -78,11 +81,12 @@ class Magic {
 		var path: string;
 		reports.forEach(r => {
 			console.log("\n" + r.violations[0].location.filename);
+			console.log(StringUtils.padRight("", "-", r.violations[0].location.filename.length));
 			r.violations.forEach(violation => {
 				console.log("  " + StringUtils.padRight(violation.location.toString(), ".", 14) + violation.message);
 			});
 		});
-
+		console.log();
 	}
 }
 
