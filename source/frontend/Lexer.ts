@@ -202,7 +202,7 @@ class Lexer {
 		} else if (firstChar === ":" && (peek === ":" || peek === "=")) {
 			result = this.handleOperator(firstChar + this.reader.getNext());
 		} else if (firstChar === "." && peek === ".") {
-			result = new Token(this.location, this.glossary.getOperatorKind(".."), "..");
+			result = new Token(this.location, TokenKind.OperatorRange, "..");
 			this.reader.advance()
 		}
 		else {
