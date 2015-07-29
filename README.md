@@ -17,9 +17,9 @@ Known to work on Linux, status on other platforms is unknown.
 * [Typescript compiler](http://www.typescriptlang.org/)
 
 #shell scripts
-* __build_magic.sh__ builds magic and stuffs the output in ./build
-* __clean_magic.sh__ removes the compiled files
-* __magic.sh__ magic app entry point
+* ```__build_magic.sh__``` builds magic and stuffs the output in ./build
+* ```__clean_magic.sh__``` removes the compiled files
+* ```__magic.sh__``` magic app entry point
 
 #usage
 ```
