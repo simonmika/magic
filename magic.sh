@@ -11,12 +11,12 @@ if [[ $# -eq 0 || $1 == "-h" ]]; then
 	echo "                       ./magic.sh -A file1 file2 file3..."
 	echo "                       ./magic.sh -A target_dir"
 	echo "  -d  [DIRECTORY]  target directory"
-	echo "  -f  [FILE]       target file"
+	echo "  -f  [FILE]       targets a single file"
 	echo "  -o  [DIRECTORY]  output directory, if not specified, output will be sent to:"
 	echo "                       $PWD/magic_out"
 	echo "  -r               process directories recursively (requires -d)"
 	echo ""
-	echo "NOTE: THESE ARE NOT IMPLEMENTED YET!"
+	echo "NOTE: THESE ARE NOT IMPLEMENTED YET! (except for -f)"
 else
 	if [[ ! -d "build/." ]]; then
 		./build_magic.sh

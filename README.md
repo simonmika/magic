@@ -9,7 +9,8 @@ Very, very early alpha stage.
 * The analyzer will work with a proper parse tree, once implemented.
 This will enable more complex checks. Right now, a limited set of checks has been hacked together using the
 token list generated from each file.
-* Command line arguments are not implemented (except for -f)
+* Command line arguments are not implemented (except for -f).
+* A tab width of 4 is assumed.
 
 #requirements
 Known to work on Linux, status on other platforms is unknown.

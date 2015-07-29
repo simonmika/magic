@@ -274,6 +274,9 @@ class Lexer {
 				// TODO: Make tab width a setting and not hard-coded
 				this.column += 4;
 				break;
+			case TokenKind.LiteralString:
+				this.line += StringUtils.subStringCount(lastToken.value, "\n");
+				break;
 			case TokenKind.BlockComment:
 				this.line += StringUtils.subStringCount(lastToken.value, "\n");
 				break;
