@@ -34,7 +34,7 @@ with a lot of violations, redirecting to a file is recommended.
 ```
 ./magic.sh ~/projects/my_awesome_project/source > violations.txt
 ```
-If you want to run the analyzer on a single file, use __-r__
+If you want to run the analyzer on a single file, use __-f__
 ```
 ./magic.sh -f ~/projects/my_awesome_project/source/math/Quaternion.ooc
 ```
