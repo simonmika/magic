@@ -12,7 +12,7 @@ class Lexer {
 
 	private reader: CharacterReader;
 	// Currently, we want to treat the entire use/import/include line as a single token,
-	// minus the actual keyword. So, use collections/generic == [KeywordUse] [Import]
+	// minus the actual keyword. So, 'use collections/generic' == [KeywordUse][SPACE][Import]
 	// This quick-fix should be removed once the analyzer works with a proper parse tree rather
 	// than a list of tokens.
 	private nextIsImport = false;
@@ -31,7 +31,7 @@ class Lexer {
 		return list;
 	}
 
-	getNextToken() {
+	private getNextToken() {
 		var result: Token = null;
 		if (this.reader.hasNext) {
 			var next = this.reader.getNext();
