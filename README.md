@@ -13,8 +13,9 @@ token list generated from each file.
 
 #requirements
 Known to work on Linux, status on other platforms is unknown.
-* [node.js](http://nodejs.org/)
-* [Typescript compiler](http://www.typescriptlang.org/)
+Make sure you have a reasonably new version of the following:
+* 1: [node.js](http://nodejs.org/)
+* 2: [Typescript compiler](http://www.typescriptlang.org/)
 
 #shell scripts
 * ```build_magic.sh``` builds magic and stuffs the output in ./build

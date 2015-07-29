@@ -92,8 +92,14 @@ class Lexer {
 
 	private handleStringLiteral() {
 		var literal: string = "";
+		var next = "";
 		while (this.reader.hasNext && this.reader.peek() !== "\"") {
-			literal += this.reader.getNext();
+			next = this.reader.getNext();
+			if(next === "\\") {
+				literal += next;
+				next = this.reader.getNext();
+			}
+			literal += next;
 		}
 		this.reader.advance();
 		return new Token(this.location, TokenKind.LiteralString, literal, 2);

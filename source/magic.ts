@@ -14,7 +14,7 @@ import LineLengthRule = require("./analyzer/rules/LineLengthRule");
 import KeywordSpacingRule = require("./analyzer/rules/KeywordSpacingRule");
 import OperatorSpacingRule = require("./analyzer/rules/OperatorSpacingRule");
 import SeparatorSpacingRule = require("./analyzer/rules/SeparatorSpacingRule");
-
+import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule");
 
 class Magic {
 
@@ -56,6 +56,7 @@ class Magic {
 		rules.push(new KeywordSpacingRule());
 		rules.push(new OperatorSpacingRule());
 		rules.push(new SeparatorSpacingRule());
+		//rules.push(new RedundantTypeInfoRule());
 
 		if (cmd[0] === "-f") {
 			this.analyze(".", cmd[1], rules);
@@ -85,8 +86,9 @@ class Magic {
 			r.violations.forEach(violation => {
 				console.log("  " + StringUtils.padRight(violation.location.toString(), ".", 14) + violation.message);
 			});
+			console.log();
 		});
-		console.log();
+
 	}
 }
 
