@@ -39,13 +39,10 @@ class Magic {
 					}
 				}
 			} else {
-				// ignore files suchs as 'foo.ooc~'
+				// ignores files such as 'foo.ooc~'
 				if (file.slice(file.length - 4) === ".ooc") {
 					sourceFiles.push(fs.realpathSync(folder + "/" + file));
 				}
-				/*if (file.lastIndexOf(".ooc") > -1) {
-					sourceFiles.push(fs.realpathSync(folder + "/" + file));
-				}*/
 			}
 		});
 		return sourceFiles;
@@ -60,7 +57,7 @@ class Magic {
 		rules.push(new KeywordSpacingRule());
 		rules.push(new OperatorSpacingRule());
 		rules.push(new SeparatorSpacingRule());
-		//rules.push(new RedundantTypeInfoRule());
+		rules.push(new RedundantTypeInfoRule());
 
 		if (cmd[0] === "-f") {
 			this.analyze(".", cmd[1], rules);

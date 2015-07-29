@@ -18,6 +18,29 @@ Make sure you have a reasonably new version of the following:
 * 1: [node.js](http://nodejs.org/)
 * 2: [Typescript compiler](http://www.typescriptlang.org/)
 
+##If you don't have node.js and the Typescript compiler
+The version provided by aptitude are outdated, so do not install via apt-get.
+Instead, download and unpack node.js into any folder, then follow the steps outlined below.
+```
+cd NODE_FOLDER
+./configure
+make
+make install
+```
+You may have to restart the terminal. Now that we've installed node.js, it's time to update
+npm (node package manager) and then install the Typescript compiler.
+```
+sudo npm install -g npm
+```
+```
+sudo npm install -g typescript
+```
+Now verify that Typescript has been installed:
+```
+tsc --v
+```
+It should give you version 1.5.3 or greater.
+
 #shell scripts
 * ```build_magic.sh``` builds magic and stuffs the output in ./build
 * ```clean_magic.sh``` removes the compiled files
