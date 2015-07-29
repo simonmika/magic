@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": false,
+        "declaration": false,
+        "target":  "ES5",
+        "module":  "commonjs",
+        "outDir":  "../build/",
+        "rootDir": ".",
+        "sourceMap": false,
+        "removeComments": true
+    }
+}
