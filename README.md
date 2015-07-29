@@ -19,7 +19,7 @@ Make sure you have a reasonably new version of the following:
 * 2: [Typescript compiler](http://www.typescriptlang.org/)
 
 ##If you don't have node.js and the Typescript compiler
-The version provided by aptitude are outdated, so do not install via apt-get.
+The node.js version provided by aptitude is outdated, so do not install via apt-get.
 Instead, download and unpack node.js into any folder, then follow the steps outlined below.
 ```
 cd NODE_FOLDER
@@ -48,6 +48,12 @@ It should give you version 1.5.3 or greater.
 
 #usage
 Build the project: ```./build_magic.sh```
+You can safely ignore these errors:
+```
+typings/node/node.d.ts(212,21): error TS2304: Cannot find name 'Map'.
+typings/node/node.d.ts(221,21): error TS2304: Cannot find name 'Set'.
+typings/node/node.d.ts(231,25): error TS2304: Cannot find name 'WeakMap'.
+```
 
 ```
 ./magic.sh [TARGET DIRECTORY]
