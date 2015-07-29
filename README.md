@@ -17,11 +17,13 @@ Known to work on Linux, status on other platforms is unknown.
 * [Typescript compiler](http://www.typescriptlang.org/)
 
 #shell scripts
-* ```__build_magic.sh__``` builds magic and stuffs the output in ./build
-* ```__clean_magic.sh__``` removes the compiled files
-* ```__magic.sh__``` magic app entry point
+* ```build_magic.sh``` builds magic and stuffs the output in ./build
+* ```clean_magic.sh``` removes the compiled files
+* ```magic.sh``` magic app entry point
 
 #usage
+Build the project: ```./build_magic.sh```
+
 ```
 ./magic.sh [TARGET DIRECTORY]
 ```
