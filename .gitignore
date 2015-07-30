@@ -1,3 +1,4 @@
 build/
 test/build/
-out.txt
+node_sources/
+release/

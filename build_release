@@ -1,0 +1,8 @@
+#!/bin/bash
+if [[ -d "build/." ]]; then
+	# Ensure a fresh build
+	./build_magic -C
+fi
+echo "Building release binary..."
+nexe -i ./build/magic.js -o release/magic -t node_sources
+echo "Done."

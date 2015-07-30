@@ -13,10 +13,12 @@ token list generated from each file.
 * A tab width of 4 is assumed.
 
 #requirements
-Known to work on Linux, status on other platforms is unknown.
-Make sure you have a reasonably new version of the following:
+Known to work on Linux (x64), status on other platforms is unknown at this time.
+__If you don't want to use the standalone release binary__, make sure you have a reasonably
+new version of the following or follow the instruction in the next section.
 * 1: [node.js](http://nodejs.org/)
 * 2: [Typescript compiler](http://www.typescriptlang.org/)
+* 3: [nexe](https://github.com/crcn/nexe) (if you want to compile a standalone binary)
 
 ##If you don't have node.js and the Typescript compiler
 The node.js version provided by aptitude is outdated, so do not install via apt-get.
@@ -42,11 +44,12 @@ tsc --v
 It should give you version 1.5.3 or greater.
 
 #shell scripts
-* ```build_magic.sh``` builds magic and stuffs the output in ./build
-* ```clean_magic.sh``` removes the compiled files
-* ```magic.sh``` magic app entry point
+* ```build_magic``` builds magic, output in ./build/
+* ```clean_magic``` removes ./build/
+* ```magic``` magic app entry point
+* ```build_release``` builds magic and creates a standalone binary in ./release/ (requires [nexe](https://github.com/crcn/nexe))
 
-#usage
+#build
 Build the project: ```./build_magic.sh```
 You can safely ignore these errors:
 ```
@@ -55,21 +58,23 @@ typings/node/node.d.ts(221,21): error TS2304: Cannot find name 'Set'.
 typings/node/node.d.ts(231,25): error TS2304: Cannot find name 'WeakMap'.
 ```
 
+#usage
+If you don't specify a target directory, your current location will be used.
 ```
-./magic.sh [TARGET DIRECTORY]
+./magic [TARGET DIRECTORY]
 ```
 ```
-./magic.sh ~/projects/my_awesome_project/source
+./magic ~/projects/my_awesome_project/source
 ```
 * The target directory is processed recursively.
 * The analyzer output (if any) is currently directed to the console. For projects
 with a lot of violations, redirecting to a file is recommended.
 ```
-./magic.sh ~/projects/my_awesome_project/source > violations.txt
+./magic ~/projects/my_awesome_project/source > violations.txt
 ```
-If you want to run the analyzer on a single file, use __-f__
+If you want to run the analyzer on a single file, use __-f__ (this does not work with the binary yet)
 ```
-./magic.sh -f ~/projects/my_awesome_project/source/math/Quaternion.ooc
+./magic -f ~/projects/my_awesome_project/source/math/Quaternion.ooc
 ```
 
 # credits
