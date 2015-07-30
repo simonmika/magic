@@ -1,5 +1,5 @@
 #!/bin/bash
 if [[ ! -d "build/." ]]; then
-	./build_magic.sh
+	./build_magic
 fi
 node build/magic.js $@

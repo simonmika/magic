@@ -18,77 +18,85 @@ import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule")
 
 class Magic {
 
-	private static version = "0.1.0-alpha";
+	private static version = "0.1.1-alpha";
 
 	private glossary = new Glossary();
 
-	private targetDirectory: string;
-	private targetFiles: string[] = [];
+	private targetBaseDirectory: string;
+	private analyzerRules = [];
+	private ignoreFiles: string[] = [];
 
 	constructor(cmd: string[]) {
-		this.parseCommandLine(cmd.slice(2));
+		cmd = cmd.slice(2);
+
+		this.analyzerRules.push(new ExcessiveWhitespaceRule());
+		this.analyzerRules.push(new KeywordSpacingRule());
+		this.analyzerRules.push(new OperatorSpacingRule());
+		this.analyzerRules.push(new SeparatorSpacingRule());
+		this.analyzerRules.push(new RedundantTypeInfoRule());
+		if(cmd[0] == "-f") {
+			this.analyze(cmd[1]);
+		} else {
+			this.analyzeDirectory(cmd[0]);
+		}
+	}
+
+	analyzeDirectory(directory: string) {
+		if(directory == undefined) {
+			directory = ".";
+		} else if (directory.charAt(directory.length - 1) === "/") {
+			directory = directory.slice(0, directory.length - 1);
+		}
+		this.targetBaseDirectory = directory;
+		var ignoreFile = directory + "/.magicignore";
+		if(fs.existsSync(ignoreFile)) {
+			fs.readFileSync(ignoreFile, "utf-8").split("\n").filter(f => {
+				return f.length > 0;
+			}).forEach(file => {
+				// Trim off leading/trailing '/'
+				if(file.charAt(file.length - 1) === "/") {
+					file = file.slice(0, file.length - 1);
+				}
+				if(file.charAt(0) === "/") {
+					file = file.slice(1);
+				}
+				this.ignoreFiles.push(this.targetBaseDirectory + "/" + file);
+			});
+		}
+		this.getFiles(this.targetBaseDirectory).forEach(file => {
+			this.analyze(file)
+		});
 	}
 
 	getFiles(folder: string, recursive: boolean = true) {
-		var allFiles: string[] = fs.readdirSync(folder);
 		var sourceFiles: string[] = [];
+		var allFiles: string[] = fs.readdirSync(folder);
+		var filename = "";
 		allFiles.forEach(file => {
-			if (fs.lstatSync(folder + "/" + file).isDirectory()) {
-				if (recursive) {
-					// Do not include SDK folder. If you want to check the files in sdk,
-					// you have to specify it directly.
-					// ./magic PATH_TO_SDK
-					if(file !== "sdk") {
-						sourceFiles = sourceFiles.concat(this.getFiles(folder + "/" + file));
+			filename = folder + "/" + file;
+			if(this.ignoreFiles.indexOf(filename) == -1) {
+				if (fs.lstatSync(filename).isDirectory()) {
+					if (recursive) {
+						sourceFiles = sourceFiles.concat(this.getFiles(filename));
 					}
-				}
-			} else {
-				// ignores files such as 'foo.ooc~'
-				if (file.slice(file.length - 4) === ".ooc") {
-					sourceFiles.push(fs.realpathSync(folder + "/" + file));
+				} else {
+					if (file.lastIndexOf(".ooc", file.length - 4) > -1) {
+						sourceFiles.push(fs.realpathSync(filename));
+					}
 				}
 			}
 		});
 		return sourceFiles;
 	}
 
-	parseCommandLine(cmd: string[]) {
-
-		var rules = [];
-
-		rules.push(new ExcessiveWhitespaceRule());
-		rules.push(new KeywordSpacingRule());
-		rules.push(new OperatorSpacingRule());
-		rules.push(new SeparatorSpacingRule());
-		rules.push(new RedundantTypeInfoRule());
-
-		if (cmd[0] === "-f") {
-			this.analyze(".", cmd[1], rules);
-		} else {
-			var folder = cmd[0];
-			if(folder == undefined) {
-				folder = ".";
-			}
-			if (folder.charAt(folder.length - 1) === "/") {
-				folder = folder.slice(0, folder.length - 1);
-			}
-			this.getFiles(folder).forEach(file => {
-				this.analyze(folder, file, rules);
-			});
-		}
-
-		console.log("\n-> magic version: " + Magic.version + "\n");
-	}
-
-	analyze(baseDir: string, file: string, rules: Rule[]) {
+	analyze(file: string) {
 		var lexer = new Lexer(file, this.glossary);
 		var analyzer = new Analyser(lexer.getTokenList());
-		var report = analyzer.run(rules);
+		var report = analyzer.run(this.analyzerRules);
 		var reports: Report[] = [];
 		if(report.violations.length > 0) {
 			reports.push(report);
 		}
-		var path: string;
 		reports.forEach(r => {
 			console.log("\n" + r.violations[0].location.filename);
 			console.log(StringUtils.padRight("", "-", r.violations[0].location.filename.length));
@@ -97,7 +105,6 @@ class Magic {
 			});
 			console.log();
 		});
-
 	}
 }
 
