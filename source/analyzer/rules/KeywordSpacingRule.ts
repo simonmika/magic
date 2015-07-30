@@ -41,8 +41,15 @@ class KeywordSpacingRule implements Rule {
 						if (right.kind == TokenKind.SeparatorLeftBracket || right.kind == TokenKind.SeparatorRightBracket) {
 							continue;
 						}
-						if (right.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceTab && right.kind != TokenKind.WhitespaceLineFeed) {
-							report.addViolation(new Violation(t.location, "missing space after keyword '" + t.value + "'", RuleKind.Keyword));
+						switch(right.kind) {
+							case TokenKind.WhitespaceSpace:
+							case TokenKind.WhitespaceTab:
+							case TokenKind.WhitespaceLineFeed:
+							case TokenKind.OperatorLessThan: // Allow This<T> etc.
+								break;
+							default:
+								report.addViolation(new Violation(right.location, "missing space after keyword '" + t.value + "'", RuleKind.Keyword));
+								break;
 						}
 						break;
 				}
