@@ -59,7 +59,9 @@ typings/node/node.d.ts(231,25): error TS2304: Cannot find name 'WeakMap'.
 ```
 
 #usage
-If you don't specify a target directory, your current location will be used.
+If you don't specify a target directory, your current location will be used. Furthermore, by default, magic will
+currently not scan any folders named __sdk__. If you want to analyze SDK files, you must point magic to that
+location directly.
 ```
 ./magic [TARGET DIRECTORY]
 ```
