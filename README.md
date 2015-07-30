@@ -15,7 +15,7 @@ token list generated from each file.
 #requirements
 Known to work on Linux (x64), status on other platforms is unknown at this time.
 __If you don't want to use the standalone release binary__, make sure you have a reasonably
-new version of the following or follow the instruction in the next section.
+new version of the following or follow the instructions in the next section.
 * 1: [node.js](http://nodejs.org/)
 * 2: [Typescript compiler](http://www.typescriptlang.org/)
 * 3: [nexe](https://github.com/crcn/nexe) (if you want to compile a standalone binary)
