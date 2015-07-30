@@ -79,4 +79,24 @@ If you want to run the analyzer on a single file, use __-f__ (this does not work
 ./magic -f ~/projects/my_awesome_project/source/math/Quaternion.ooc
 ```
 
+#troubleshooting
+Here are some problems that may occur along the way, and hopefully, solutions to them.
+
+##using the binary
+__Problem__: You get this error when trying to run the binary:
+```
+./magic: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.20' not found (required by ./magic)_
+```
+__Solution 1__ (Ubuntu 14.04): Install g++ 4.9.
+```
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+sudo apt-get install g++-4.9
+```
+If you installed g++ 4.9 from the specified PPA, your default g++ version will not
+be altered. If you don't want to keep the newly added toolchain PPA, issue this command:
+```
+sudo add-apt-repository --remove ppa:ubuntu-toolchain-r/test
+```
+
 # credits
