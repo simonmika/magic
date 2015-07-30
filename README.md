@@ -59,9 +59,8 @@ typings/node/node.d.ts(231,25): error TS2304: Cannot find name 'WeakMap'.
 ```
 
 #usage
-If you don't specify a target directory, your current location will be used. Furthermore, by default, magic will
-currently not scan any folders named __sdk__. If you want to analyze SDK files, you must point magic to that
-location directly.
+If you don't specify a target directory, your current location will be used.
+
 ```
 ./magic [TARGET DIRECTORY]
 ```
@@ -79,6 +78,16 @@ If you want to run the analyzer on a single file, use __-f__ (this does not work
 ./magic -f ~/projects/my_awesome_project/source/math/Quaternion.ooc
 ```
 
+###ignore list
+If you want to prevent magic from analyzing certain folders or files in your project directory,
+create a file called ```.magicignore``` and put it in the root folder of your project. In this file
+you add everything you want to keep from magic, __relative to the project root folder__.
+Example:
+```
+lib/somethirdpartylibrary
+source/math/Transform.ooc
+```
+
 #troubleshooting
 Here are some problems that may occur along the way, and hopefully, solutions to them.
 
@@ -87,7 +96,8 @@ __Problem__: You get this error when trying to run the binary:
 ```
 ./magic: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.20' not found (required by ./magic)_
 ```
-__Solution 1__ (Ubuntu 14.04): Install g++ 4.9.
+__Why?__ Node.js was probably compiled using a newer version of gcc/g++.
+__Solution 1__ (Ubuntu 14.04): Install g++ 4.9 (or newer):
 ```
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo apt-get update
