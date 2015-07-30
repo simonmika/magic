@@ -18,6 +18,8 @@ import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule")
 
 class Magic {
 
+	private static version = "0.1.0-alpha";
+
 	private glossary = new Glossary();
 
 	private targetDirectory: string;
@@ -33,7 +35,9 @@ class Magic {
 		allFiles.forEach(file => {
 			if (fs.lstatSync(folder + "/" + file).isDirectory()) {
 				if (recursive) {
-					// Do not include SDK folder
+					// Do not include SDK folder. If you want to check the files in sdk,
+					// you have to specify it directly.
+					// ./magic PATH_TO_SDK
 					if(file !== "sdk") {
 						sourceFiles = sourceFiles.concat(this.getFiles(folder + "/" + file));
 					}
@@ -53,7 +57,6 @@ class Magic {
 		var rules = [];
 
 		rules.push(new ExcessiveWhitespaceRule());
-		rules.push(new LineLengthRule(160));
 		rules.push(new KeywordSpacingRule());
 		rules.push(new OperatorSpacingRule());
 		rules.push(new SeparatorSpacingRule());
@@ -63,6 +66,9 @@ class Magic {
 			this.analyze(".", cmd[1], rules);
 		} else {
 			var folder = cmd[0];
+			if(folder == undefined) {
+				folder = ".";
+			}
 			if (folder.charAt(folder.length - 1) === "/") {
 				folder = folder.slice(0, folder.length - 1);
 			}
@@ -70,6 +76,8 @@ class Magic {
 				this.analyze(folder, file, rules);
 			});
 		}
+
+		console.log("\n-> magic version: " + Magic.version + "\n");
 	}
 
 	analyze(baseDir: string, file: string, rules: Rule[]) {

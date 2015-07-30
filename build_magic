@@ -1,8 +1,8 @@
+#!/bin/bash
 if [ "$1" == "-C" ]
 then
-	echo "Cleaning..."
-	./clean_magic.sh
+	./clean_magic
 fi
-echo "Building..."
+echo "Building magic..."
 tsc --p "source/"
 echo "Done."
