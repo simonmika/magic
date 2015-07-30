@@ -1,3 +1,4 @@
 test: func(x: Float[], y: Float[], z: Float[]) {
-	// Test
+	This<T> // allowed
+	This(foobar) // trigger
 }
