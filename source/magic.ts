@@ -18,7 +18,7 @@ import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule")
 import ParenthesesRule = require("./analyzer/rules/ParenthesesRule");
 
 class Magic {
-	private static version = "0.1.1-alpha";
+	private static version = "0.1.2-alpha";
 
 	private glossary = new Glossary();
 
