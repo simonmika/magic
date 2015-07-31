@@ -12,6 +12,10 @@ class ExcessiveWhitespaceRule implements Rule {
 		var linefeeds = 0;
 		var spaces = 0;
 		for (var i = 0; i < tokens.length; i++) {
+			if (tokens[i].kind == TokenKind.WhitespaceSpace && tokens[i + 1].kind == TokenKind.WhitespaceLineFeed) {
+				report.addViolation(new Violation(tokens[i].location,
+					"space character before a new line", RuleKind.Whitespace));
+			}
 			while (tokens[i].kind != TokenKind.Eof && TokenKind[tokens[i].kind].indexOf("Whitespace") > -1) {
 				if (tokens[i].kind == TokenKind.WhitespaceLineFeed) {
 					linefeeds++;

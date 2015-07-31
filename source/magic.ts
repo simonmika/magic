@@ -15,6 +15,7 @@ import KeywordSpacingRule = require("./analyzer/rules/KeywordSpacingRule");
 import OperatorSpacingRule = require("./analyzer/rules/OperatorSpacingRule");
 import SeparatorSpacingRule = require("./analyzer/rules/SeparatorSpacingRule");
 import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule");
+import ParenthesesRule = require("./analyzer/rules/ParenthesesRule");
 
 class Magic {
 
@@ -28,36 +29,38 @@ class Magic {
 
 	constructor(cmd: string[]) {
 		cmd = cmd.slice(2);
-
 		this.analyzerRules.push(new ExcessiveWhitespaceRule());
 		this.analyzerRules.push(new KeywordSpacingRule());
 		this.analyzerRules.push(new OperatorSpacingRule());
 		this.analyzerRules.push(new SeparatorSpacingRule());
 		this.analyzerRules.push(new RedundantTypeInfoRule());
-		if(cmd[0] == "-f") {
+		this.analyzerRules.push(new ParenthesesRule());
+
+		if (cmd[0] == "-f") {
 			this.analyze(cmd[1]);
 		} else {
 			this.analyzeDirectory(cmd[0]);
 		}
+		console.log("-> magic " + Magic.version);
 	}
 
 	analyzeDirectory(directory: string) {
-		if(directory == undefined) {
+		if (directory == undefined) {
 			directory = ".";
 		} else if (directory.charAt(directory.length - 1) === "/") {
 			directory = directory.slice(0, directory.length - 1);
 		}
 		this.targetBaseDirectory = directory;
 		var ignoreFile = directory + "/.magicignore";
-		if(fs.existsSync(ignoreFile)) {
+		if (fs.existsSync(ignoreFile)) {
 			fs.readFileSync(ignoreFile, "utf-8").split("\n").filter(f => {
 				return f.length > 0;
 			}).forEach(file => {
 				// Trim off leading/trailing '/'
-				if(file.charAt(file.length - 1) === "/") {
+				if (file.charAt(file.length - 1) === "/") {
 					file = file.slice(0, file.length - 1);
 				}
-				if(file.charAt(0) === "/") {
+				if (file.charAt(0) === "/") {
 					file = file.slice(1);
 				}
 				this.ignoreFiles.push(this.targetBaseDirectory + "/" + file);
@@ -74,7 +77,7 @@ class Magic {
 		var filename = "";
 		allFiles.forEach(file => {
 			filename = folder + "/" + file;
-			if(this.ignoreFiles.indexOf(filename) == -1) {
+			if (this.ignoreFiles.indexOf(filename) == -1) {
 				if (fs.lstatSync(filename).isDirectory()) {
 					if (recursive) {
 						sourceFiles = sourceFiles.concat(this.getFiles(filename));
@@ -94,7 +97,7 @@ class Magic {
 		var analyzer = new Analyser(lexer.getTokenList());
 		var report = analyzer.run(this.analyzerRules);
 		var reports: Report[] = [];
-		if(report.violations.length > 0) {
+		if (report.violations.length > 0) {
 			reports.push(report);
 		}
 		reports.forEach(r => {
