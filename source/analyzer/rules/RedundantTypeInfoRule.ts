@@ -12,7 +12,7 @@ class RedundantTypeInfoRule implements Rule {
 	run(tokens: Array<Token>, report: Report) {
 		for (var i = 0; i < tokens.length; i++) {
 			if (tokens[i].kind == TokenKind.KeywordFunc) {
-				while (tokens[i].kind != TokenKind.WhitespaceLineFeed) {
+				while (tokens[i].kind != TokenKind.Eof && tokens[i].kind != TokenKind.WhitespaceLineFeed) {
 					if (tokens[i].kind == TokenKind.SeparatorLeftParanthesis) {
 						i++;
 						var nextIsType = false;
