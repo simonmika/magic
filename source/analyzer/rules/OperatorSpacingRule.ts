@@ -33,11 +33,12 @@ class OperatorSpacingRule implements Rule {
 					case TokenKind.OperatorBitwiseAnd:
 					case TokenKind.OperatorBitwiseOr:
 					case TokenKind.OperatorLogicalOr:
+					case TokenKind.OperatorRightShift:
 						break;
 					default:
 						var left = previous;
 						var right = tokens[i + 1];
-						if(left.kind != TokenKind.WhitespaceSpace) {
+						if(left.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
 							report.addViolation(new Violation(t.location, "missing space before operator '" + t.value + "'", RuleKind.Operator));
 						}
 						if(right.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
