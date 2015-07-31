@@ -18,7 +18,6 @@ import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule")
 import ParenthesesRule = require("./analyzer/rules/ParenthesesRule");
 
 class Magic {
-
 	private static version = "0.1.1-alpha";
 
 	private glossary = new Glossary();
@@ -83,7 +82,7 @@ class Magic {
 						sourceFiles = sourceFiles.concat(this.getFiles(filename));
 					}
 				} else {
-					if (file.lastIndexOf(".ooc", file.length - 4) > -1) {
+					if (file.lastIndexOf(".ooc", file.length - 4) === file.length - 4) {
 						sourceFiles.push(fs.realpathSync(filename));
 					}
 				}
