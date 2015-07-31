@@ -276,6 +276,7 @@ class Lexer {
 				break;
 			case TokenKind.LiteralString:
 			case TokenKind.BlockComment:
+				this.column += lastToken.length;
 				this.line += StringUtils.subStringCount(lastToken.value, "\n");
 				break;
 			default:

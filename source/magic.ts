@@ -9,16 +9,17 @@ import Analyser = require("./analyzer/Analyzer");
 import Violation = require("./analyzer/Violation");
 import Report = require("./analyzer/Report");
 import Rule = require("./analyzer/rules/Rule");
-import ExcessiveWhitespaceRule = require("./analyzer/rules/ExcessiveWhitespaceRule");
+import EmptyLinesRule = require("./analyzer/rules/EmptyLinesRule");
+import ExcessiveSpaceRule = require("./analyzer/rules/ExcessiveSpaceRule");
 import LineLengthRule = require("./analyzer/rules/LineLengthRule");
 import KeywordSpacingRule = require("./analyzer/rules/KeywordSpacingRule");
 import OperatorSpacingRule = require("./analyzer/rules/OperatorSpacingRule");
 import SeparatorSpacingRule = require("./analyzer/rules/SeparatorSpacingRule");
 import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule");
-import ParenthesesRule = require("./analyzer/rules/ParenthesesRule");
+import FuncRule = require("./analyzer/rules/FuncRule");
 
 class Magic {
-	private static version = "0.1.1-alpha";
+	private static version = "0.1.2-alpha";
 
 	private glossary = new Glossary();
 
@@ -28,13 +29,13 @@ class Magic {
 
 	constructor(cmd: string[]) {
 		cmd = cmd.slice(2);
-		this.analyzerRules.push(new ExcessiveWhitespaceRule());
+		this.analyzerRules.push(new RedundantTypeInfoRule());
+		this.analyzerRules.push(new FuncRule());
 		this.analyzerRules.push(new KeywordSpacingRule());
 		this.analyzerRules.push(new OperatorSpacingRule());
 		this.analyzerRules.push(new SeparatorSpacingRule());
-		this.analyzerRules.push(new RedundantTypeInfoRule());
-		this.analyzerRules.push(new ParenthesesRule());
-
+		this.analyzerRules.push(new EmptyLinesRule());
+		this.analyzerRules.push(new ExcessiveSpaceRule());
 		if (cmd[0] == "-f") {
 			this.analyze(cmd[1]);
 		} else {
@@ -102,7 +103,9 @@ class Magic {
 		reports.forEach(r => {
 			console.log("\n" + r.violations[0].location.filename);
 			console.log(StringUtils.padRight("", "-", r.violations[0].location.filename.length));
-			r.violations.forEach(violation => {
+			r.violations/*.sort((a, b) => {
+				return a.location.line - b.location.line;
+			})*/.forEach(violation => {
 				console.log("  " + StringUtils.padRight(violation.location.toString(), ".", 14) + violation.message);
 			});
 			console.log();
