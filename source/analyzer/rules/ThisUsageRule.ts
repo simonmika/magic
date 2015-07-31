@@ -13,7 +13,7 @@ class ThisUsageRule implements Rule {
 		for (var i = 0; i < tokens.length; i++) {
 			if (tokens[i].kind == TokenKind.Identifier) {
 				className = tokens[i].value;
-				while (tokens[i].kind != TokenKind.WhitespaceLineFeed) {
+				while (tokens[i].kind != TokenKind.WhitespaceLineFeed && tokens[i].kind != TokenKind.Eof) {
 					if (tokens[i].kind == TokenKind.KeywordClass) {
 						while (tokens[i].kind != TokenKind.SeparatorLeftCurly) {
 							i++;
