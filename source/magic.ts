@@ -17,6 +17,7 @@ import OperatorSpacingRule = require("./analyzer/rules/OperatorSpacingRule");
 import SeparatorSpacingRule = require("./analyzer/rules/SeparatorSpacingRule");
 import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule");
 import FuncRule = require("./analyzer/rules/FuncRule");
+import ThisUsageRule = require("./analyzer/rules/ThisUsageRule");
 
 class Magic {
 	private static version = "0.1.2-alpha";
@@ -29,6 +30,7 @@ class Magic {
 
 	constructor(cmd: string[]) {
 		cmd = cmd.slice(2);
+		this.analyzerRules.push(new ThisUsageRule());
 		this.analyzerRules.push(new RedundantTypeInfoRule());
 		this.analyzerRules.push(new FuncRule());
 		this.analyzerRules.push(new KeywordSpacingRule());
