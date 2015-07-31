@@ -5,24 +5,39 @@ import Report = require("./../Report");
 import Violation = require("./../Violation");
 import RuleKind = require("./../RuleKind");
 
-class ParenthesesRule implements Rule {
+class FuncRule implements Rule {
 	constructor() { }
 	run(tokens: Array<Token>, report: Report) {
 		for (var i = 0; i < tokens.length; i++) {
 			switch (tokens[i].kind) {
 				case TokenKind.KeywordFunc:
 					i++;
-					while (tokens[i].kind != TokenKind.Eof) {
+					if (tokens[i].kind == TokenKind.WhitespaceLineFeed) {
+						break;
+					}
+					var canExit = false;
+					var insideBlock = false;
+					while (!canExit && tokens[i].kind != TokenKind.Eof) {
 						switch (tokens[i].kind) {
 							case TokenKind.SeparatorLeftParanthesis:
+								if(!insideBlock && tokens[i - 1].kind == TokenKind.Identifier) {
+									report.addViolation(new Violation(tokens[i].location,
+										"missing space between func identifier and parenthesis",
+										RuleKind.General));
+								}
 								i = this.checkBody(tokens, i + 1, report,
 										TokenKind.SeparatorLeftParanthesis, TokenKind.SeparatorRightParanthesis,
 										"unnecessary parentheses [empty argument list]");
+								if (tokens[i].kind == TokenKind.WhitespaceLineFeed) {
+									canExit = true;
+								}
 								break;
 							case TokenKind.SeparatorLeftCurly:
+								insideBlock = true;
 								i = this.checkBody(tokens, i + 1, report,
 										TokenKind.SeparatorLeftCurly, TokenKind.SeparatorRightCurly,
 										"unnecessary curly brackets [empty function body]");
+								canExit = true;
 								break;
 							default:
 								i++;
@@ -40,7 +55,6 @@ class ParenthesesRule implements Rule {
 		var delta = 1;
 		var emptyBody = true;
 		var startLocation = tokens[index - 1].location;
-		//console.log(tokens[index - 1]);
 		while (delta > 0 && tokens[index].kind != TokenKind.Eof) {
 			switch (tokens[index].kind) {
 				case TokenKind.WhitespaceLineFeed:
@@ -66,4 +80,4 @@ class ParenthesesRule implements Rule {
 	}
 }
 
-export = ParenthesesRule;
+export = FuncRule;
