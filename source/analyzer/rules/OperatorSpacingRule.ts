@@ -24,7 +24,6 @@ class OperatorSpacingRule implements Rule {
 					case TokenKind.OperatorGreaterThan:
 					case TokenKind.OperatorAssign:
 					case TokenKind.OperatorNot:
-					case TokenKind.OperatorRange:
 					case TokenKind.OperatorConditional:
 					case TokenKind.OperatorExponent:
 					case TokenKind.OperatorNegate:
