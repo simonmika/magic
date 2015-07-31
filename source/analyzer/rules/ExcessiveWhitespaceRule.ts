@@ -8,6 +8,45 @@ import RuleKind = require("./../RuleKind");
 class ExcessiveWhitespaceRule implements Rule {
 	constructor() { }
 	run(tokens: Array<Token>, report: Report) {
+		var newlines = 0;
+		var spaces = 0;
+		for(var i = 0; i < tokens.length; i++) {
+			switch(tokens[i].kind) {
+				case TokenKind.WhitespaceLineFeed:
+					i++;
+					while(TokenKind[tokens[i].kind].indexOf("Whitespace") > -1) {
+						if(tokens[i].kind == TokenKind.WhitespaceLineFeed) {
+							newlines++;
+						}
+						i++;
+					}
+					break;
+				case TokenKind.WhitespaceSpace:
+					i++;
+					while(tokens[i].kind == TokenKind.WhitespaceSpace) {
+						while(tokens[i].kind == TokenKind.WhitespaceSpace) {
+							spaces++;
+							i++;
+						}
+					}
+					break;
+				default:
+					newlines = 0;
+					spaces = 0;
+					break;
+			}
+			if(newlines > 1) {
+				console.log("too many empty lines: " + newlines);
+			}
+			if(spaces > 1) {
+				console.log("too many consecutive space characters: " + spaces);
+			}
+			newlines = 0;
+			spaces = 0;
+		}
+	}
+}
+/*
 		var offset = 0;
 		var linefeeds = 0;
 		var spaces = 0;
@@ -38,7 +77,6 @@ class ExcessiveWhitespaceRule implements Rule {
 			linefeeds = 0;
 			spaces = 0;
 		}
-	}
-}
+*/
 
 export = ExcessiveWhitespaceRule;
