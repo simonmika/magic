@@ -8,52 +8,61 @@ import RuleKind = require("./../RuleKind");
 class ParenthesesRule implements Rule {
 	constructor() { }
 	run(tokens: Array<Token>, report: Report) {
-		var keepReading: boolean;
-		var curly = false;
 		for (var i = 0; i < tokens.length; i++) {
-			if (tokens[i].kind == TokenKind.KeywordFunc) {
-				keepReading = true;
-				curly = false;
-				while (keepReading && !curly) {
-					switch (tokens[i].kind) {
-						case TokenKind.Eof:
-						case TokenKind.WhitespaceLineFeed:
-							keepReading = false;
-							break;
-						case TokenKind.SeparatorLeftCurly:
-							curly = true;
-							// FALL-THROUGH
-						case TokenKind.SeparatorLeftParanthesis:
-							var emptyArgs = true;
-							var location = tokens[i].location;
-							i++;
-							while (emptyArgs && tokens[i].kind != TokenKind.SeparatorRightParanthesis &&
-								tokens[i].kind != TokenKind.SeparatorRightCurly)
-							{
-								switch(tokens[i].kind) {
-									case TokenKind.WhitespaceLineFeed:
-									case TokenKind.WhitespaceSpace:
-									case TokenKind.WhitespaceTab:
-										break;
-									default:
-										emptyArgs = false;
-										break;
-								}
+			switch (tokens[i].kind) {
+				case TokenKind.KeywordFunc:
+					i++;
+					while (tokens[i].kind != TokenKind.Eof) {
+						switch (tokens[i].kind) {
+							case TokenKind.SeparatorLeftParanthesis:
+								i = this.checkBody(tokens, i + 1, report,
+										TokenKind.SeparatorLeftParanthesis, TokenKind.SeparatorRightParanthesis,
+										"unnecessary parentheses [empty argument list]");
+								break;
+							case TokenKind.SeparatorLeftCurly:
+								i = this.checkBody(tokens, i + 1, report,
+										TokenKind.SeparatorLeftCurly, TokenKind.SeparatorRightCurly,
+										"unnecessary curly brackets [empty function body]");
+								break;
+							default:
 								i++;
-							}
-							if (emptyArgs) {
-								report.addViolation(new Violation(location,
-									"unnecessary parentheses/curlies [empty argument list / function body]", RuleKind.General));
-							}
-							break;
-						default:
-							i++;
-							break;
+								break;
+						}
 					}
-				}
+					break;
+				default:
+					break;
 			}
 		}
+	}
 
+	checkBody(tokens: Token[], index: number, report: Report, openingKind: TokenKind, closingKind: TokenKind, message: string) {
+		var delta = 1;
+		var emptyBody = true;
+		var startLocation = tokens[index - 1].location;
+		//console.log(tokens[index - 1]);
+		while (delta > 0 && tokens[index].kind != TokenKind.Eof) {
+			switch (tokens[index].kind) {
+				case TokenKind.WhitespaceLineFeed:
+				case TokenKind.WhitespaceSpace:
+				case TokenKind.WhitespaceTab:
+					break;
+				case openingKind:
+					delta++;
+					break;
+				case closingKind:
+					delta--;
+					break;
+				default:
+					emptyBody = false;
+					break;
+			}
+			index++;
+		}
+		if (emptyBody) {
+			report.addViolation(new Violation(startLocation, message, RuleKind.General));
+		}
+		return index;
 	}
 }
 
