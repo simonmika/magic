@@ -50,7 +50,7 @@ It should give you version 1.5.3 or greater.
 * ```build_release``` builds magic and creates a standalone binary in ./release/ (requires [nexe](https://github.com/crcn/nexe))
 
 #build
-Build the project: ```./build_magic.sh```
+Build the project: ```./build_magic```
 You can safely ignore these errors:
 ```
 typings/node/node.d.ts(212,21): error TS2304: Cannot find name 'Map'.
