@@ -15,6 +15,7 @@ import KeywordSpacingRule = require("./analyzer/rules/KeywordSpacingRule");
 import OperatorSpacingRule = require("./analyzer/rules/OperatorSpacingRule");
 import SeparatorSpacingRule = require("./analyzer/rules/SeparatorSpacingRule");
 import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule");
+import ParenthesesRule = require("./analyzer/rules/ParenthesesRule");
 
 class Magic {
 
@@ -33,6 +34,8 @@ class Magic {
 		this.analyzerRules.push(new OperatorSpacingRule());
 		this.analyzerRules.push(new SeparatorSpacingRule());
 		this.analyzerRules.push(new RedundantTypeInfoRule());
+		this.analyzerRules.push(new ParenthesesRule());
+
 		if (cmd[0] == "-f") {
 			this.analyze(cmd[1]);
 		} else {
