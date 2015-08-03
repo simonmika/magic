@@ -41,9 +41,16 @@ class Magic {
 		if (cmd[0] == "-f") {
 			this.analyze(cmd[1]);
 		} else {
+			if (!fs.existsSync(cmd[0])) {
+				this.throwError("The folder '" + cmd[0] + "' does not exist.");
+			}
 			this.analyzeDirectory(cmd[0]);
 		}
 		console.log("-> magic " + Magic.version);
+	}
+
+	throwError(message: string) {
+		throw new Error(message);
 	}
 
 	analyzeDirectory(directory: string) {
@@ -115,4 +122,8 @@ class Magic {
 	}
 }
 
-var magic = new Magic(process.argv);
+try {
+	var magic = new Magic(process.argv);
+} catch (Error) {
+	console.log(Error.toString());
+}
