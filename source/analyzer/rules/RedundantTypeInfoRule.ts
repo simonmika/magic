@@ -19,7 +19,7 @@ class RedundantTypeInfoRule implements Rule {
 						var idents: string[] = [];
 						var types: string[] = [];
 						while (tokens[i].kind != TokenKind.SeparatorRightParanthesis) {
-							if (tokens[i].kind == TokenKind.Identifier) {
+							if (tokens[i].kind == TokenKind.Identifier || tokens[i].kind == TokenKind.VarArgs) {
 								if (nextIsType) {
 									types.push(tokens[i].value);
 								} else {
