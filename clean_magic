@@ -1,6 +1,4 @@
 #!/bin/bash
-if [ -d "build/" ]; then
-	echo "Cleaning..."
-	rm -r build/
-fi
+echo "Cleaning..."
+rm -r build/
 echo "Done."

@@ -41,7 +41,7 @@ class KeywordSpacingRule implements Rule {
 						if (right.kind == TokenKind.SeparatorLeftBracket || right.kind == TokenKind.SeparatorRightBracket) {
 							continue;
 						}
-						switch(right.kind) {
+						switch (right.kind) {
 							case TokenKind.WhitespaceSpace:
 							case TokenKind.WhitespaceTab:
 							case TokenKind.WhitespaceLineFeed:

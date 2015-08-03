@@ -10,9 +10,9 @@ class SeparatorSpacingRule implements Rule {
 	run(tokens: Array<Token>, report: Report) {
 		var previous = Token.empty;
 		tokens.forEach(t => {
-			switch(previous.kind) {
+			switch (previous.kind) {
 				case TokenKind.SeparatorComma:
-					if(t.kind != TokenKind.WhitespaceSpace && t.kind != TokenKind.WhitespaceLineFeed) {
+					if (t.kind != TokenKind.WhitespaceSpace && t.kind != TokenKind.WhitespaceLineFeed) {
 						report.addViolation(new Violation(t.location,
 							"missing space after separator '" + previous.value + "'", RuleKind.Separator));
 					}

@@ -7,6 +7,7 @@ enum TokenKind {
 	Datatype,
 	Import,
 	LineBreak,
+	VarArgs,
 	// Keywords
 	Keyword,
 	KeywordOnHeap,

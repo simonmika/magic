@@ -20,14 +20,14 @@ class FuncRule implements Rule {
 					while (!canExit && tokens[i].kind != TokenKind.Eof) {
 						switch (tokens[i].kind) {
 							case TokenKind.SeparatorLeftParanthesis:
-								if(!insideBlock && tokens[i - 1].kind == TokenKind.Identifier) {
+								if (!insideBlock && tokens[i - 1].kind == TokenKind.Identifier) {
 									report.addViolation(new Violation(tokens[i].location,
 										"missing space between func identifier and parenthesis",
 										RuleKind.General));
 								}
 								i = this.checkBody(tokens, i + 1, report,
-										TokenKind.SeparatorLeftParanthesis, TokenKind.SeparatorRightParanthesis,
-										"unnecessary parentheses [empty argument list]");
+									TokenKind.SeparatorLeftParanthesis, TokenKind.SeparatorRightParanthesis,
+									"unnecessary parentheses [empty argument list]");
 								if (tokens[i].kind == TokenKind.WhitespaceLineFeed) {
 									canExit = true;
 								}
@@ -35,8 +35,8 @@ class FuncRule implements Rule {
 							case TokenKind.SeparatorLeftCurly:
 								insideBlock = true;
 								i = this.checkBody(tokens, i + 1, report,
-										TokenKind.SeparatorLeftCurly, TokenKind.SeparatorRightCurly,
-										"unnecessary curly brackets [empty function body]");
+									TokenKind.SeparatorLeftCurly, TokenKind.SeparatorRightCurly,
+									"unnecessary curly brackets [empty function body]");
 								canExit = true;
 								break;
 							default:

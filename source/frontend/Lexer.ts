@@ -196,14 +196,21 @@ class Lexer {
 		var result: Token;
 		var peek = this.reader.peek();
 		// Since operators :=, ::= and :== start with a separator, we need to
-		// check manually for these here. We also check for the range operator "..".
+		// check manually for these here. We also check for the range operator ".." and
+		// varargs, "..."
 		if (this.isOperator(firstChar)) {
 			result = this.handleOperator(firstChar);
 		} else if (firstChar === ":" && (peek === ":" || peek === "=")) {
 			result = this.handleOperator(firstChar + this.reader.getNext());
 		} else if (firstChar === "." && peek === ".") {
-			result = new Token(this.location, TokenKind.OperatorRange, "..");
-			this.reader.advance()
+			this.reader.advance();
+			if (this.reader.peek() === ".") {
+				this.reader.advance()
+				result = new Token(this.location, TokenKind.VarArgs, "...");
+			} else {
+				result = new Token(this.location, TokenKind.OperatorRange, "..");
+			}
+			//this.reader.advance()
 		}
 		else {
 			result = new Token(this.location, this.glossary.getSeparatorKind(firstChar), firstChar);

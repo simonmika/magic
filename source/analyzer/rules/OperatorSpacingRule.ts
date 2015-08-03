@@ -11,7 +11,7 @@ class OperatorSpacingRule implements Rule {
 		var index = 0;
 		var t: Token;
 		var previous = Token.empty;
-		for(var i = 0; i < tokens.length; i++) {
+		for (var i = 0; i < tokens.length; i++) {
 			t = tokens[i];
 			if (TokenKind[t.kind].indexOf("Operator") > -1) {
 				switch (t.kind) {
@@ -37,11 +37,13 @@ class OperatorSpacingRule implements Rule {
 					default:
 						var left = previous;
 						var right = tokens[i + 1];
-						if(left.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
-							report.addViolation(new Violation(t.location, "missing space before operator '" + t.value + "'", RuleKind.Operator));
+						if (left != null && left.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
+							report.addViolation(new Violation(t.location,
+								"missing space before operator '" + t.value + "'", RuleKind.Operator));
 						}
-						if(right.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
-							report.addViolation(new Violation(right.location, "missing space after operator '" + t.value + "'", RuleKind.Operator));
+						if (right.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
+							report.addViolation(new Violation(right.location,
+								"missing space after operator '" + t.value + "'", RuleKind.Operator));
 						}
 						break;
 				}
