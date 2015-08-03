@@ -37,13 +37,21 @@ class OperatorSpacingRule implements Rule {
 					default:
 						var left = previous;
 						var right = tokens[i + 1];
-						if (left != null && left.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
-							report.addViolation(new Violation(t.location,
-								"missing space before operator '" + t.value + "'", RuleKind.Operator));
+						var message = "missing space ";
+
+						var missingLeft = left != null && left.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed;
+						var missingRight = right.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed;
+
+						if (missingLeft && missingRight) {
+							message += "before and after";
+						} else if (missingLeft) {
+							message += "before"
+						} else {
+							message += "after";
 						}
-						if (right.kind != TokenKind.WhitespaceSpace && right.kind != TokenKind.WhitespaceLineFeed) {
-							report.addViolation(new Violation(right.location,
-								"missing space after operator '" + t.value + "'", RuleKind.Operator));
+						
+						if (missingLeft || missingRight) {
+							report.addViolation(new Violation(t.location, message + " operator '" + t.value + "'", RuleKind.Operator));
 						}
 						break;
 				}
