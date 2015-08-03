@@ -17,10 +17,6 @@ class KeywordSpacingRule implements Rule {
 					case TokenKind.KeywordImport:
 					case TokenKind.KeywordInclude:
 					case TokenKind.KeywordNew:
-					case TokenKind.KeywordUnmangled:
-					case TokenKind.KeywordSet:
-					case TokenKind.KeywordGet:
-					case TokenKind.KeywordExtern:
 						break;
 					default:
 						var left = tokens[i - 1];
