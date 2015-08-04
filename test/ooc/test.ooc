@@ -1,4 +1,3 @@
-test: func(x: Float[], y: Float[], z: Float[]) {
-	This<T> // allowed
-	This(foobar) // trigger
+test: class {
+	f1: func (p: Bool) -> Bool { return p; }
 }
