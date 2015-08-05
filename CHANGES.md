@@ -5,6 +5,7 @@ Example:
 x = 1; y = 2; z = 3 // Allowed
 x = 1; y = 2; z = 3; // Not allowed
 ```
+* fixed a bug in ThisUsage
 
 # 0.1.2-alpha
 * a lot of bug fixes
