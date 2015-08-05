@@ -14,7 +14,7 @@ class ThisUsageRule implements Rule {
 			if (tokens[i].kind == TokenKind.Identifier) {
 				className = tokens[i].value;
 				while (tokens[i].kind != TokenKind.WhitespaceLineFeed && tokens[i].kind != TokenKind.Eof) {
-					if (tokens[i].kind == TokenKind.KeywordClass) {
+					if (tokens[i].kind == TokenKind.KeywordClass || tokens[i].kind == TokenKind.KeywordCover) {
 						while (tokens[i].kind != TokenKind.SeparatorLeftCurly) {
 							i++;
 						}
