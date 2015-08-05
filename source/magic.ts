@@ -18,10 +18,9 @@ import SeparatorSpacingRule = require("./analyzer/rules/SeparatorSpacingRule");
 import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule");
 import FuncRule = require("./analyzer/rules/FuncRule");
 import ThisUsageRule = require("./analyzer/rules/ThisUsageRule");
-import SemicolonRule = require("./analyzer/rules/SemicolonRule");
 
 class Magic {
-	private static version = "0.1.3-alpha";
+	private static version = "0.1.2-alpha";
 
 	private glossary = new Glossary();
 
@@ -39,7 +38,6 @@ class Magic {
 		this.analyzerRules.push(new SeparatorSpacingRule());
 		this.analyzerRules.push(new EmptyLinesRule());
 		this.analyzerRules.push(new ExcessiveSpaceRule());
-		this.analyzerRules.push(new SemicolonRule());
 		if (cmd[0] == "-f") {
 			this.analyze(cmd[1]);
 		} else {
