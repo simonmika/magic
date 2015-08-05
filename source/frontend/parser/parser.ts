@@ -1,7 +1,0 @@
-
-class Parser {
-
-	
-}
-
-export = Parser;

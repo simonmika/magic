@@ -20,7 +20,7 @@ import FuncRule = require("./analyzer/rules/FuncRule");
 import ThisUsageRule = require("./analyzer/rules/ThisUsageRule");
 
 class Magic {
-	private static version = "0.1.2-alpha";
+	private static version = "0.1.3-alpha";
 
 	private glossary = new Glossary();
 
