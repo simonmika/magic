@@ -1,6 +1,8 @@
 # 0.1.4-alpha
 * fixed a bug in ThisUsage rule where it would stop analyzing the file if it came across ```cover from```
-* improved EmptyLines rule to detect unnecessary empty line(s) before EOF and before closing curly
+* improved EmptyLines rule to detect unnecessary empty line(s) before EOF, before closing curly and after opening curly.
+* Command-line handling was improved. You can now target a specific file, a list of files or a directory,
+and also use wildcards, if your shell support wildcard expansion.
 
 # 0.1.3-alpha
 * Implemented Semicolon rule, which says that no line can end with a semicolon.
