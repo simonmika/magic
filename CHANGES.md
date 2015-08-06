@@ -1,5 +1,6 @@
 # 0.1.4-alpha
 * fixed a bug in ThisUsage rule where it would stop analyzing the file if it came across ```cover from```
+* improved EmptyLines rule to detect unnecessary empty line(s) before EOF and before closing curly
 
 # 0.1.3-alpha
 * Implemented Semicolon rule, which says that no line can end with a semicolon.
