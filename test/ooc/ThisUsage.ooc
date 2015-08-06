@@ -41,4 +41,3 @@ Moobar: cover {
 		return true
 	}
 }
-
