@@ -1,13 +1,10 @@
 ///<reference path="./../typings/node/node.d.ts" />
 import fs = require("fs");
 
-import Dictionary = require("./utilities/Dictionary");
+import Filesystem = require("./utilities/Filesystem");
 import StringUtils = require("./utilities/StringUtils");
-import Lexer = require("./frontend/Lexer");
 import Glossary = require("./frontend/Glossary");
 import Analyser = require("./analyzer/Analyzer");
-import Violation = require("./analyzer/Violation");
-import Report = require("./analyzer/Report");
 import Rule = require("./analyzer/rules/Rule");
 import EmptyLinesRule = require("./analyzer/rules/EmptyLinesRule");
 import ExcessiveSpaceRule = require("./analyzer/rules/ExcessiveSpaceRule");
@@ -21,115 +18,52 @@ import ThisUsageRule = require("./analyzer/rules/ThisUsageRule");
 import SemicolonRule = require("./analyzer/rules/SemicolonRule");
 
 class Magic {
-	private static version = "0.1.4-alpha";
+	private static version = "0.1.5-alpha";
 
-	private glossary = new Glossary();
-
-	private targetBaseDirectory: string;
-	private analyzerRules = [];
-	private ignoreFiles: string[] = [];
+	private arguments: string[];
 
 	constructor(cmd: string[]) {
-		this.analyzerRules.push(new ThisUsageRule());
-		this.analyzerRules.push(new RedundantTypeInfoRule());
-		this.analyzerRules.push(new FuncRule());
-		this.analyzerRules.push(new KeywordSpacingRule());
-		this.analyzerRules.push(new OperatorSpacingRule());
-		this.analyzerRules.push(new SeparatorSpacingRule());
-		this.analyzerRules.push(new EmptyLinesRule());
-		this.analyzerRules.push(new ExcessiveSpaceRule());
-		this.analyzerRules.push(new SemicolonRule());
 		cmd = cmd.slice(2);
 		if (cmd.length == 0) {
 			cmd[0] = ".";
 		}
-		cmd.forEach(argument => {
-			if (fs.existsSync(argument)) {
-				if (fs.lstatSync(argument).isDirectory()) {
-					this.analyzeDirectory(argument);
-				} else {
-					this.analyze(argument);
-				}
-			} else {
-				console.log("-> File/folder '" + argument + "' does not exist");
+		this.arguments = cmd;
+	}
+
+	analyze() {
+		var rules = [
+			new EmptyLinesRule(),
+			new ExcessiveSpaceRule(),
+			new KeywordSpacingRule(),
+			new OperatorSpacingRule(),
+			new SeparatorSpacingRule(),
+			new RedundantTypeInfoRule(),
+			new FuncRule(),
+			new ThisUsageRule(),
+			new SemicolonRule()
+		];
+		var analyzer = new Analyser(new Glossary(), rules);
+		analyzer.analyze(this.arguments).forEach(report => {
+			if (report.violations.length > 0) {
+				var file = report.violations[0].location.filename;
+				console.log("\n" + file);
+				console.log(StringUtils.padRight("", "-", file.length));
+				report.violations.forEach(v => {
+					console.log(StringUtils.padRight(v.location.toString(), ".", 14) + v.message);
+				});
 			}
 		});
-		console.log("-> magic " + Magic.version);
 	}
 
-	throwError(message: string) {
-		throw new Error(message);
-	}
-
-	analyzeDirectory(directory: string) {
-		if (directory.charAt(directory.length - 1) === "/") {
-			directory = directory.slice(0, directory.length - 1);
-		}
-		this.targetBaseDirectory = directory;
-		var ignoreFile = directory + "/.magicignore";
-		if (fs.existsSync(ignoreFile)) {
-			fs.readFileSync(ignoreFile, "utf-8").split("\n").filter(f => {
-				return f.length > 0;
-			}).forEach(file => {
-				// Trim off leading/trailing '/'
-				if (file.charAt(file.length - 1) === "/") {
-					file = file.slice(0, file.length - 1);
-				}
-				if (file.charAt(0) === "/") {
-					file = file.slice(1);
-				}
-				this.ignoreFiles.push(this.targetBaseDirectory + "/" + file);
-			});
-		}
-		this.getFiles(this.targetBaseDirectory).forEach(file => {
-			this.analyze(file)
-		});
-	}
-
-	getFiles(folder: string, recursive: boolean = true) {
-		var sourceFiles: string[] = [];
-		var allFiles: string[] = fs.readdirSync(folder);
-		var filename = "";
-		allFiles.forEach(file => {
-			filename = folder + "/" + file;
-			if (this.ignoreFiles.indexOf(filename) == -1) {
-				if (fs.lstatSync(filename).isDirectory()) {
-					if (recursive) {
-						sourceFiles = sourceFiles.concat(this.getFiles(filename));
-					}
-				} else {
-					if (file.length > 4 && file.lastIndexOf(".ooc", file.length - 4) === file.length - 4) {
-						sourceFiles.push(fs.realpathSync(filename));
-					}
-				}
-			}
-		});
-		return sourceFiles;
-	}
-
-	analyze(file: string) {
-		var lexer = new Lexer(file, this.glossary);
-		var analyzer = new Analyser(lexer.getTokenList());
-		var report = analyzer.run(this.analyzerRules);
-		var reports: Report[] = [];
-		if (report.violations.length > 0) {
-			reports.push(report);
-		}
-		reports.forEach(r => {
-			console.log("\n" + r.violations[0].location.filename);
-			console.log(StringUtils.padRight("", "-", r.violations[0].location.filename.length));
-			r.violations/*.sort((a, b) => {
-				return a.location.line - b.location.line;
-			})*/.forEach(violation => {
-				console.log("  " + StringUtils.padRight(violation.location.toString(), ".", 14) + violation.message);
-			});
-			console.log();
-		});
+	static printVersion() {
+		console.log("\n-> magic " + Magic.version);
 	}
 }
 
 try {
 	var magic = new Magic(process.argv);
+	magic.analyze()
+	Magic.printVersion();
 } catch (Error) {
 	console.log(Error.toString());
 }
