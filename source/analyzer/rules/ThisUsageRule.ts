@@ -6,6 +6,7 @@ import Violation = require("./../Violation");
 import RuleKind = require("./../RuleKind");
 
 class ThisUsageRule implements Rule {
+	private classMembers: string[] = [];
 	constructor() { }
 	run(tokens: Array<Token>, report: Report) {
 		var className: string;
@@ -36,6 +37,39 @@ class ThisUsageRule implements Rule {
 			}
 			isCoverFrom = false;
 		}
+		//this.classMembers = this.getClassMembers(tokens);
+	}
+
+	getClassMembers(tokens: Token[]) {
+		var members: string[] = [];
+		var previous = Token.empty;
+		for (var i = 0; i < tokens.length; i++) {
+			if (previous.kind == TokenKind.Identifier && tokens[i].kind == TokenKind.SeparatorColon) {
+				i++;
+				while (TokenKind[tokens[i].kind].indexOf("Whitespace") > -1) {
+					i++;
+				}
+				switch (tokens[i].kind) {
+					case TokenKind.KeywordClass:
+					case TokenKind.KeywordCover:
+						break;
+					case TokenKind.KeywordStatic:
+						break;
+					case TokenKind.KeywordFunc:
+						while (tokens[i].kind != TokenKind.SeparatorLeftCurly && tokens[i].kind != TokenKind.WhitespaceLineFeed) {
+							i++;
+						}
+						break;
+					case TokenKind.Identifier:
+						break;
+					default:
+						break;
+				}
+			}
+			previous = tokens[i];
+		}
+
+		return members;
 	}
 
 	analyzeClassBody(tokens: Token[], report: Report, index: number, name: string) {
