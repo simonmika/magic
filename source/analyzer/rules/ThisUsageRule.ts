@@ -10,33 +10,38 @@ class ThisUsageRule implements Rule {
 	run(tokens: Array<Token>, report: Report) {
 		var className: string;
 		var isClass = false;
-		var last: Token;
+		var isCoverFrom = false;
 		for (var i = 0; i < tokens.length; i++) {
 			if (tokens[i].kind == TokenKind.Identifier) {
 				className = tokens[i].value;
 				while (tokens[i].kind != TokenKind.WhitespaceLineFeed && tokens[i].kind != TokenKind.Eof) {
 					if (tokens[i].kind == TokenKind.KeywordClass || tokens[i].kind == TokenKind.KeywordCover) {
-						while (tokens[i].kind != TokenKind.SeparatorLeftCurly && tokens[i].kind != TokenKind.KeywordFrom) {
+						while (tokens[i].kind != TokenKind.SeparatorLeftCurly) {
+							if (tokens[i].kind == TokenKind.KeywordFrom) {
+								isCoverFrom = true;
+								i++;
+								break;
+							}
 							i++;
 						}
-						isClass = true;
+						isClass = !isCoverFrom
 						break;
 					}
 					i++;
 				}
-				if (isClass) {
+				if (isClass && !isCoverFrom) {
 					i = this.analyzeClassBody(tokens, report, i, className);
 					isClass = false;
 				}
 			}
-			last = tokens[i];
+			isCoverFrom = false;
 		}
 	}
 
 	analyzeClassBody(tokens: Token[], report: Report, index: number, name: string) {
 		var delta = 1;
 		index++;
-		while (delta > 0 && tokens[index].kind != TokenKind.Eof) {
+		while (delta > 0 && tokens[index].kind != TokenKind.Eof && tokens[index].kind != TokenKind.KeywordFrom) {
 			switch (tokens[index].kind) {
 				case TokenKind.SeparatorLeftCurly:
 					delta++;
