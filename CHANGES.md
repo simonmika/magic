@@ -1,3 +1,6 @@
+# 0.1.4-alpha
+* fixed a bug in ThisUsage rule where it would stop analyze the file if it came across ´´´cover from´´´
+
 # 0.1.3-alpha
 * Implemented Semicolon rule, which says that no line can end with a semicolon.
 Example:
