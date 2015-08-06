@@ -9,7 +9,6 @@ Very, very early alpha stage.
 * The analyzer will work with a proper parse tree, once implemented.
 This will enable more complex checks. Right now, a limited set of checks has been hacked together using the
 token list generated from each file.
-* Command line arguments are not implemented (except for -f).
 * A tab width of 4 is assumed.
 
 #requirements
@@ -73,9 +72,15 @@ with a lot of violations, redirecting to a file is recommended.
 ```
 ./magic ~/projects/my_awesome_project/source > violations.txt
 ```
-If you want to run the analyzer on a single file, use __-f__ (this does not work with the binary yet)
+If you want to run the analyzer on a single file, simply specify the filename.
+You may also specify a list of files, separated by a space.
 ```
-./magic -f ~/projects/my_awesome_project/source/math/Quaternion.ooc
+./magic ~/projects/my_awesome_project/source/math/Quaternion.ooc
+```
+If your shell supports wildcard expansion, you may also specify wildcards to
+process files that match a certain pattern, for example, to analyze all files that start with __Matrix__:
+```
+./magic ~/projects/my_awesome_project/source/math/Matrix*.ooc
 ```
 
 ###ignore list
