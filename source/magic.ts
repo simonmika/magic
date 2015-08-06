@@ -40,14 +40,17 @@ class Magic {
 		this.analyzerRules.push(new EmptyLinesRule());
 		this.analyzerRules.push(new ExcessiveSpaceRule());
 		this.analyzerRules.push(new SemicolonRule());
-		if (cmd[0] == "-f") {
-			this.analyze(cmd[1]);
-		} else {
-			if (!fs.existsSync(cmd[0])) {
-				this.throwError("The folder '" + cmd[0] + "' does not exist.");
+		cmd.forEach(argument => {
+			if (fs.existsSync(argument)) {
+				if (fs.lstatSync(argument).isDirectory()) {
+					this.analyzeDirectory(argument);
+				} else {
+					this.analyze(argument);
+				}
+			} else {
+				console.log("-> File/folder '" + argument + "' does not exist");
 			}
-			this.analyzeDirectory(cmd[0]);
-		}
+		});
 		console.log("-> magic " + Magic.version);
 	}
 
