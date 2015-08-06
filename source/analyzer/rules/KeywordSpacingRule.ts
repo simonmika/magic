@@ -18,6 +18,9 @@ class KeywordSpacingRule implements Rule {
 					case TokenKind.KeywordInclude:
 					case TokenKind.KeywordNew:
 						break;
+					case TokenKind.KeywordGet:
+					case TokenKind.KeywordSet:
+						break;
 					default:
 						var left = tokens[i - 1];
 						var right = tokens[i + 1];

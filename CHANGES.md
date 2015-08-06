@@ -1,3 +1,6 @@
+# 0.1.5-alpha
+* ...
+
 # 0.1.4-alpha
 * fixed a bug in ThisUsage rule where it would stop analyzing the file if it came across ```cover from```
 * improved EmptyLines rule to detect unnecessary empty line(s) before EOF, before closing curly and after opening curly.
