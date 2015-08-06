@@ -1,3 +1,4 @@
+[![Build Status](https://secure.travis-ci.org/cogneco/magic.png?branch=master)](http://travis-ci.org/cogneco/magic)
 #magic
 
 Code analyzer for [ooc](http://ooc-lang.org)
