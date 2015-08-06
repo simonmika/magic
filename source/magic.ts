@@ -30,7 +30,6 @@ class Magic {
 	private ignoreFiles: string[] = [];
 
 	constructor(cmd: string[]) {
-		cmd = cmd.slice(2);
 		this.analyzerRules.push(new ThisUsageRule());
 		this.analyzerRules.push(new RedundantTypeInfoRule());
 		this.analyzerRules.push(new FuncRule());
@@ -40,6 +39,10 @@ class Magic {
 		this.analyzerRules.push(new EmptyLinesRule());
 		this.analyzerRules.push(new ExcessiveSpaceRule());
 		this.analyzerRules.push(new SemicolonRule());
+		cmd = cmd.slice(2);
+		if (cmd.length == 0) {
+			cmd[0] = ".";
+		}
 		cmd.forEach(argument => {
 			if (fs.existsSync(argument)) {
 				if (fs.lstatSync(argument).isDirectory()) {
@@ -59,9 +62,7 @@ class Magic {
 	}
 
 	analyzeDirectory(directory: string) {
-		if (directory == undefined) {
-			directory = ".";
-		} else if (directory.charAt(directory.length - 1) === "/") {
+		if (directory.charAt(directory.length - 1) === "/") {
 			directory = directory.slice(0, directory.length - 1);
 		}
 		this.targetBaseDirectory = directory;
@@ -97,7 +98,7 @@ class Magic {
 						sourceFiles = sourceFiles.concat(this.getFiles(filename));
 					}
 				} else {
-					if (file.lastIndexOf(".ooc", file.length - 4) === file.length - 4) {
+					if (file.length > 4 && file.lastIndexOf(".ooc", file.length - 4) === file.length - 4) {
 						sourceFiles.push(fs.realpathSync(filename));
 					}
 				}
