@@ -18,7 +18,7 @@ import ThisUsageRule = require("./analyzer/rules/ThisUsageRule");
 import SemicolonRule = require("./analyzer/rules/SemicolonRule");
 
 class Magic {
-	private static version = "0.1.5-alpha";
+	private static version = "0.1.6-alpha";
 
 	private arguments: string[];
 
