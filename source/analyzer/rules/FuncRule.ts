@@ -7,7 +7,7 @@ import RuleKind = require("./../RuleKind");
 
 class FuncRule implements Rule {
 	constructor() { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		for (var i = 0; i < tokens.length; i++) {
 			switch (tokens[i].kind) {
 				case TokenKind.KeywordFunc:

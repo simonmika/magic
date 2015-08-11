@@ -7,7 +7,7 @@ import RuleKind = require("./../RuleKind");
 
 class SeparatorSpacingRule implements Rule {
 	constructor() { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		var previous = Token.empty;
 		tokens.forEach(t => {
 			switch (previous.kind) {

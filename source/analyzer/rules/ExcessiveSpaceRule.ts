@@ -8,7 +8,7 @@ import RuleKind = require("./../RuleKind");
 
 class ExcessiveSpaceRule implements Rule {
 	constructor() { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		var spaces = 0;
 		var spaceLocation: TokenLocation;
 		for (var i = 0; i < tokens.length; i++) {

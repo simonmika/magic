@@ -7,7 +7,7 @@ import RuleKind = require("./../RuleKind");
 
 class SemicolonRule implements Rule {
 	constructor() { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		var semicolons = 0;
 		var previous = Token.empty;
 		for (var i = 0; i < tokens.length; i++) {

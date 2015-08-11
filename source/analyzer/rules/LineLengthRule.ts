@@ -7,7 +7,7 @@ import RuleKind = require("./../RuleKind");
 
 class LineLengthRule implements Rule {
 	constructor(private maxLineLength: number) { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		tokens.forEach(t => {
 			if (t.kind == TokenKind.WhitespaceLineFeed) {
 				if (t.location.column > this.maxLineLength) {

@@ -1,5 +1,8 @@
 # 0.1.5-alpha
-* ...
+* Fixed EmptyLines rule to check for an empty line in the beginning of a file
+* Fixed KeywordSpacing rule so it does not trigger a violation when a keyword is immediately followed by the ```?``` operator.
+* Added ```:``` to the SeparatorSpacing rule.
+* get/set are no longer considered by the KeywordSpacing rule
 
 # 0.1.4-alpha
 * fixed a bug in ThisUsage rule where it would stop analyzing the file if it came across ```cover from```

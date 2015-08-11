@@ -7,7 +7,7 @@ import Report = require("./../Report");
 // temporary.
 //
 interface Rule {
-	run(tokens: Array<Token>, report: Report): void;
+	run(tokens: Token[], report: Report): void;
 }
 
 export = Rule;
