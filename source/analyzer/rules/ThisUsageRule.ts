@@ -8,7 +8,7 @@ import RuleKind = require("./../RuleKind");
 class ThisUsageRule implements Rule {
 	private classMembers: string[] = [];
 	constructor() { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		var className: string;
 		var isClass = false;
 		var isCoverFrom = false;

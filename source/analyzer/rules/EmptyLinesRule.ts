@@ -8,7 +8,7 @@ import RuleKind = require("./../RuleKind");
 
 class EmptyLinesRule implements Rule {
 	constructor() { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		var linefeeds = 0;
 		var linefeedLocation: TokenLocation;
 		var foundLeftCurly = false;

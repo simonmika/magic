@@ -7,7 +7,7 @@ import RuleKind = require("./../RuleKind");
 
 class KeywordSpacingRule implements Rule {
 	constructor() { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		var previous = Token.empty;
 		for (var i = 0; i < tokens.length; i++) {
 			if (TokenKind[tokens[i].kind].indexOf("Keyword") < 0) {

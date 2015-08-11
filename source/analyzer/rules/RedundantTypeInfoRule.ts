@@ -9,7 +9,7 @@ import RuleKind = require("./../RuleKind");
 
 class RedundantTypeInfoRule implements Rule {
 	constructor() { }
-	run(tokens: Array<Token>, report: Report) {
+	run(tokens: Token[], report: Report) {
 		for (var i = 0; i < tokens.length; i++) {
 			if (tokens[i].kind == TokenKind.KeywordFunc) {
 				while (tokens[i].kind != TokenKind.Eof && tokens[i].kind != TokenKind.WhitespaceLineFeed) {
