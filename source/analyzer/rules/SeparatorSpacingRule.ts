@@ -11,6 +11,7 @@ class SeparatorSpacingRule implements Rule {
 		var previous = Token.empty;
 		tokens.forEach(t => {
 			switch (previous.kind) {
+				case TokenKind.SeparatorColon:
 				case TokenKind.SeparatorComma:
 					if (t.kind != TokenKind.WhitespaceSpace && t.kind != TokenKind.WhitespaceLineFeed) {
 						report.addViolation(new Violation(t.location,
