@@ -1,3 +1,5 @@
+
+// Leading empty line
 Foo: class { /* Empty line after opening curly */ // noise
 
 	// Two or more consecutive empty lines
