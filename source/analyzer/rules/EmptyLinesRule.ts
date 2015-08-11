@@ -12,6 +12,10 @@ class EmptyLinesRule implements Rule {
 		var linefeeds = 0;
 		var linefeedLocation: TokenLocation;
 		var foundLeftCurly = false;
+		if (tokens[0].kind == TokenKind.WhitespaceLineFeed) {
+			report.addViolation(new Violation(tokens[0].location,
+					"unnecessary empty line(s) at beginning of file", RuleKind.Whitespace));
+		}
 		for (var i = 0; i < tokens.length; i++) {
 			switch (tokens[i].kind) {
 				case TokenKind.WhitespaceLineFeed:
