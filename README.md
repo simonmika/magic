@@ -58,8 +58,8 @@ It should give you version 1.5.3 or greater.
 # Installation
 You can install magic in two different ways:
 
-* Use the provided install script
-* Use the [release file](https://github.com/cogneco/magic/releases)
+* Using the provided install script
+* Using the pre-compiled [release file](https://github.com/cogneco/magic/releases)
 
 ## build it yourself and install
 magic's default install location is ```/usr/local/bin```, which requires you to run the installer as root.
@@ -74,13 +74,14 @@ The installer will build the project for you. For ease of use, make sure you hav
 in your ```$PATH```.
 
 ## using the release
-* Download the latest release and unpack it
+* Download the [latest release](https://github.com/cogneco/magic/releases) and unpack it
 * Move the file ```magic``` to a location of your choosing (we recommend ```/usr/local/bin```
 or any other standard bin directory)
 * That's it.
 
 #build
-To build the project, make sure you're in magic's root folder, then simply run: ```tsc```.
+If you have modified the project, you must obviously re-build the project.
+To do so, make sure you're in magic's root folder, then simply run: ```tsc```.
 
 #usage
 If you don't specify a target directory, your current location will be used.

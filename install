@@ -14,10 +14,12 @@ BUILD_DIR="./build"
 DEFAULT_DIR="/usr/local/bin"
 INSTALL_DIR=""
 
-if [[ ! -d "$BUILD_DIR" ]]; then
-	echo "building magic..."
-	tsc
+# Ensure a fresh build
+if [[ -d "$BUILD_DIR" ]]; then
+	rm -rf "$BUILD_DIR"
 fi
+echo "building magic..."
+tsc
 if [ -z "$1" ]; then
 	INSTALL_DIR="$DEFAULT_DIR"
 else
