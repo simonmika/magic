@@ -6,8 +6,11 @@
 - [0.1.3-alpha](#013-alpha)
 - [0.1.2-alpha](#012-alpha)
 
+# 0.1.7-alpha
+* Same as 0.1.6-alpha
+
 # 0.1.6-alpha
-* ...
+* No change - only release mode changes
 
 # 0.1.5-alpha
 * Fixed EmptyLines rule to check for an empty line in the beginning of a file
