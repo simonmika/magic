@@ -267,5 +267,3 @@ class Dictionary<K, V> {
 		return toret + "\n}";
 	}
 }
-
-export = Dictionary

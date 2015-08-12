@@ -1,5 +1,5 @@
-import Dictionary = require("./../utilities/Dictionary");
-import TokenKind = require("./TokenKind");
+/// <reference path="./../utilities/Dictionary" />
+/// <reference path="TokenKind" />
 //
 // Glossary over ooc operators, keywords, separators and valid whitespace.
 //
@@ -160,5 +160,3 @@ class Glossary {
 		this.separators.setValue("}", TokenKind.SeparatorRightCurly);
 	}
 }
-
-export = Glossary;

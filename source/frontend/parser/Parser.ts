@@ -1,6 +1,6 @@
-import Lexer = require("./../Lexer");
-import Glossary = require("./../Glossary");
-import TokenReader = require("./../TokenReader");
+/// <reference path="./../Lexer" />
+/// <reference path="./../Glossary" />
+/// <reference path="./../TokenReader" />
 
 class Parser {
 	private tokenReader: TokenReader;
@@ -9,9 +9,7 @@ class Parser {
 	}
 
 	parse() {
-		
+
 	}
 
 }
-
-export = Parser;

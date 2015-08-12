@@ -1,10 +1,11 @@
-import Rule = require("./Rule");
-import Token = require("./../../frontend/Token");
-import TokenKind = require("./../../frontend/TokenKind");
-import TokenLocation = require("../../frontend/TokenLocation");
-import Report = require("./../Report");
-import Violation = require("./../Violation");
-import RuleKind = require("./../RuleKind");
+/// <reference path="Rule" />
+/// <reference path="../../frontend/Token" />
+/// <reference path="../../frontend/TokenKind" />
+/// <reference path="../../frontend/TokenLocation" />
+/// <reference path="../Report" />
+/// <reference path="../Violation" />
+/// <reference path="../RuleKind" />
+
 
 class ExcessiveSpaceRule implements Rule {
 	constructor() { }
@@ -43,5 +44,3 @@ class ExcessiveSpaceRule implements Rule {
 		}
 	}
 }
-
-export = ExcessiveSpaceRule;

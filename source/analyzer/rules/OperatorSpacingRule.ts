@@ -1,9 +1,9 @@
-import Rule = require("./Rule");
-import Token = require("./../../frontend/Token");
-import TokenKind = require("./../../frontend/TokenKind");
-import Report = require("./../Report");
-import Violation = require("./../Violation");
-import RuleKind = require("./../RuleKind");
+/// <reference path="Rule" />
+/// <reference path="../../frontend/Token" />
+/// <reference path="../../frontend/TokenKind" />
+/// <reference path="../Report" />
+/// <reference path="../Violation" />
+/// <reference path="../RuleKind" />
 
 class OperatorSpacingRule implements Rule {
 	constructor() { }
@@ -49,7 +49,7 @@ class OperatorSpacingRule implements Rule {
 						} else {
 							message += "after";
 						}
-						
+
 						if (missingLeft || missingRight) {
 							report.addViolation(new Violation(t.location, message + " operator '" + t.value + "'", RuleKind.Operator));
 						}
@@ -60,5 +60,3 @@ class OperatorSpacingRule implements Rule {
 		}
 	}
 }
-
-export = OperatorSpacingRule;

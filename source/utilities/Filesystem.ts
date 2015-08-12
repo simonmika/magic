@@ -1,5 +1,5 @@
 ///<reference path="./../../typings/node/node.d.ts" />
-import fs = require("fs");
+var fs = require("fs");
 
 class Filesystem {
 	constructor() { }
@@ -24,7 +24,4 @@ class Filesystem {
 		});
 		return sourceFiles;
 	}
-
 }
-
-export = Filesystem;

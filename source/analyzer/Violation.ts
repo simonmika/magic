@@ -1,5 +1,5 @@
-import TokenLocation = require("./../frontend/TokenLocation")
-import RuleKind = require("./RuleKind");
+/// <reference path="./../frontend/TokenLocation" />
+/// <reference path="./RuleKind" />
 
 class Violation {
 	constructor(private _location: TokenLocation, private _message: string, private _kind: RuleKind) { }
@@ -7,5 +7,3 @@ class Violation {
 	get message() { return this._message; }
 	get kind() { return this._kind; }
 }
-
-export = Violation;

@@ -1,5 +1,5 @@
-import Token = require("./../../frontend/Token");
-import Report = require("./../Report");
+/// <reference path="./../../frontend/Token" />
+/// <reference path="./../Report" />
 
 //
 // TODO: The analyzer should not work with a list of tokens.
@@ -9,5 +9,3 @@ import Report = require("./../Report");
 interface Rule {
 	run(tokens: Token[], report: Report): void;
 }
-
-export = Rule;
