@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/cogneco/magic.png?branch=master)](http://travis-ci.org/cogneco/magic)
+
 **Table of Contents**
 
 - [magic](#magic)
@@ -81,7 +83,7 @@ or any other standard bin directory)
 
 #build
 If you have modified the project, you must obviously re-build the project.
-To do so, make sure you're in magic's root folder, then simply run: ```tsc```.
+To do so, make sure you're in magic's root folder, then simply run: ```tsc```
 
 #usage
 If you don't specify a target directory, your current location will be used.
@@ -122,10 +124,8 @@ source/math/Transform.ooc
 
 #troubleshooting
 Here are some problems that may occur along the way, and hopefully, solutions to them.
-__I have installed magic, but can't seem to run it?__
-
-Make sure the system knows where to look for it. Try executing ```command -v magic```.
-The output be a directory, if it is empty, then you need to add magic's location to your ```$PATH```.
-
+* __I have installed magic, but can't seem to run it?__ Make sure the system knows where to look for it.
+Try executing ```command -v magic```. The output should point to where magic is installed, if it is empty,
+then you need to add magic's location to your ```$PATH```.
 
 # credits
