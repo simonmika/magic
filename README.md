@@ -13,16 +13,15 @@ token list generated from each file.
 * A tab width of 4 is assumed.
 
 #requirements
-Known to work on Linux (x64), status on other platforms is unknown at this time.
-__If you don't want to use the standalone release binary__, make sure you have a reasonably
-new version of the following or follow the instructions in the next section.
+## Platforms
+* Known to work on Linux (x64), status on other platforms is unknown at this time.
+## Dependencies
 * 1: [node.js](http://nodejs.org/)
-* 2: [Typescript compiler](http://www.typescriptlang.org/)
-* 3: [nexe](https://github.com/crcn/nexe) (if you want to compile a standalone binary)
+* 2: [Typescript compiler](http://www.typescriptlang.org/) (if you want to build it yourself)
 
-##If you don't have node.js and the Typescript compiler
+##If you don't have node.js and/or the Typescript compiler
 The node.js version provided by aptitude is outdated, so do not install via apt-get.
-Instead, download and unpack node.js into any folder, then follow the steps outlined below.
+Instead, [download](https://nodejs.org/download/) and unpack node.js into any folder, then follow the steps outlined below.
 ```
 cd NODE_FOLDER
 ./configure
@@ -44,17 +43,14 @@ tsc --v
 It should give you version 1.5.3 or greater.
 
 #shell scripts
-* ```magic``` magic app entry point (output in ```./build```)
-* ```build_binary``` builds magic and creates a standalone node.js binary in ./release/ (requires [nexe](https://github.com/crcn/nexe))
+##```install```
+Installs magic to the default or user-specified location.
+The default location is ```/usr/local/bin```.
+To install magic to a different location, simply specify the path: ```./install /opt/apps/magic```
+Make sure you have any user-specified paths in your PATH environment variable.
 
 #build
-Build the project: ```tsc```
-You can safely ignore these errors:
-```
-typings/node/node.d.ts(212,21): error TS2304: Cannot find name 'Map'.
-typings/node/node.d.ts(221,21): error TS2304: Cannot find name 'Set'.
-typings/node/node.d.ts(231,25): error TS2304: Cannot find name 'WeakMap'.
-```
+To build the project, make sure you're in the root folder and then execture: ```tsc```
 
 #usage
 If you don't specify a target directory, your current location will be used.
@@ -95,24 +91,6 @@ source/math/Transform.ooc
 
 #troubleshooting
 Here are some problems that may occur along the way, and hopefully, solutions to them.
-
-##using the binary
-__Problem__: You get this error when trying to run the binary:
-```
-./magic: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.20' not found (required by ./magic)_
-```
-__Why?__ Node.js was probably compiled using a newer version of gcc/g++.
-
-__Solution 1__ (Ubuntu 14.04): Install g++ 4.9 (or newer):
-```
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-sudo apt-get update
-sudo apt-get install g++-4.9
-```
-If you installed g++ 4.9 from the specified PPA, your default g++ version will not
-be altered. If you don't want to keep the newly added toolchain PPA, issue this command:
-```
-sudo add-apt-repository --remove ppa:ubuntu-toolchain-r/test
-```
+* Nothing yet :-)
 
 # credits
