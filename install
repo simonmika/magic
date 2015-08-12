@@ -1,18 +1,19 @@
 #!/bin/bash
+set -e
 
-#
-# Check if node is installed
-#
-NODEJS_DIR=$(command -v node)
-echo $NODEJS_DIR >/dev/null 2>&1 || {
-	echo "Can't find node (node.js), is it installed? Is it in your PATH?" >&2;
-	exit 1;
-}
-
+NODEJS="node"
 FILENAME="magic"
 BUILD_DIR="./build"
 DEFAULT_DIR="/usr/local/bin"
 INSTALL_DIR=""
+
+#
+# Check if node is installed
+#
+command -v $NODEJS >/dev/null 2>&1 || {
+	echo "Can't find '$NODEJS' (Node.js binary), is it installed? Is it in your PATH?" >&2
+	exit 1
+}
 
 # Ensure a fresh build
 if [[ -d "$BUILD_DIR" ]]; then
@@ -28,8 +29,8 @@ fi
 if [ ! -d "$INSTALL_DIR" ]; then
 	mkdir "$INSTALL_DIR"
 fi
-echo "installing magic..."
-echo "#!$NODEJS_DIR" > "$BUILD_DIR/$FILENAME"
+echo "installing..."
+echo "#!/usr/bin/env node" > "$BUILD_DIR/$FILENAME"
 cat "$BUILD_DIR/magic.js" >> "$BUILD_DIR/$FILENAME"
 chmod 755 "$BUILD_DIR/$FILENAME"
 mv -f "$BUILD_DIR/$FILENAME" "$INSTALL_DIR"
