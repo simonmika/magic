@@ -1,13 +1,9 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+**Table of Contents**
 
 - [0.1.5-alpha](#015-alpha)
 - [0.1.4-alpha](#014-alpha)
 - [0.1.3-alpha](#013-alpha)
 - [0.1.2-alpha](#012-alpha)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # 0.1.5-alpha
 * Fixed EmptyLines rule to check for an empty line in the beginning of a file
