@@ -10,7 +10,7 @@ module Magic.Frontend {
 			this._sourceText = this.readFile(sourceFile);
 		}
 		get eofCharacter() { return this._eofCharacter; }
-		set eofCharacter(eofChar: string) { this._eofCharacter = eofChar; }
+		set eofCharacter(eofCharacter: string) { this._eofCharacter = eofCharacter; }
 		get hasNext() { return this._currentPosition < this._sourceText.length; }
 		peek() {
 			return this.hasNext ? this._sourceText[this._currentPosition] : this.eofCharacter;

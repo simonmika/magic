@@ -277,7 +277,7 @@ module Magic.Frontend {
 				case TokenKind.LiteralString:
 				case TokenKind.BlockComment:
 					this.column += lastToken.length;
-					this.line += Utilities.String.subStringCount(lastToken.value, "\n");
+					this.line += Utilities.String.substringCount(lastToken.value, "\n");
 					break;
 				default:
 					this.column += lastToken.length;

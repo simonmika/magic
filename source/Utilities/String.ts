@@ -1,25 +1,25 @@
 module Magic.Utilities {
 	export class String {
-		static padLeft(str: string, padChar: string, width: number) {
-			return String.pad(str, padChar, width, true);
+		static padLeft(value: string, padingCharacter: string, width: number) {
+			return String.pad(value, padingCharacter, width, true);
 		}
-		static padRight(str: string, padChar: string, width: number) {
-			return String.pad(str, padChar, width, false);
+		static padRight(value: string, padingCharacter: string, width: number) {
+			return String.pad(value, padingCharacter, width, false);
 		}
-		private static pad(str: string, padChar: string, width: number, padLeft = false) {
+		private static pad(value: string, padingCharacter: string, width: number, padLeft = false) {
 			var padding = "";
-			var n = width - str.length;
+			var n = width - value.length;
 			for (var i = 0; i < n; i++) {
-				padding += padChar;
+				padding += padingCharacter;
 			}
-			return padLeft ? padding + str : str + padding;
+			return padLeft ? padding + value : value + padding;
 		}
-		static subStringCount(source: string, substr: string) {
+		static substringCount(haystack: string, needle: string) {
 			var i = 0;
 			var count = 0;
 			var index = 0;
-			while ((i = source.indexOf(substr, index)) > -1) {
-				index = i + substr.length;
+			while ((i = haystack.indexOf(needle, index)) > -1) {
+				index = i + needle.length;
 				count++;
 			}
 			return count;
