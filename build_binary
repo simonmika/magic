@@ -1,6 +1,0 @@
-#!/bin/bash
-# Ensure a fresh build
-rm -rf ./build && tsc
-echo "Building release binary..."
-nexe -i ./build/magic.js -o ./release/magic -t ./node_sources
-echo "Done."

@@ -1,5 +1,0 @@
-#!/bin/bash
-if [[ ! -d "build/." ]]; then
-	./build_magic
-fi
-node build/magic.js $@
