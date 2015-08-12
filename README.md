@@ -44,13 +44,11 @@ tsc --v
 It should give you version 1.5.3 or greater.
 
 #shell scripts
-* ```build_magic``` builds magic, output in ./build/
-* ```clean_magic``` removes ./build/
-* ```magic``` magic app entry point
-* ```build_release``` builds magic and creates a standalone binary in ./release/ (requires [nexe](https://github.com/crcn/nexe))
+* ```magic``` magic app entry point (output in ```./build```)
+* ```build_binary``` builds magic and creates a standalone node.js binary in ./release/ (requires [nexe](https://github.com/crcn/nexe))
 
 #build
-Build the project: ```./build_magic```
+Build the project: ```tsc```
 You can safely ignore these errors:
 ```
 typings/node/node.d.ts(212,21): error TS2304: Cannot find name 'Map'.

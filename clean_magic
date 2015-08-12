@@ -1,4 +1,0 @@
-#!/bin/bash
-echo "Cleaning..."
-rm -r build/
-echo "Done."

@@ -1,4 +1,5 @@
+module Magic.Utilities {
+	export class CommandParser {
 
-class CommandParser {
-
+	}
 }
