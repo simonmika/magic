@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [magic](#magic)
+- [very much readme](#very-much-readme)
+- [requirements](#requirements)
+  - [Platforms](#platforms)
+  - [Dependencies](#dependencies)
+  - [If you don't have node.js and/or the Typescript compiler](#if-you-dont-have-nodejs-andor-the-typescript-compiler)
+- [shell scripts](#shell-scripts)
+  - [```install```](#install)
+- [build](#build)
+- [usage](#usage)
+    - [ignore list](#ignore-list)
+- [troubleshooting](#troubleshooting)
+- [credits](#credits)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 [![Build Status](https://secure.travis-ci.org/cogneco/magic.png?branch=master)](http://travis-ci.org/cogneco/magic)
 #magic
 
