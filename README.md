@@ -49,6 +49,7 @@ magic's default install location is ```/usr/local/bin```, which requires you to 
 
 If you want to install magic to a different location, you may give the installer that location as an argument.
 Depending on the location, you may have to run the installer as root.
+
 ```./install ~/apps/bin```
 
 For ease of use, make sure you have magic's location in your ```$PATH```.
