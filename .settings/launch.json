@@ -9,17 +9,23 @@
 			// Type of configuration. Possible values: "node", "mono".
 			"type": "node",
 			// Workspace relative or absolute path to the program.
-			"program": "magic.js",
+			"program": "build/magic.js",
 			// Automatically stop program after launch.
-			"stopOnEntry": true,
+			"stopOnEntry": false,
 			// Command line arguments passed to the program.
-			"args": ["--module commonjs"],
+			"args": [],
 			// Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.
 			"cwd": ".",
 			// Workspace relative or absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.
 			"runtimeExecutable": null,
+			// Optional arguments passed to the runtime executable.
+			"runtimeArgs": [],
 			// Environment variables passed to the program.
-			"env": { }
+			"env": { },
+			// Use JavaScript source maps (if they exist).
+			"sourceMaps": true,
+			// If JavaScript source maps are enabled, the generated code is expected in this directory.
+			"outDir": "build"
 		},
 		{
 			"name": "Attach",
@@ -27,7 +33,8 @@
 			// TCP/IP address. Default is "localhost".
 			"address": "localhost",
 			// Port to attach to.
-			"port": 5858
+			"port": 5858,
+			"sourceMaps": true
 		}
 	]
 }

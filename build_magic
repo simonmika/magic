@@ -4,5 +4,5 @@ then
 	./clean_magic
 fi
 echo "Building magic..."
-tsc --p "source/"
+tsc
 echo "Done."

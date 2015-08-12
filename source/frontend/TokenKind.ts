@@ -128,5 +128,3 @@ enum TokenKind {
 	WhitespaceCarriageReturn,
 	WhitespaceSpace,
 }
-
-export = TokenKind;

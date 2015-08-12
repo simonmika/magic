@@ -1,5 +1,5 @@
-import TokenKind = require("./TokenKind");
-import TokenLocation = require("./TokenLocation");
+/// <reference path="TokenKind" />
+/// <reference path="TokenLocation" />
 
 class Token {
 	static get empty() {  return new Token(new TokenLocation("", 0, 0), TokenKind.Unknown, ""); }
@@ -14,5 +14,3 @@ class Token {
 		return this.location.toString() + " [" + TokenKind[this.kind] + " = '" + this.value + "']";
 	}
 }
-
-export = Token;

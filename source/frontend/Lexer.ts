@@ -1,12 +1,11 @@
-import StringUtils = require("./../utilities/StringUtils");
-import CharacterReader = require("./CharacterReader");
-import Glossary = require("./Glossary");
-import Token = require("./Token");
-import TokenKind = require("./TokenKind");
-import TokenLocation = require("./TokenLocation");
+/// <reference path="../utilities/StringUtils" />
+/// <reference path="CharacterReader" />
+/// <reference path="Glossary" />
+/// <reference path="Token" />
+/// <reference path="TokenKind" />
+/// <reference path="TokenLocation" />
 
 class Lexer {
-
 	private line = 1;
 	private column = 1;
 
@@ -350,5 +349,3 @@ class Lexer {
 	}
 
 }
-
-export = Lexer;

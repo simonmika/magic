@@ -1,5 +1,5 @@
-import fs = require("fs");
-import TokenLocation = require("./TokenLocation");
+var fs = require("fs");
+/// <reference path="TokenLocation" />
 
 class CharacterReader {
 
@@ -41,5 +41,3 @@ class CharacterReader {
 		}
 	}
 }
-
-export = CharacterReader;

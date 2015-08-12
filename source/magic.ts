@@ -1,21 +1,21 @@
 ///<reference path="./../typings/node/node.d.ts" />
-import fs = require("fs");
+var fs = require("fs");
 
-import Filesystem = require("./utilities/Filesystem");
-import StringUtils = require("./utilities/StringUtils");
-import Glossary = require("./frontend/Glossary");
-import Analyser = require("./analyzer/Analyzer");
-import Rule = require("./analyzer/rules/Rule");
-import EmptyLinesRule = require("./analyzer/rules/EmptyLinesRule");
-import ExcessiveSpaceRule = require("./analyzer/rules/ExcessiveSpaceRule");
-import LineLengthRule = require("./analyzer/rules/LineLengthRule");
-import KeywordSpacingRule = require("./analyzer/rules/KeywordSpacingRule");
-import OperatorSpacingRule = require("./analyzer/rules/OperatorSpacingRule");
-import SeparatorSpacingRule = require("./analyzer/rules/SeparatorSpacingRule");
-import RedundantTypeInfoRule = require("./analyzer/rules/RedundantTypeInfoRule");
-import FuncRule = require("./analyzer/rules/FuncRule");
-import ThisUsageRule = require("./analyzer/rules/ThisUsageRule");
-import SemicolonRule = require("./analyzer/rules/SemicolonRule");
+///<reference path="./utilities/Filesystem" />
+///<reference path="./utilities/StringUtils" />
+///<reference path="./frontend/Glossary" />
+///<reference path="./analyzer/Analyzer" />
+///<reference path="./analyzer/rules/Rule" />
+///<reference path="./analyzer/rules/EmptyLinesRule" />
+///<reference path="./analyzer/rules/ExcessiveSpaceRule" />
+///<reference path="./analyzer/rules/LineLengthRule" />
+///<reference path="./analyzer/rules/KeywordSpacingRule" />
+///<reference path="./analyzer/rules/OperatorSpacingRule" />
+///<reference path="./analyzer/rules/SeparatorSpacingRule" />
+///<reference path="./analyzer/rules/RedundantTypeInfoRule" />
+///<reference path="./analyzer/rules/FuncRule" />
+///<reference path="./analyzer/rules/ThisUsageRule" />
+///<reference path="./analyzer/rules/SemicolonRule" />
 
 class Magic {
 	private static version = "0.1.6-alpha";
@@ -42,7 +42,7 @@ class Magic {
 			new ThisUsageRule(),
 			new SemicolonRule()
 		];
-		var analyzer = new Analyser(new Glossary(), rules);
+		var analyzer = new Analyzer(new Glossary(), rules);
 		analyzer.analyze(this.arguments).forEach(report => {
 			if (report.violations.length > 0) {
 				var file = report.violations[0].location.filename;

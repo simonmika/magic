@@ -1,5 +1,5 @@
-import Token = require("./Token");
-import Lexer = require("./Lexer");
+/// <reference path="Token" />
+/// <reference path="Lexer" />
 
 class TokenReader {
 	private tokens: Token[];
@@ -18,5 +18,3 @@ class TokenReader {
 		return result;
 	}
 }
-
-export = TokenReader;

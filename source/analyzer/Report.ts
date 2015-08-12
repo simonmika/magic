@@ -1,4 +1,4 @@
-import Violation = require("./Violation");
+/// <reference path="./Violation" />
 
 class Report {
 	private _violations = new Array<Violation>();
@@ -8,5 +8,3 @@ class Report {
 		this._violations.push(violaton);
 	}
 }
-
-export = Report;
