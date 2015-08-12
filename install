@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#
+# Check if node is installed
+#
+NODEJS_DIR=$(command -v node)
+echo $NODEJS_DIR >/dev/null 2>&1 || {
+	echo "Can't find node (node.js), is it installed? Is it in your PATH?" >&2;
+	exit 1;
+}
+
+FILENAME="magic"
+BUILD_DIR="./build"
+DEFAULT_DIR="/usr/local/bin"
+INSTALL_DIR=""
+
+if [[ ! -d "$BUILD_DIR" ]]; then
+	echo "building magic..."
+	tsc
+fi
+if [ -z "$1" ]; then
+	INSTALL_DIR="$DEFAULT_DIR"
+else
+	INSTALL_DIR="$1"
+fi
+if [ ! -d "$INSTALL_DIR" ]; then
+	mkdir "$INSTALL_DIR"
+fi
+echo "installing magic..."
+echo "#!$NODEJS_DIR" > "$BUILD_DIR/$FILENAME"
+cat "$BUILD_DIR/magic.js" >> "$BUILD_DIR/$FILENAME"
+chmod 755 "$BUILD_DIR/$FILENAME"
+mv -f "$BUILD_DIR/$FILENAME" "$INSTALL_DIR"
+echo "installed magic to '$INSTALL_DIR'"
