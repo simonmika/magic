@@ -46,7 +46,9 @@ It should give you version 1.5.3 or greater.
 ##```install```
 Installs magic to the default or user-specified location.
 The default location is ```/usr/local/bin```.
-To install magic to a different location, simply specify the path: ```./install /opt/apps/magic```
+To install magic to a different location, simply specify the path:
+```./install /opt/apps/magic```
+
 Make sure you have any user-specified paths in your PATH environment variable.
 
 #build
