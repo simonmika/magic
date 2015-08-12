@@ -1,8 +1,0 @@
-#!/bin/bash
-if [ "$1" == "-C" ]
-then
-	./clean_magic
-fi
-echo "Building magic..."
-tsc
-echo "Done."
