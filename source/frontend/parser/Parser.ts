@@ -1,15 +1,11 @@
-/// <reference path="./../Lexer" />
-/// <reference path="./../Glossary" />
-/// <reference path="./../TokenReader" />
+module Magic.Frontend.Parser {
+	export class Parser {
+		private tokenReader: Magic.Frontend.TokenReader;
+		constructor(file: string, glossary: Glossary) {
+			this.tokenReader = new TokenReader(new Lexer(file, glossary));
+		}
+		parse() {
 
-class Parser {
-	private tokenReader: TokenReader;
-	constructor(file: string, glossary: Glossary) {
-		this.tokenReader = new TokenReader(new Lexer(file, glossary));
+		}
 	}
-
-	parse() {
-
-	}
-
 }

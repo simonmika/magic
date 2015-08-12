@@ -10,17 +10,17 @@
 		"sourceRoot": "../source"
     },
     "files": [
-		"source/analyzer/rules/EmptyLinesRule.ts",
-		"source/analyzer/rules/ExcessiveSpaceRule.ts",
-		"source/analyzer/rules/FuncRule.ts",
-		"source/analyzer/rules/KeywordSpacingRule.ts",
-		"source/analyzer/rules/LineLengthRule.ts",
-		"source/analyzer/rules/OperatorSpacingRule.ts",
-		"source/analyzer/rules/RedundantTypeInfoRule.ts",
+		"source/analyzer/rules/EmptyLines.ts",
+		"source/analyzer/rules/ExcessiveSpace.ts",
+		"source/analyzer/rules/Func.ts",
+		"source/analyzer/rules/KeywordSpacing.ts",
+		"source/analyzer/rules/LineLength.ts",
+		"source/analyzer/rules/OperatorSpacing.ts",
+		"source/analyzer/rules/RedundantTypeInfo.ts",
 		"source/analyzer/rules/Rule.ts",
-		"source/analyzer/rules/SemicolonRule.ts",
-		"source/analyzer/rules/SeparatorSpacingRule.ts",
-		"source/analyzer/rules/ThisUsageRule.ts",
+		"source/analyzer/rules/Semicolon.ts",
+		"source/analyzer/rules/SeparatorSpacing.ts",
+		"source/analyzer/rules/ThisUsage.ts",
 		"source/analyzer/Analyzer.ts",
 		"source/analyzer/Report.ts",
 		"source/analyzer/RuleKind.ts",
@@ -36,7 +36,7 @@
 		"source/utilities/CommandParser.ts",
 		"source/utilities/Dictionary.ts",
 		"source/utilities/Filesystem.ts",
-		"source/utilities/StringUtils.ts",
+		"source/utilities/String.ts",
         "source/magic.ts"
     ]
 }

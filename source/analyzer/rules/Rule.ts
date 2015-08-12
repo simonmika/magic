@@ -1,11 +1,10 @@
-/// <reference path="./../../frontend/Token" />
-/// <reference path="./../Report" />
-
 //
 // TODO: The analyzer should not work with a list of tokens.
 // Instead, it should work with a proper parse tree. This is just
 // temporary.
 //
-interface Rule {
-	run(tokens: Token[], report: Report): void;
+module Magic.Analyzer.Rules {
+	export interface Rule {
+		run(tokens: Frontend.Token[], report: Report): void;
+	}
 }
