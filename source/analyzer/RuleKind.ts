@@ -9,5 +9,3 @@ enum RuleKind {
 	Operator,
 	Separator,
 }
-
-export = RuleKind;

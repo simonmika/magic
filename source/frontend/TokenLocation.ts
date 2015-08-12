@@ -8,5 +8,3 @@ class TokenLocation {
 		return "[" + this._line + ", " + this._column + "]"
 	}
 }
-
-export = TokenLocation;

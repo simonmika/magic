@@ -1,12 +1,11 @@
-///<reference path="./../../typings/node/node.d.ts" />
-import fs = require("fs");
+///<reference path="../../typings/node/node.d.ts" />
+/// <reference path="../frontend/Lexer" />
+/// <reference path="../frontend/Glossary" />
+/// <reference path="../analyzer/rules/Rule" />
+/// <reference path="../analyzer/Report" />
+/// <reference path="../utilities/Filesystem" />
 
-import Rule = require("./rules/Rule");
-import Token = require("./../frontend/Token");
-import Lexer = require("./../frontend/Lexer");
-import Report = require("./Report");
-import Filesystem = require("./../utilities/Filesystem");
-import Glossary = require("./../frontend/Glossary");
+var fs = require("fs");
 
 //
 // TODO: The analyzer should not work with a list of tokens, it should work with a parse tree.
@@ -75,5 +74,3 @@ class Analyzer {
 	}
 
 }
-
-export = Analyzer;

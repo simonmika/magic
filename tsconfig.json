@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+		"target": "ES5",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "out": "build/magic.js",
+        "sourceMap": true,
+		"sourceRoot": "../source"
+    },
+    "files": [
+		"source/analyzer/rules/EmptyLinesRule.ts",
+		"source/analyzer/rules/ExcessiveSpaceRule.ts",
+		"source/analyzer/rules/FuncRule.ts",
+		"source/analyzer/rules/KeywordSpacingRule.ts",
+		"source/analyzer/rules/LineLengthRule.ts",
+		"source/analyzer/rules/OperatorSpacingRule.ts",
+		"source/analyzer/rules/RedundantTypeInfoRule.ts",
+		"source/analyzer/rules/Rule.ts",
+		"source/analyzer/rules/SemicolonRule.ts",
+		"source/analyzer/rules/SeparatorSpacingRule.ts",
+		"source/analyzer/rules/ThisUsageRule.ts",
+		"source/analyzer/Analyzer.ts",
+		"source/analyzer/Report.ts",
+		"source/analyzer/RuleKind.ts",
+		"source/analyzer/Violation.ts",
+		"source/frontend/parser/Parser.ts",
+		"source/frontend/CharacterReader.ts",
+		"source/frontend/Glossary.ts",
+		"source/frontend/Lexer.ts",
+		"source/frontend/Token.ts",
+		"source/frontend/TokenKind.ts",
+		"source/frontend/TokenLocation.ts",
+		"source/frontend/TokenReader.ts",
+		"source/utilities/CommandParser.ts",
+		"source/utilities/Dictionary.ts",
+		"source/utilities/Filesystem.ts",
+		"source/utilities/StringUtils.ts",
+        "source/magic.ts"
+    ]
+}

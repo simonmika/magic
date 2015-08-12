@@ -1,6 +1,4 @@
 
 class CommandParser {
-	
-}
 
-export = CommandParser;
+}

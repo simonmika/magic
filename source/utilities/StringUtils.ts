@@ -24,5 +24,3 @@ class StringUtils {
 		return count;
 	}
 }
-
-export = StringUtils;
