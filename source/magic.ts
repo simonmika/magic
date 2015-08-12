@@ -6,12 +6,12 @@ module Magic {
 		private static version = "0.1.7-alpha";
 		private arguments: string[];
 
-		constructor(cmd: string[]) {
-			cmd = cmd.slice(2);
-			if (cmd.length == 0) {
-				cmd[0] = ".";
+		constructor(command: string[]) {
+			command = command.slice(2);
+			if (command.length == 0) {
+				command[0] = ".";
 			}
-			this.arguments = cmd;
+			this.arguments = command;
 		}
 
 		analyze() {

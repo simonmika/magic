@@ -36,9 +36,9 @@ module Magic.Frontend {
 		getSeparatorKind(separator: string) {
 			return this.getTokenKind(this.separators, separator, "separator");
 		}
-		private getTokenKind(dictionary: Utilities.Dictionary<string, TokenKind>, key: string, dict: string) {
+		private getTokenKind(dictionary: Utilities.Dictionary<string, TokenKind>, key: string, dictionaryName: string) {
 			if (!dictionary.containsKey(key)) {
-				throw new Error("-> [Glossary] the specified key '" + key + "' was not found in " + dict + " glossary");
+				throw new Error("-> [Glossary] the specified key '" + key + "' was not found in " + dictionaryName + " glossary");
 			}
 			return dictionary.getValue(key);
 		}
