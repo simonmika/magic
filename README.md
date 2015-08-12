@@ -1,7 +1,21 @@
-[![Build Status](https://secure.travis-ci.org/cogneco/magic.png?branch=master)](http://travis-ci.org/cogneco/magic)
+**Table of Contents**
+
+- [magic](#magic)
+- [very much readme](#very-much-readme)
+- [requirements](#requirements)
+  - [If you don't have node.js and/or the Typescript compiler](#if-you-dont-have-nodejs-andor-the-typescript-compiler)
+- [Installation](#installation)
+  - [build it yourself and install](#build-it-yourself-and-install)
+  - [using the release](#using-the-release)
+- [build](#build)
+- [usage](#usage)
+    - [ignore list](#ignore-list)
+- [troubleshooting](#troubleshooting)
+- [credits](#credits)
+
 #magic
 
-Code analyzer for [ooc](http://ooc-lang.org)
+Code analyzer for the [ooc programming language](http://ooc-lang.org).
 
 #very much readme
 Very, very early alpha stage.
@@ -13,9 +27,8 @@ token list generated from each file.
 * A tab width of 4 is assumed.
 
 #requirements
-## Platforms
-* Known to work on Linux (x64), status on other platforms is unknown at this time.
-## Dependencies
+Known to work on Linux (x64), status on other platforms is unknown at this time.
+
 * 1: [node.js](http://nodejs.org/)
 * 2: [Typescript compiler](http://www.typescriptlang.org/) (if you want to build it yourself)
 
@@ -42,8 +55,13 @@ tsc --v
 ```
 It should give you version 1.5.3 or greater.
 
-#shell scripts
-##```install```
+# Installation
+You can install magic in two different ways:
+
+* Using the provided install script
+* Using the pre-compiled [release file](https://github.com/cogneco/magic/releases)
+
+## build it yourself and install
 magic's default install location is ```/usr/local/bin```, which requires you to run the installer as root.
 ```sudo ./install```
 
@@ -52,10 +70,18 @@ Depending on the location, you may have to run the installer as root.
 
 ```./install ~/apps/bin```
 
-For ease of use, make sure you have magic's location in your ```$PATH```.
+The installer will build the project for you. For ease of use, make sure you have magic's location
+in your ```$PATH```.
+
+## using the release
+* Download the [latest release](https://github.com/cogneco/magic/releases) and unpack it
+* Move the file ```magic``` to a location of your choosing (we recommend ```/usr/local/bin```
+or any other standard bin directory)
+* That's it.
 
 #build
-To build the project, make sure you're in magic's root folder, then execute: ```tsc```.
+If you have modified the project, you must obviously re-build the project.
+To do so, make sure you're in magic's root folder, then simply run: ```tsc```
 
 #usage
 If you don't specify a target directory, your current location will be used.
@@ -96,6 +122,8 @@ source/math/Transform.ooc
 
 #troubleshooting
 Here are some problems that may occur along the way, and hopefully, solutions to them.
-* Nothing yet :-)
+* __I have installed magic, but can't seem to run it?__ Make sure the system knows where to look for it.
+Try executing ```command -v magic```. The output should point to where magic is installed, if it is empty,
+then you need to add magic's location to your ```$PATH```.
 
 # credits

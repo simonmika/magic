@@ -1,3 +1,14 @@
+**Table of Contents**
+
+- [0.1.6-alpha](#016-alpha)
+- [0.1.5-alpha](#015-alpha)
+- [0.1.4-alpha](#014-alpha)
+- [0.1.3-alpha](#013-alpha)
+- [0.1.2-alpha](#012-alpha)
+
+# 0.1.6-alpha
+* ...
+
 # 0.1.5-alpha
 * Fixed EmptyLines rule to check for an empty line in the beginning of a file
 * Fixed KeywordSpacing rule so it does not trigger a violation when a keyword is immediately followed by the ```?``` operator.
