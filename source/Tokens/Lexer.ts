@@ -7,8 +7,9 @@
 /// <reference path="Token" />
 /// <reference path="EndOfFile" />
 /// <reference path="Identifier" />
-/// <reference path="Keyword" />
+/// <reference path="Comment" />
 /// <reference path="Literal" />
+/// <reference path="Literals/String" />
 /// <reference path="Separator" />
 /// <reference path="Whitespace" />
 
@@ -20,11 +21,17 @@ module Magic.Tokens {
 		}
 		next(): Token {
 			var result: Token = null
-			while (!this.reader.isEmpty()) {
-				result = Whitespace.scan(this.reader);
-				if (!result)
-					result = Separator.scan(this.reader);
-			}
+			if (!(
+				(result = EndOfFile.scan(this.reader)) ||
+				(result = Whitespace.scan(this.reader)) ||
+				(result = Comment.scan(this.reader)) ||
+				(result = Separator.scan(this.reader)) ||
+				(result = Operator.scan(this.reader)) ||
+				(result = Literals.String.scan(this.reader)) ||
+				(result = Identifier.scan(this.reader)) ||
+				false
+			))
+				throw "Lexical Error: Failed to tokenize " + this.reader.peek(5) + " @ " + this.reader.getLocation();
 			return result
 		}
 	}

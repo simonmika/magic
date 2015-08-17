@@ -5,7 +5,6 @@ var fs = require("fs");
 module Magic {
 	export class Program {
 		private arguments: string[];
-
 		constructor(command: string[]) {
 			command = command.slice(2);
 			if (command.length == 0) {
@@ -14,7 +13,7 @@ module Magic {
 			this.arguments = command;
 		}
 		getVersion(): string {
-			return "0.1.7-alpha"
+			return "0.2"
 		}
 	}
 }

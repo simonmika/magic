@@ -2,11 +2,11 @@
 
 module Magic.Tokens {
 	export class Token {
-		get region() { return this._region; }
-		get value() { return this._value; }
-		constructor(private _region: IO.Region, private _value: string) { }
+		constructor(private original: string, private region: IO.Region) { }
+		getRegion() { return this.region; }
+		getOriginal() { return this.original; }
 		toString() {
-			return this.region.toString() + ": " + this.value;
+			return this.region.toString() + ": " + this.original;
 		}
 	}
 }

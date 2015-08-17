@@ -4,8 +4,8 @@
 
 module Magic.Tokens {
 	export class EndOfFile extends Token {
-		constructor(region: IO.Region, value: string) {
-			super(region, value)
+		constructor(region: IO.Region, original: string) {
+			super(original, region)
 		}
 		static scan(reader: IO.BufferedReader): Token {
 			var result: Token;
