@@ -1,16 +1,17 @@
-///<reference path="./../typings/node/node" />
+///<reference path="../typings/node/node" />
+///<reference path="Tokens/Lexer" />
+///<reference path="IO/Reader" />
 
 var fs = require("fs");
 
 module Magic {
 	export class Program {
-		private arguments: string[];
+		private path: string
 		constructor(command: string[]) {
-			command = command.slice(2);
-			if (command.length == 0) {
-				command[0] = ".";
-			}
-			this.arguments = command;
+			this.path = command.length > 1 ? command[1] : ".";
+		}
+		run() {
+			var lexer = new Tokens.Lexer(new IO.FolderReader(this.path, "*.ooc"))
 		}
 		getVersion(): string {
 			return "0.2"
