@@ -8,5 +8,14 @@ module Magic.Tokens {
 		toString() {
 			return this.region.toString() + ": " + this.original;
 		}
+		isSeparator(symbol: string = null): boolean {
+			return false
+		}
+		isIdentifier(name: string = null): boolean {
+			return false
+		}
+		isOperator(symbol: string = null): boolean {
+			return false
+		}
 	}
 }

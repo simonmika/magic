@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "ES5",
+		"target": "ES3",
 		"module": "commonjs",
 		"noImplicitAny": true,
 		"removeComments": true,
@@ -16,19 +16,23 @@
 		"source/IO/Location.ts",
 		"source/IO/Region.ts",
 		"source/IO/Reader.ts",
+		"source/IO/StringReader.ts",
 		"source/IO/BufferedReader.ts",
 		"source/IO/FileReader.ts",
 		"source/IO/FolderReader.ts",
 		"source/Tokens/Token.ts",
+		"source/Tokens/Gap.ts",
+		"source/Tokens/Substance.ts",
 		"source/Tokens/Identifier.ts",
-		"source/Tokens/Comment.ts",
 		"source/Tokens/Literal.ts",
 		"source/Tokens/Literals/String.ts",
 		"source/Tokens/Literals/Number.ts",
 		"source/Tokens/Operator.ts",
 		"source/Tokens/Separator.ts",
+		"source/Tokens/Comment.ts",
 		"source/Tokens/Whitespace.ts",
 		"source/Tokens/Lexer.ts",
+		"source/Tokens/GapRemover.ts",
 		"source/magic.ts"
 	]
 }

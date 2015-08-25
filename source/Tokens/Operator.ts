@@ -1,14 +1,18 @@
 /// <reference path="../IO/Region" />
 /// <reference path="../IO/BufferedReader" />
 /// <reference path="Token" />
+/// <reference path="Substance" />
 
 module Magic.Tokens {
-	export class Operator extends Token {
+	export class Operator extends Substance {
 		constructor(private symbol: string, region: IO.Region) {
 			super(symbol, region)
 		}
 		getSymbol(): string {
 			return this.symbol
+		}
+		isOperator(symbol: string = null): boolean {
+			return !symbol && symbol == this.symbol
 		}
 		static scan(reader: IO.BufferedReader): Token {
 			var result: Token;

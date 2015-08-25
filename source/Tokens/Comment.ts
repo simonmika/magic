@@ -1,9 +1,10 @@
 /// <reference path="../IO/Region" />
 /// <reference path="../IO/BufferedReader" />
 /// <reference path="Token" />
+/// <reference path="Gap" />
 
 module Magic.Tokens {
-	export class Comment extends Token {
+	export class Comment extends Gap {
 		constructor(original: string, region: IO.Region) {
 			super(original, region)
 		}
