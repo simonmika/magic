@@ -6,13 +6,42 @@ var fs = require("fs");
 
 module Magic {
 	export class Program {
-		private path: string
-		constructor(command: string[]) {
-			this.path = command.length > 1 ? command[1] : ".";
+		private defaultCommand = "compile"
+		constructor(private commands: string[]) {
+		}
+		private openReader(path: string) {
+			return path.slice(-4) == ".ooc" ? new IO.FileReader(path) : new IO.FolderReader(path, "*.ooc")
+		}
+		private openLexer(path: string) {
+			return new Tokens.Lexer(this.openReader(path))
+		}
+		private runHelper(command: string, commands: string[]) {
+			switch (command) {
+				case "compile":
+				case "verify":
+					var lexer = new Tokens.Lexer(new IO.FolderReader(commands.pop(), "*.ooc"))
+					break;
+				case "self-test":
+					break;
+				case "version":
+					console.log("magic " + magic.getVersion());
+					break;
+				case "help":
+					break;
+				default:
+					commands.push(command)
+					command = undefined
+					this.runHelper(this.defaultCommand, commands)
+					break;
+			}
+			if (command)
+				this.defaultCommand = command
 		}
 		run() {
-			var lexer = new Tokens.Lexer(new IO.FolderReader(this.path, "*.ooc"))
-
+			var command: string
+			while (command = this.commands.shift()) {
+				this.runHelper(command, this.commands)
+			}
 		}
 		getVersion(): string {
 			return "0.2"
