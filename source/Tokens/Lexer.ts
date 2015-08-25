@@ -1,7 +1,4 @@
 /// <reference path="../Utilities/Iterator" />
-/// <reference path="../IO/Position" />
-/// <reference path="../IO/Location" />
-/// <reference path="../IO/Region" />
 /// <reference path="../IO/Reader" />
 /// <reference path="../IO/BufferedReader" />
 /// <reference path="Token" />
@@ -28,10 +25,11 @@ module Magic.Tokens {
 				(result = Separator.scan(this.reader)) ||
 				(result = Operator.scan(this.reader)) ||
 				(result = Literals.String.scan(this.reader)) ||
+				(result = Literals.Number.scan(this.reader)) ||
 				(result = Identifier.scan(this.reader)) ||
 				false
 			))
-				throw "Lexical Error: Failed to tokenize " + this.reader.peek(5) + " @ " + this.reader.getLocation();
+				;//this.reader.raise("Failed to tokenize " + this.reader.peek(5));
 			return result
 		}
 	}

@@ -1,7 +1,7 @@
 /// <reference path="Position" />
 /// <reference path="Location" />
 
-module Magic.IO {
+module Magic.Error {
 	export class Region {
 		constructor(private resource: string, private start: Position, private end: Position) { }
 		getResource() { return this.resource }

@@ -1,13 +1,12 @@
-/// <reference path="Position" />
-/// <reference path="Location" />
-/// <reference path="Region" />
+/// <reference path="../Error/Location" />
+/// <reference path="../Error/Region" />
 
 module Magic.IO {
 	export interface Reader {
 		isEmpty(): boolean
 		read(): string;
 		getResource(): string
-		getLocation(): Location
-		mark(): Region
+		getLocation(): Error.Location
+		mark(): Error.Region
 	}
 }

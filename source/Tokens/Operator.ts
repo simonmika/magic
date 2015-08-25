@@ -1,11 +1,11 @@
-/// <reference path="../IO/Region" />
+/// <reference path="../Error/Region" />
 /// <reference path="../IO/BufferedReader" />
 /// <reference path="Token" />
 /// <reference path="Substance" />
 
 module Magic.Tokens {
 	export class Operator extends Substance {
-		constructor(private symbol: string, region: IO.Region) {
+		constructor(private symbol: string, region: Error.Region) {
 			super(symbol, region)
 		}
 		getSymbol(): string {

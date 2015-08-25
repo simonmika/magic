@@ -10,16 +10,23 @@
 		"sourceRoot": "../source"
 	},
 	"files": [
+		"source/Error/Position.ts",
+		"source/Error/Location.ts",
+		"source/Error/Region.ts",
+		"source/Error/Type.ts",
+		"source/Error/Level.ts",
+		"source/Error/Message.ts",
+		"source/Error/Handler.ts",
+
 		"source/Utilities/Iterator.ts",
 		"source/Utilities/BufferedIterator.ts",
-		"source/IO/Position.ts",
-		"source/IO/Location.ts",
-		"source/IO/Region.ts",
+
 		"source/IO/Reader.ts",
 		"source/IO/StringReader.ts",
 		"source/IO/BufferedReader.ts",
 		"source/IO/FileReader.ts",
 		"source/IO/FolderReader.ts",
+
 		"source/Tokens/Token.ts",
 		"source/Tokens/Gap.ts",
 		"source/Tokens/Substance.ts",
@@ -33,6 +40,7 @@
 		"source/Tokens/Whitespace.ts",
 		"source/Tokens/Lexer.ts",
 		"source/Tokens/GapRemover.ts",
+
 		"source/magic.ts"
 	]
 }

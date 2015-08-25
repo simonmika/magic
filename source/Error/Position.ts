@@ -1,4 +1,4 @@
-module Magic.IO {
+module Magic.Error {
 	export class Position {
 		constructor(private line: number, private column: number) { }
 		getLine() { return this.line }

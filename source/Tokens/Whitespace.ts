@@ -1,11 +1,11 @@
-/// <reference path="../IO/Region" />
+/// <reference path="../Error/Region" />
 /// <reference path="../IO/BufferedReader" />
 /// <reference path="Token" />
 /// <reference path="Gap" />
 
 module Magic.Tokens {
 	export class Whitespace extends Gap {
-		constructor(private endsLine: boolean, original: string, region: IO.Region) {
+		constructor(private endsLine: boolean, original: string, region: Error.Region) {
 			super(original, region)
 		}
 		getEndsLine() : boolean { return this.endsLine }

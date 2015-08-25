@@ -1,8 +1,8 @@
-/// <reference path="../IO/Region" />
+/// <reference path="../Error/Region" />
 
 module Magic.Tokens {
 	export class Token {
-		constructor(private original: string, private region: IO.Region) { }
+		constructor(private original: string, private region: Error.Region) { }
 		getRegion() { return this.region; }
 		getOriginal() { return this.original; }
 		toString() {

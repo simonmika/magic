@@ -1,4 +1,4 @@
-/// <reference path="../IO/Region" />
+/// <reference path="../Error/Region" />
 /// <reference path="../IO/BufferedReader" />
 /// <reference path="Token" />
 /// <reference path="Gap" />
@@ -7,7 +7,7 @@ module Magic.Tokens {
 	export class Substance extends Token {
 		private pregap: Gap[]
 		private postgap: Gap[]
-		constructor(original: string, region: IO.Region) {
+		constructor(original: string, region: Error.Region) {
 			super(original, region)
 		}
 		getPregap() { return this.pregap }

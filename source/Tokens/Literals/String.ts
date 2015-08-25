@@ -1,12 +1,12 @@
-/// <reference path="../../IO/Region" />
+/// <reference path="../../Error/Region" />
 /// <reference path="../../IO/BufferedReader" />
 /// <reference path="../Token" />
 /// <reference path="../Literal" />
 
 module Magic.Tokens.Literals {
 	export class String extends Literal {
-		constructor(private value: string, original: string, region: IO.Region) {
-			super(region, value)
+		constructor(private value: string, original: string, region: Error.Region) {
+			super(value, region)
 		}
 		getValue() : string { return this.value }
 		static scan(reader: IO.BufferedReader): Token {

@@ -1,6 +1,6 @@
 /// <reference path="Position" />
 
-module Magic.IO {
+module Magic.Error {
 	export class Location extends Position {
 		getResource(): string { return this.resource }
 		constructor(private resource: string, line: number, column: number) {
