@@ -1,12 +1,12 @@
 /// <reference path="../Error/Region" />
-/// <reference path="../IO/BufferedReader" />
+/// <reference path="Source" />
 /// <reference path="Token" />
 /// <reference path="Substance" />
 
 module Magic.Tokens {
 	export class Separator extends Substance {
 		constructor(private symbol: string, region: Error.Region) {
-			super(symbol, region)
+			super(region)
 		}
 		getSymbol(): string {
 			return this.symbol
@@ -14,9 +14,9 @@ module Magic.Tokens {
 		isSeparator(symbol: string = null): boolean {
 			return !symbol || this.symbol == symbol
 		}
-		static scan(reader: IO.BufferedReader): Token {
+		static scan(source: Source): Token {
 			var result: Token;
-			switch (reader.peek()) {
+			switch (source.peek()) {
 				case ".":
 				case ":":
 				case ";":
@@ -27,7 +27,7 @@ module Magic.Tokens {
 				case ")":
 				case "{":
 				case "}":
-					result = new Separator(reader.read(), reader.mark())
+					result = new Separator(source.read(), source.mark())
 					break
 				default:
 					result = null

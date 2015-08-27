@@ -2,11 +2,10 @@
 
 module Magic.Tokens {
 	export class Token {
-		constructor(private original: string, private region: Error.Region) { }
+		constructor(private region: Error.Region) { }
 		getRegion() { return this.region; }
-		getOriginal() { return this.original; }
 		toString() {
-			return this.region.toString() + ": " + this.original;
+			return this.region.toString()
 		}
 		isSeparator(symbol: string = null): boolean {
 			return false

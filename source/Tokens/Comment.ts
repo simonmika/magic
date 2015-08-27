@@ -1,30 +1,32 @@
 /// <reference path="../Error/Region" />
-/// <reference path="../IO/BufferedReader" />
+/// <reference path="Source" />
 /// <reference path="Token" />
 /// <reference path="Gap" />
 
 module Magic.Tokens {
 	export class Comment extends Gap {
-		constructor(original: string, region: Error.Region) {
-			super(original, region)
+		constructor(private content: string, region: Error.Region) {
+			super(region)
 		}
-		static scan(reader: IO.BufferedReader): Token {
+		static scan(source: Source): Token {
 			var result: string;
-			switch (reader.peek(2)) {
+			switch (source.peek(2)) {
 				case "//":
-					result = reader.read(2)
-					while (reader.peek() != "\n")
-						result += reader.read()
+					result = ""
+					source.read(2)
+					while (source.peek() != "\n")
+						result += source.read()
 					break
 				case "/*":
-					result = reader.read(2)
-					while (reader.peek(2) != "*/")
-						result += reader.read()
+					result = ""
+					source.read(2)
+					while (source.peek(2) != "*/")
+						result += source.read()
 					break
 				default:
 					result = null
 			}
-			return result ? new Comment(result, reader.mark()) : null
+			return result ? new Comment(result, source.mark()) : null
 		}
 	}
 }

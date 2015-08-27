@@ -1,18 +1,19 @@
 /// <reference path="../Error/Region" />
-/// <reference path="../IO/BufferedReader" />
+/// <reference path="Source" />
 /// <reference path="Token" />
 /// <reference path="Substance" />
 
 module Magic.Tokens {
 	export class EndOfFile extends Substance {
-		constructor(original: string, region: Error.Region) {
-			super(original, region)
+		constructor(region: Error.Region) {
+			super(region)
 		}
-		static scan(reader: IO.BufferedReader): Token {
+		static scan(source: Source): Token {
 			var result: Token;
-			switch (reader.peek()) {
+			switch (source.peek()) {
 				case "\0":
-					result = new EndOfFile(reader.read(), reader.mark())
+					source.read()
+					result = new EndOfFile(source.mark())
 					break
 				default:
 					result = null

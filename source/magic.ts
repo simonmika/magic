@@ -1,4 +1,5 @@
 /// <reference path="../typings/node/node" />
+/// <reference path="Error/ConsoleHandler" />
 /// <reference path="Tokens/Lexer" />
 /// <reference path="IO/Reader" />
 
@@ -13,13 +14,13 @@ module Magic {
 			return path.slice(-4) == ".ooc" ? new IO.FileReader(path) : new IO.FolderReader(path, "*.ooc")
 		}
 		private openLexer(path: string) {
-			return new Tokens.Lexer(this.openReader(path))
+			return new Tokens.Lexer(this.openReader(path), new Error.ConsoleHandler())
 		}
 		private runHelper(command: string, commands: string[]) {
 			switch (command) {
 				case "compile":
 				case "verify":
-					var lexer = new Tokens.Lexer(new IO.FolderReader(commands.pop(), "*.ooc"))
+					var lexer = this.openLexer(commands.pop())
 					break;
 				case "self-test":
 					break;

@@ -17,6 +17,7 @@
 		"source/Error/Level.ts",
 		"source/Error/Message.ts",
 		"source/Error/Handler.ts",
+		"source/Error/ConsoleHandler.ts",
 
 		"source/Utilities/Iterator.ts",
 		"source/Utilities/BufferedIterator.ts",
@@ -27,6 +28,7 @@
 		"source/IO/FileReader.ts",
 		"source/IO/FolderReader.ts",
 
+		"source/Tokens/Source.ts",
 		"source/Tokens/Token.ts",
 		"source/Tokens/Gap.ts",
 		"source/Tokens/Substance.ts",

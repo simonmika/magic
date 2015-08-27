@@ -1,12 +1,12 @@
 /// <reference path="../Error/Region" />
-/// <reference path="../IO/BufferedReader" />
+/// <reference path="Source" />
 /// <reference path="Token" />
 /// <reference path="Substance" />
 
 module Magic.Tokens {
 	export class Identifier extends Substance {
 		constructor(private name: string, region: Error.Region) {
-			super(name, region)
+			super(region)
 		}
 		getName(): string {
 			return this.name
@@ -14,14 +14,14 @@ module Magic.Tokens {
 		isIdentifier(name: string = null): boolean {
 			return !name || name == this.name
 		}
-		static scan(reader: IO.BufferedReader): Token {
+		static scan(source: Source): Token {
 			var result: string
-			if (Identifier.isValidFirstCharacter(reader.peek())) {
+			if (Identifier.isValidFirstCharacter(source.peek())) {
 				do {
-					result += reader.read()
-				} while (Identifier.isValidWithinCharacter(reader.peek()))
+					result += source.read()
+				} while (Identifier.isValidWithinCharacter(source.peek()))
 			}
-			return result ? new Identifier(result, reader.mark()) : null
+			return result ? new Identifier(result, source.mark()) : null
 		}
 		private static isValidFirstCharacter(character: string): boolean {
 			return character >= "A" && character <= "Z" || character >= "a" && character <= "z" || character == "_"

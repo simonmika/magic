@@ -1,31 +1,31 @@
 /// <reference path="../Error/Region" />
-/// <reference path="../IO/BufferedReader" />
+/// <reference path="Source" />
 /// <reference path="Token" />
 /// <reference path="Gap" />
 
 module Magic.Tokens {
 	export class Whitespace extends Gap {
-		constructor(private endsLine: boolean, original: string, region: Error.Region) {
-			super(original, region)
+		constructor(private endsLine: boolean, region: Error.Region) {
+			super(region)
 		}
 		getEndsLine() : boolean { return this.endsLine }
-		static scan(reader: IO.BufferedReader): Token {
+		static scan(source: Source): Token {
 			var result: Token
-			var original: string
 			do {
-				switch (reader.peek()) {
+				switch (source.peek()) {
 					case "\n":
-						result = new Whitespace(true, original + reader.read(), reader.mark())
+						source.read()
+						result = new Whitespace(true, source.mark())
 						break
 					case "\r":
 					case "\t":
 					case " ":
-						original += reader.read()
-						break
+						source.read()
+						continue
 					default:
-						result = original ? new Whitespace(false, original, reader.mark()) : null
+						result = new Whitespace(false, source.mark())
 				}
-			} while (original && !result)
+			} while (false)
 			return result
 		}
 	}

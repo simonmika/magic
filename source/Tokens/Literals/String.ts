@@ -1,52 +1,50 @@
 /// <reference path="../../Error/Region" />
-/// <reference path="../../IO/BufferedReader" />
+/// <reference path="../Source" />
 /// <reference path="../Token" />
 /// <reference path="../Literal" />
 
 module Magic.Tokens.Literals {
 	export class String extends Literal {
-		constructor(private value: string, original: string, region: Error.Region) {
-			super(value, region)
+		constructor(private value: string, region: Error.Region) {
+			super(region)
 		}
 		getValue() : string { return this.value }
-		static scan(reader: IO.BufferedReader): Token {
-			var original: string;
-			var value: string;
-			if (reader.peek() == "\"") {
-				original += reader.read()
+		static scan(source: Source): Token {
+			var result: string;
+			if (source.peek() == "\"") {
+				source.read()
+				result = ""
 				do {
-					if (reader.peek() == "\"") {
-						switch (reader.peek(2)) {
+					if (source.peek() == "\"") {
+						switch (source.peek(2)) {
 							case "\\0":
-								value += "\0"
+								result += "\0"
 								break
 							case "\\\\":
-								value += "\\"
+								result += "\\"
 								break
 							case "\\\"":
-								value += "\""
+								result += "\""
 								break
 							case "\\n":
-								value += "\n"
+								result += "\n"
 								break
 							case "\\r":
-								value += "\r"
+								result += "\r"
 								break
 							default:
-								throw "Lexer Error: Unrecognized escape sequence: " + reader.peek(2) + " @ " + reader.getLocation()
+								source.raise("Unrecognized escape sequence: \"" + source.peek(2) + "\"")
 								break
 						}
-						original += reader.read(2)
+						source.read(2)
 					}
 					else {
-						var c = reader.read()
-						original += c
-						value += c
+						result += source.read()
 					}
-				} while (reader.peek() != "\"")
-				original += reader.read()
+				} while (source.peek() != "\"")
+				source.read()
 			}
-			return original ? new String(value, original, reader.mark()) : null
+			return result ? new String(result, source.mark()) : null
 		}
 	}
 }

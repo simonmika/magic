@@ -30,6 +30,7 @@ module Magic.IO {
 		}
 		getResource(): string { return this.current ? this.current.getResource() : null }
 		getLocation(): Error.Location { return this.current.getLocation() }
+		getRegion(): Error.Region { return this.current.getRegion() }
 		mark(): Error.Region { return this.current.mark() }
 
 		private static getFiles(folder: string, filetype: string, ignoreFiles: string[] = []): string[] {

@@ -1,12 +1,12 @@
 /// <reference path="../Error/Region" />
-/// <reference path="../IO/BufferedReader" />
+/// <reference path="Source" />
 /// <reference path="Token" />
 /// <reference path="Substance" />
 
 module Magic.Tokens {
 	export class Operator extends Substance {
 		constructor(private symbol: string, region: Error.Region) {
-			super(symbol, region)
+			super(region)
 		}
 		getSymbol(): string {
 			return this.symbol
@@ -14,113 +14,113 @@ module Magic.Tokens {
 		isOperator(symbol: string = null): boolean {
 			return !symbol && symbol == this.symbol
 		}
-		static scan(reader: IO.BufferedReader): Token {
+		static scan(source: Source): Token {
 			var result: Token;
-			switch (reader.peek()) {
-				case "@": result = new Operator(reader.read(), reader.mark()); break
+			switch (source.peek()) {
+				case "@": result = new Operator(source.read(), source.mark()); break
 				case "+":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
-						case "+=": result = new Operator(reader.read(2), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
+						case "+=": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "-":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
-						case "-=": result = new Operator(reader.read(2), reader.mark()); break
-						case "->": result = new Operator(reader.read(2), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
+						case "-=": result = new Operator(source.read(2), source.mark()); break
+						case "->": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "*":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
 						case "**":
-							switch (reader.peek(3)) {
-								default: result = new Operator(reader.read(2), reader.mark()); break
-								case "**=": result = new Operator(reader.read(3), reader.mark()); break
+							switch (source.peek(3)) {
+								default: result = new Operator(source.read(2), source.mark()); break
+								case "**=": result = new Operator(source.read(3), source.mark()); break
 							} break
-						case "*=": result = new Operator(reader.read(2), reader.mark()); break
+						case "*=": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "/":
-					switch (reader.peek(2)) {
+					switch (source.peek(2)) {
 						default:
-							result = new Operator(reader.read(), reader.mark()); break
+							result = new Operator(source.read(), source.mark()); break
 						case "/=":
-							result = new Operator(reader.read(2), reader.mark()); break
+							result = new Operator(source.read(2), source.mark()); break
 					}; break
 				case "=":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
-						case "==": result = new Operator(reader.read(2), reader.mark()); break
-						case "=>": result = new Operator(reader.read(2), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
+						case "==": result = new Operator(source.read(2), source.mark()); break
+						case "=>": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "^":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
-						case "^=":result = new Operator(reader.read(2), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
+						case "^=":result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "|":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
-						case "||": result = new Operator(reader.read(2), reader.mark()); break
-						case "|=": result = new Operator(reader.read(2), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
+						case "||": result = new Operator(source.read(2), source.mark()); break
+						case "|=": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "&":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()) ;break
-						case "&&": result = new Operator(reader.read(2), reader.mark()); break
-						case "&=": result = new Operator(reader.read(2), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()) ;break
+						case "&&": result = new Operator(source.read(2), source.mark()); break
+						case "&=": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "!":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
-						case "!=": result = new Operator(reader.read(2), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
+						case "!=": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "<":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
 						case "<<":
-							switch (reader.peek(3)) {
-								default: result = new Operator(reader.read(2), reader.mark()); break
-								case "<<=": result = new Operator(reader.read(3), reader.mark()); break
+							switch (source.peek(3)) {
+								default: result = new Operator(source.read(2), source.mark()); break
+								case "<<=": result = new Operator(source.read(3), source.mark()); break
 							} break
 						case "<=":
-							switch (reader.peek(4)) {
-								default: result = new Operator(reader.read(2), reader.mark()); break
-								case "<==>": result = new Operator(reader.read(4), reader.mark()); break
+							switch (source.peek(4)) {
+								default: result = new Operator(source.read(2), source.mark()); break
+								case "<==>": result = new Operator(source.read(4), source.mark()); break
 							} break
 					} break
 				case ">":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
 						case ">>":
-							switch (reader.peek(3)) {
-								default: result = new Operator(reader.read(2), reader.mark()); break
-								case ">>=": result = new Operator(reader.read(3), reader.mark()); break
+							switch (source.peek(3)) {
+								default: result = new Operator(source.read(2), source.mark()); break
+								case ">>=": result = new Operator(source.read(3), source.mark()); break
 							} break
-						case ">=": result = new Operator(reader.read(2), reader.mark()); break
+						case ">=": result = new Operator(source.read(2), source.mark()); break
 					}
 					break
 				case ":":
-					switch (reader.peek(2)) {
+					switch (source.peek(2)) {
 						default: result = null /* separator */; break
-						case ":=": result = new Operator(reader.read(2), reader.mark()); break
+						case ":=": result = new Operator(source.read(2), source.mark()); break
 						case "::":
-							switch (reader.peek(3)) {
-								default: result = null /* undefined */; break
-								case "::=": result = new Operator(reader.read(3), reader.mark()); break
+							switch (source.peek(3)) {
+								default: source.raise("Undefined operator \"::\""); break
+								case "::=": result = new Operator(source.read(3), source.mark()); break
 							} break
 					} break
 				case ".":
-					switch (reader.peek(2)) {
+					switch (source.peek(2)) {
 						default: result = null /* separator */; break
-						case "..": result = new Operator(reader.read(2), reader.mark()); break
+						case "..": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "%":
-					switch (reader.peek(2)) {
-						default: result = new Operator(reader.read(), reader.mark()); break
-						case "%=": result = new Operator(reader.read(2), reader.mark()); break
+					switch (source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
+						case "%=": result = new Operator(source.read(2), source.mark()); break
 					} break
-				case "~": result = new Operator(reader.read(), reader.mark()); break
-				case "?": result = new Operator(reader.read(), reader.mark()); break
+				case "~": result = new Operator(source.read(), source.mark()); break
+				case "?": result = new Operator(source.read(), source.mark()); break
 				default: result = null; break
 			}
 			return result

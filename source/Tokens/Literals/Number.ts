@@ -1,16 +1,16 @@
 /// <reference path="../../Error/Region" />
-/// <reference path="../../IO/BufferedReader" />
+/// <reference path="../Source" />
 /// <reference path="../Token" />
 /// <reference path="../Literal" />
 
 module Magic.Tokens.Literals {
 	export class Number extends Literal {
 		constructor(private value: number, original: string, region: Error.Region) {
-			super(original, region)
+			super(region)
 		}
 		getValue() : number { return this.value }
-		static scan(reader: IO.BufferedReader): Token {
-			return Number.scanHexadecimal(reader)
+		static scan(source: Source): Token {
+			return Number.scanHexadecimal(source)
 		}
 		private static scanHexadecimal(reader : IO.BufferedReader): Token {
 			var result: Token

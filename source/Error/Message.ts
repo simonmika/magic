@@ -3,8 +3,10 @@
 
 module Magic.Error {
 	export class Message {
-		constructor(private type: Type, private level: Level, private message: Message, private location: Location) {
-
+		constructor(private description: string, private level: Level, private type: Type, private region: Region) {
+		}
+		toString(): string {
+			return this.level + ": " + this.type + " Error. " + this.description + " @ " + this.region.toString();
 		}
 	}
 }

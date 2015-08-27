@@ -7,6 +7,7 @@ module Magic.IO {
 		read(): string;
 		getResource(): string
 		getLocation(): Error.Location
+		getRegion(): Error.Region
 		mark(): Error.Region
 	}
 }
