@@ -21,6 +21,7 @@
 		"source/Unit/Constraints/FalseConstraint.ts",
 		"source/Unit/Constraints/NotModifier.ts",
 		"source/Unit/Constraints/NullConstraint.ts",
+		"source/Unit/Constraints/NullOrUndefinedConstraint.ts",
 		"source/Unit/Constraints/UndefinedConstraint.ts",
 		"source/Unit/Constraints/TrueConstraint.ts",
 		"source/Unit/Constraints/Is.ts",
@@ -62,7 +63,10 @@
 
 		"source/Unit/Tests/BooleanTest.ts",
 		"source/Unit/Tests/EqualTest.ts",
+		"source/Unit/Tests/NotTest.ts",
 		"source/Unit/Tests/NullTest.ts",
+		"source/Unit/Tests/UndefinedTest.ts",
+		"source/Unit/Tests/NullOrUndefinedTest.ts",
 
 		"source/Tokens/Tests/LexerTest.ts",
 
