@@ -21,6 +21,7 @@
 		"source/Unit/Constraints/FalseConstraint.ts",
 		"source/Unit/Constraints/NotModifier.ts",
 		"source/Unit/Constraints/NullConstraint.ts",
+		"source/Unit/Constraints/UndefinedConstraint.ts",
 		"source/Unit/Constraints/TrueConstraint.ts",
 		"source/Unit/Constraints/Is.ts",
 

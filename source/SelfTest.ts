@@ -1,6 +1,7 @@
 /// <reference path="./Unit/Fixture" />
 /// <reference path="./Unit/Tests/BooleanTest" />
 /// <reference path="./Unit/Tests/NullTest" />
+/// <reference path="./Unit/Tests/UndefinedTest" />
 /// <reference path="./Unit/Tests/EqualTest" />
 /// <reference path="./Unit/Tests/NotTest" />
 /// <reference path="./Tokens/Tests/LexerTest" />
@@ -12,6 +13,7 @@ module Magic {
 				// Unit/Tests
 				new Unit.Tests.BooleanTest(),
 				new Unit.Tests.NullTest(),
+				new Unit.Tests.UndefinedTest(),
 				new Unit.Tests.EqualTest(),
 				new Unit.Tests.NotTest(),
 				// Tokens/Tests
