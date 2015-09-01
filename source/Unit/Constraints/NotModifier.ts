@@ -4,6 +4,7 @@
 /// <reference path="TrueConstraint" />
 /// <reference path="EqualModifier" />
 /// <reference path="NullConstraint" />
+/// <reference path="UndefinedConstraint" />
 
 module Magic.Unit.Constraints {
 	export class NotModifier extends Modifier {
@@ -14,6 +15,7 @@ module Magic.Unit.Constraints {
 			return !(this.testChild(value))
 		}
 		Null() { return new NullConstraint(this) }
+		Undefined() { return new UndefinedConstraint(this) }
 		False() { return new FalseConstraint(this) }
 		True() { return new TrueConstraint(this) }
 		Equal() { return new EqualModifier(this) }

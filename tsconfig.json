@@ -10,6 +10,21 @@
 		"sourceRoot": "../source"
 	},
 	"files": [
+		"source/Unit/Test.ts",
+		"source/Unit/TestFailedError.ts",
+		"source/Unit/Fixture.ts",
+
+		"source/Unit/Constraints/Modifier.ts",
+		"source/Unit/Constraints/Constraint.ts",
+		"source/Unit/Constraints/CompareConstraint.ts",
+		"source/Unit/Constraints/EqualModifier.ts",
+		"source/Unit/Constraints/FalseConstraint.ts",
+		"source/Unit/Constraints/NotModifier.ts",
+		"source/Unit/Constraints/NullConstraint.ts",
+		"source/Unit/Constraints/UndefinedConstraint.ts",
+		"source/Unit/Constraints/TrueConstraint.ts",
+		"source/Unit/Constraints/Is.ts",
+
 		"source/Error/Position.ts",
 		"source/Error/Location.ts",
 		"source/Error/Region.ts",
@@ -34,8 +49,10 @@
 		"source/Tokens/Substance.ts",
 		"source/Tokens/Identifier.ts",
 		"source/Tokens/Literal.ts",
+
 		"source/Tokens/Literals/String.ts",
 		"source/Tokens/Literals/Number.ts",
+
 		"source/Tokens/Operator.ts",
 		"source/Tokens/Separator.ts",
 		"source/Tokens/Comment.ts",
@@ -43,24 +60,13 @@
 		"source/Tokens/Lexer.ts",
 		"source/Tokens/GapRemover.ts",
 
-		"source/Unit/Constraints/CompareConstraint.ts",
-		"source/Unit/Constraints/Constraint.ts",
-		"source/Unit/Constraints/EqualModifier.ts",
-		"source/Unit/Constraints/FalseConstraint.ts",
-		"source/Unit/Constraints/Is.ts",
-		"source/Unit/Constraints/Modifier.ts",
-		"source/Unit/Constraints/NotModifier.ts",
-		"source/Unit/Constraints/NullConstraint.ts",
-		"source/Unit/Constraints/TrueConstraint.ts",
-
 		"source/Unit/Tests/BooleanTest.ts",
 		"source/Unit/Tests/EqualTest.ts",
 		"source/Unit/Tests/NullTest.ts",
 
-		"source/Unit/Fixture.ts",
-		"source/Unit/Test.ts",
-		"source/Unit/TestFailedError.ts",
+		"source/Tokens/Tests/LexerTest.ts",
 
+		"source/SelfTest.ts",
 		"source/magic.ts"
 	]
 }

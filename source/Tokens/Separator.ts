@@ -14,6 +14,9 @@ module Magic.Tokens {
 		isSeparator(symbol: string = null): boolean {
 			return !symbol || this.symbol == symbol
 		}
+		toString() {
+			return this.getSymbol()
+		}
 		static scan(source: Source): Token {
 			var result: Token;
 			switch (source.peek()) {

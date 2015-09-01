@@ -14,6 +14,9 @@ module Magic.Tokens {
 		isOperator(symbol: string = null): boolean {
 			return !symbol && symbol == this.symbol
 		}
+		toString() {
+			return this.getSymbol()
+		}
 		static scan(source: Source): Token {
 			var result: Token;
 			switch (source.peek()) {
