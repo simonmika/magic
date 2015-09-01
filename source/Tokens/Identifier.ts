@@ -18,7 +18,7 @@ module Magic.Tokens {
 			return this.getName()
 		}
 		static scan(source: Source): Token {
-			var result: string
+			var result: string = ""
 			if (Identifier.isValidFirstCharacter(source.peek())) {
 				do {
 					result += source.read()
