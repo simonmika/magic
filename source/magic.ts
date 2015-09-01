@@ -25,7 +25,7 @@ module Magic {
 				case "self-test":
 					break
 				case "version":
-					console.log("magic " + magic.getVersion())
+					console.log("magic " + this.getVersion())
 					break
 				case "help":
 					break
