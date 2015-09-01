@@ -9,7 +9,7 @@ module Magic.Tokens.Tests {
 	import Is = Unit.Constraints.Is
 	export class LexerTest extends Unit.Fixture {
 		constructor() {
-			super("LexerTest")
+			super("Lexer")
 			var errorHandler = new Error.ConsoleHandler()
 			this.add("expression 1", () => {
 				var lexer = new Lexer(new IO.StringReader("a+b\0"), errorHandler)
