@@ -19,15 +19,6 @@
 
 Code analyzer for the [ooc programming language](http://ooc-lang.org).
 
-#very much readme
-Very, very early alpha stage.
-* The lexer must be improved and streamlined.
-* A parse tree is yet to be implemented.
-* The analyzer will work with a proper parse tree, once implemented.
-This will enable more complex checks. Right now, a limited set of checks has been hacked together using the
-token list generated from each file.
-* A tab width of 4 is assumed.
-
 #requirements
 Known to work on Linux (x64), status on other platforms is unknown at this time.
 

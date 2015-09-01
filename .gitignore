@@ -1,2 +1,3 @@
+.settings/settings.json
 build/
-test/build/
+bin/

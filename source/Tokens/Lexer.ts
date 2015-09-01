@@ -23,14 +23,14 @@ module Magic.Tokens {
 				(result = EndOfFile.scan(this.source)) ||
 				(result = Whitespace.scan(this.source)) ||
 				(result = Comment.scan(this.source)) ||
-				(result = Separator.scan(this.source)) ||
 				(result = Operator.scan(this.source)) ||
+				(result = Separator.scan(this.source)) ||
 				(result = Literals.String.scan(this.source)) ||
 				(result = Literals.Number.scan(this.source)) ||
 				(result = Identifier.scan(this.source)) ||
 				false
 			))
-				;//this.reader.raise("Failed to tokenize " + this.reader.peek(5));
+				this.source.raise("Unrecognized token.");
 			return result
 		}
 	}
