@@ -43,6 +43,24 @@
 		"source/Tokens/Lexer.ts",
 		"source/Tokens/GapRemover.ts",
 
+		"source/Unit/Constraints/CompareConstraint.ts",
+		"source/Unit/Constraints/Constraint.ts",
+		"source/Unit/Constraints/EqualModifier.ts",
+		"source/Unit/Constraints/FalseConstraint.ts",
+		"source/Unit/Constraints/Is.ts",
+		"source/Unit/Constraints/Modifier.ts",
+		"source/Unit/Constraints/NotModifier.ts",
+		"source/Unit/Constraints/NullConstraint.ts",
+		"source/Unit/Constraints/TrueConstraint.ts",
+
+		"source/Unit/Tests/BooleanTest.ts",
+		"source/Unit/Tests/EqualTest.ts",
+		"source/Unit/Tests/NullTest.ts",
+
+		"source/Unit/Fixture.ts",
+		"source/Unit/Test.ts",
+		"source/Unit/TestFailedError.ts",
+
 		"source/magic.ts"
 	]
 }
