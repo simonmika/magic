@@ -1,6 +1,7 @@
 /// <reference path="Test" />
 /// <reference path="TestFailedError" />
 /// <reference path="./Constraints/Constraint" />
+/// <reference path="./Constraints/TrueConstraint" />
 
 module Magic.Unit {
 	export class Fixture {
@@ -19,7 +20,7 @@ module Magic.Unit {
 				try {
 					test.run()
 				} catch (Error) {
-					if (Error instanceof(TestFailedError)) {
+					if (Error instanceof TestFailedError) {
 						var e = <TestFailedError>Error
 						e.setTest(test)
 						e.setExpectId(this.expectId)
@@ -31,13 +32,15 @@ module Magic.Unit {
 			console.log(this.name + ":", success ? "passed" : "failed")
 			if(!success) {
 				failures.forEach(failure => {
-					console.log("  -> expect #" + failure.getExpectId() + ", name: '" + failure.getTest().toString() + "'")
+					console.log("  -> expect #" + failure.getExpectId() + ", '" + failure.getTest().toString() + "'")
 				})
 				//process.exit(1)
 			}
 		}
-		expect(value: any, constraint: Constraints.Constraint): void {
+		expect(value: any, constraint: Constraints.Constraint = null): void {
 			this.expectId++
+			if (constraint == null)
+				constraint = new Constraints.TrueConstraint()
 			if (!constraint.verify(value))
 				throw new TestFailedError(value, constraint)
 		}
