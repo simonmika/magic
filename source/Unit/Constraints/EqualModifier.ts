@@ -8,7 +8,7 @@ module Magic.Unit.Constraints {
 		}
 		To(correct: any): CompareConstraint {
 			var comparer = function(objectA: any, objectB: any) {
-				return objectA === objectB
+				return objectA == objectB
 			}
 			return new CompareConstraint(correct, comparer, this)
 		}
