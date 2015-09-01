@@ -10,9 +10,9 @@ var fs = require("fs");
 
 module Magic.IO {
 	export class StringReader implements Reader {
-		private count: number
-		private line: number
-		private column: number
+		private count: number = 0
+		private line: number = 1
+		private column: number = 1
 		private lastPosition: Error.Position
 		private lastContent: string
 		constructor(private content: string, private path: string = "") {
@@ -26,7 +26,7 @@ module Magic.IO {
 			if (result) {
 				if (result == "\n") {
 					this.line++
-					this.column = 0
+					this.column = 1
 				} else {
 					this.column++
 				}

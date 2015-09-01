@@ -5,7 +5,7 @@ module Magic.Unit.Tests {
 	import Is = Constraints.Is
 	export class EqualTest extends Fixture {
 		constructor() {
-			super("EqualTest")
+			super("Equal")
 			this.add("true is true", () => {
 				this.expect(true, Is.Equal().To(true))
 			})

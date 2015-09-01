@@ -4,6 +4,7 @@
 /// <reference path="TrueConstraint" />
 /// <reference path="EqualModifier" />
 /// <reference path="NullConstraint" />
+/// <reference path="NullOrUndefinedConstraint" />
 /// <reference path="UndefinedConstraint" />
 
 module Magic.Unit.Constraints {
@@ -15,6 +16,7 @@ module Magic.Unit.Constraints {
 			return !(this.testChild(value))
 		}
 		Null() { return new NullConstraint(this) }
+		NullOrUndefined() { return new NullOrUndefinedConstraint(this) }
 		Undefined() { return new UndefinedConstraint(this) }
 		False() { return new FalseConstraint(this) }
 		True() { return new TrueConstraint(this) }
