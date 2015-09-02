@@ -27,6 +27,8 @@ module Magic.Unit {
 						e.setExpectId(this.expectId)
 						failures.push(e)
 						result = false
+					} else {
+						console.dir(Error)
 					}
 				}
 				this.expectId = 0
