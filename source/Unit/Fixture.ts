@@ -27,6 +27,9 @@ module Magic.Unit {
 						e.setExpectId(this.expectId)
 						failures.push(e)
 						result = false
+					} else {
+						console.dir("[Fixture] " + Error)
+						process.exit(1)
 					}
 				}
 				this.expectId = 0

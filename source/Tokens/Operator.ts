@@ -14,9 +14,6 @@ module Magic.Tokens {
 		isOperator(symbol: string = null): boolean {
 			return !symbol && symbol == this.symbol
 		}
-		toString() {
-			return this.getSymbol()
-		}
 		static scan(source: Source): Token {
 			var result: Token;
 			switch (source.peek()) {
@@ -24,6 +21,7 @@ module Magic.Tokens {
 				case "+":
 					switch (source.peek(2)) {
 						default: result = new Operator(source.read(), source.mark()); break
+						case "++": result = new Operator(source.read(2), source.mark()); break
 						case "+=": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "-":
@@ -44,10 +42,8 @@ module Magic.Tokens {
 					} break
 				case "/":
 					switch (source.peek(2)) {
-						default:
-							result = new Operator(source.read(), source.mark()); break
-						case "/=":
-							result = new Operator(source.read(2), source.mark()); break
+						default: result = new Operator(source.read(), source.mark()); break
+						case "/=": result = new Operator(source.read(2), source.mark()); break
 					}; break
 				case "=":
 					switch (source.peek(2)) {
@@ -58,7 +54,7 @@ module Magic.Tokens {
 				case "^":
 					switch (source.peek(2)) {
 						default: result = new Operator(source.read(), source.mark()); break
-						case "^=":result = new Operator(source.read(2), source.mark()); break
+						case "^=": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "|":
 					switch (source.peek(2)) {
@@ -68,7 +64,7 @@ module Magic.Tokens {
 					} break
 				case "&":
 					switch (source.peek(2)) {
-						default: result = new Operator(source.read(), source.mark()) ;break
+						default: result = new Operator(source.read(), source.mark()); break
 						case "&&": result = new Operator(source.read(2), source.mark()); break
 						case "&=": result = new Operator(source.read(2), source.mark()); break
 					} break
@@ -105,7 +101,11 @@ module Magic.Tokens {
 				case ":":
 					switch (source.peek(2)) {
 						default: result = null /* separator */; break
-						case ":=": result = new Operator(source.read(2), source.mark()); break
+						case ":=":
+							switch(source.peek(3)) {
+								default: result = new Operator(source.read(2), source.mark()); break
+								case ":==": result = new Operator(source.read(3), source.mark()); break
+							} break
 						case "::":
 							switch (source.peek(3)) {
 								default: source.raise("Undefined operator \"::\""); break

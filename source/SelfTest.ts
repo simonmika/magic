@@ -8,7 +8,10 @@
 /// <reference path="./Unit/Tests/EmptyTest" />
 /// <reference path="./IO/Tests/BufferedReaderTest" />
 /// <reference path="./IO/Tests/StringReaderTest" />
+/// <reference path="./Tokens/Tests/GapRemoverTest" />
 /// <reference path="./Tokens/Tests/LexerTest" />
+/// <reference path="./Tokens/Tests/OperatorTest" />
+/// <reference path="./Utilities/Tests/BufferedIteratorTest" />
 
 module Magic {
 	export class SelfTest {
@@ -26,7 +29,12 @@ module Magic {
 				new IO.Tests.BufferedReaderTest(),
 				new IO.Tests.StringReaderTest(),
 				// Tokens tests
-				new Tokens.Tests.LexerTest()
+				new Tokens.Tests.GapRemoverTest(),
+				new Tokens.Tests.LexerTest(),
+				new Tokens.Tests.OperatorTest(),
+				// Utilities tests
+				new Utilities.Tests.BufferedIteratorTest()
+
 			]
 			var result = true
 			tests.forEach(test => {

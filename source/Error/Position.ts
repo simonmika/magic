@@ -4,7 +4,7 @@ module Magic.Error {
 		getLine() { return this.line }
 		getColumn() { return this.column }
 		toString() {
-			return "Ln" + this.line + ", Col" + this.column
+			return "Ln " + this.line + ", Col " + this.column
 		}
 	}
 }
