@@ -47,6 +47,7 @@
 		"source/Tokens/GapRemover.ts",
 
 		"source/IO/Tests/StringReaderTest.ts",
+		"source/IO/Tests/BufferedReaderTest.ts",
 
 		"source/Unit/Test.ts",
 		"source/Unit/TestFailedError.ts",

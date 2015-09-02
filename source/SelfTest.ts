@@ -6,6 +6,7 @@
 /// <reference path="./Unit/Tests/EqualTest" />
 /// <reference path="./Unit/Tests/NotTest" />
 /// <reference path="./Unit/Tests/EmptyTest" />
+/// <reference path="./IO/Tests/BufferedReaderTest" />
 /// <reference path="./IO/Tests/StringReaderTest" />
 /// <reference path="./Tokens/Tests/LexerTest" />
 
@@ -22,6 +23,7 @@ module Magic {
 				new Unit.Tests.NotTest(),
 				new Unit.Tests.EmptyTest(),
 				// IO tests
+				new IO.Tests.BufferedReaderTest(),
 				new IO.Tests.StringReaderTest(),
 				// Tokens tests
 				new Tokens.Tests.LexerTest()
