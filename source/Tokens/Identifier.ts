@@ -20,6 +20,7 @@ module Magic.Tokens {
 		static scan(source: Source): Token {
 			var result: string = ""
 			if (Identifier.isValidFirstCharacter(source.peek())) {
+				source.mark()
 				do {
 					result += source.read()
 				} while (Identifier.isValidWithinCharacter(source.peek()))
