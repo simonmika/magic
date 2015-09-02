@@ -36,15 +36,15 @@
 		"source/Tokens/Identifier.ts",
 		"source/Tokens/Literal.ts",
 
-		"source/Tokens/Literals/String.ts",
-		"source/Tokens/Literals/Number.ts",
-
 		"source/Tokens/Operator.ts",
 		"source/Tokens/Separator.ts",
 		"source/Tokens/Comment.ts",
 		"source/Tokens/Whitespace.ts",
 		"source/Tokens/Lexer.ts",
 		"source/Tokens/GapRemover.ts",
+
+		"source/Tokens/Literals/String.ts",
+		"source/Tokens/Literals/Number.ts",
 
 		"source/IO/Tests/StringReaderTest.ts",
 		"source/IO/Tests/BufferedReaderTest.ts",
