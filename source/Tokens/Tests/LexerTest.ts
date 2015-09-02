@@ -26,25 +26,22 @@ module Magic.Tokens.Tests {
 			this.add("identifier", () => {
 				var lexer = new Lexer(new IO.StringReader("ident"), errorHandler)
 				var ident = lexer.next()
-				this.expect(ident instanceof Identifier)
+				this.expect(ident instanceof Identifier && (<Identifier>ident).getName() === "ident")
 				this.expect(ident.isIdentifier())
-				this.expect((<Identifier>ident).getName() === "ident")
 			})
 			this.add("operator", () => {
 				var lexer = new Lexer(new IO.StringReader(">"), errorHandler)
 				var op = lexer.next()
-				this.expect(op instanceof Operator)
+				this.expect(op instanceof Operator && (<Operator>op).getSymbol() === ">")
 				// TODO: These two fail, why!?
 				//this.expect(op.isOperator())
 				//this.expect((<Operator>op).isOperator())
-				this.expect((<Operator>op).getSymbol() === ">")
 			})
 			this.add("whitespace", () => {
-				var lexer = new Lexer(new IO.StringReader("\n\t\r "), errorHandler)
-				var lf = lexer.next()
-				this.expect(lf instanceof Whitespace && lf.getRegion().getContent() === "\n")
-				var rest = lexer.next()
-				this.expect(rest instanceof Whitespace && rest.getRegion().getContent() === "\t\r ")
+				var lexer = new Lexer(new IO.StringReader("\n\t\r \n"), errorHandler)
+				var token: Token
+				this.expect((token = lexer.next()) instanceof Whitespace && (<Whitespace>token).getRegion().getContent() === "\n")
+				this.expect((token = lexer.next()) instanceof Whitespace && (<Whitespace>token).getRegion().getContent() === "\t\r \n")
 			})
 			this.add("expression 1", () => {
 				var lexer = new Lexer(new IO.StringReader("a := b * c"), errorHandler)
