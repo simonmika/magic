@@ -30,6 +30,12 @@ module Magic.Unit.Tests {
 			this.add("undefined === undefined", () => {
 				this.expect(undefined, Is.Equal().To(undefined))
 			})
+			this.add("\"5\" == 5", () => {
+				this.expect("5" == <any>5, Is.Equal().To(true))
+			})
+			this.add("\"5\" === 5 == false", () => {
+				this.expect("5" === <any>5, Is.Equal().To(false))
+			})
 		}
 	}
 }

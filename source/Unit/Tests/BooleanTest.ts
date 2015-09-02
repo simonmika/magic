@@ -18,6 +18,9 @@ module Magic.Unit.Tests {
 			this.add("foo === bar (false)", () => {
 				this.expect("foo" === "bar", Is.False())
 			})
+			this.add("null === null", () => {
+				this.expect(null === null)
+			})
 		}
 	}
 }

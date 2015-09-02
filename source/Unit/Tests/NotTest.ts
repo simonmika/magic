@@ -18,6 +18,12 @@ module Magic.Unit.Tests {
 			this.add("foo !== bar is not false", () => {
 				this.expect("foo" !== "bar", Is.Not().False())
 			})
+			this.add("null is not undefined", () => {
+				this.expect(null, Is.Not().Undefined())
+			})
+			this.add("undefined is not null", () => {
+				this.expect(undefined, Is.Not().Null())
+			})
 		}
 	}
 }
