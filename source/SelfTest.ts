@@ -28,7 +28,7 @@ module Magic {
 				// Tokens tests
 				new Tokens.Tests.LexerTest()
 			]
-			var result = false
+			var result = true
 			tests.forEach(test => {
 				if (!test.run()) {
 					result = false
