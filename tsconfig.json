@@ -33,9 +33,9 @@
 		"source/Tokens/Token.ts",
 		"source/Tokens/Gap.ts",
 		"source/Tokens/Substance.ts",
+		"source/Tokens/EndOfFile",
 		"source/Tokens/Identifier.ts",
 		"source/Tokens/Literal.ts",
-
 		"source/Tokens/Operator.ts",
 		"source/Tokens/Separator.ts",
 		"source/Tokens/Comment.ts",
@@ -73,7 +73,11 @@
 		"source/Unit/Tests/UndefinedTest.ts",
 		"source/Unit/Tests/NullOrUndefinedTest.ts",
 
+		"source/Tokens/Tests/GapRemoverTest.ts",
 		"source/Tokens/Tests/LexerTest.ts",
+		"source/Tokens/Tests/OperatorTest.ts",
+
+		"source/Utilities/Tests/BufferedIteratorTest.ts",
 
 		"source/SelfTest.ts",
 		"source/magic.ts"

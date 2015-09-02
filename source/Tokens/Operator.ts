@@ -101,11 +101,14 @@ module Magic.Tokens {
 				case ":":
 					switch (source.peek(2)) {
 						default: result = null /* separator */; break
-						case ":=": result = new Operator(source.read(2), source.mark()); break
+						case ":=":
+							switch(source.peek(3)) {
+								default: result = new Operator(source.read(2), source.mark()); break
+								case ":==": result = new Operator(source.read(3), source.mark()); break
+							} break
 						case "::":
 							switch (source.peek(3)) {
 								default: source.raise("Undefined operator \"::\""); break
-								case ":==": result = new Operator(source.read(3), source.mark()); break
 								case "::=": result = new Operator(source.read(3), source.mark()); break
 							} break
 					} break

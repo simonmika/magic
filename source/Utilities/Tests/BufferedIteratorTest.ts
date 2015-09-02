@@ -1,9 +1,20 @@
 /// <reference path="../../Unit/Fixture" />
 /// <reference path="../../Unit/Constraints/Is" />
+/// <reference path="../Iterator" />
 /// <reference path="../BufferedIterator" />
-/// <reference path="../StringIterator" />
 
 module Magic.Utilities.Tests {
+	class StringIterator implements Iterator<string> {
+		private position: number = 0
+		constructor(private content: string) {
+			if (!content)
+				content = ""
+		}
+		next(): string {
+			var ret = this.position < this.content.length ? this.content.charAt(this.position++) : null
+			return ret
+		}
+	}
 	export class BufferedIteratorTest extends Unit.Fixture {
 		constructor() {
 			super("BufferedIterator")
