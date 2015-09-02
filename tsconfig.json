@@ -46,6 +46,8 @@
 		"source/Tokens/Lexer.ts",
 		"source/Tokens/GapRemover.ts",
 
+		"source/IO/Tests/StringReaderTest.ts",
+
 		"source/Unit/Test.ts",
 		"source/Unit/TestFailedError.ts",
 		"source/Unit/Fixture.ts",
