@@ -12,17 +12,19 @@ module Magic.Tokens.Tests {
 			super("Lexer")
 			var errorHandler = new Error.ConsoleHandler()
 			this.add("expression 1", () => {
-				var lexer = new Lexer(new IO.StringReader("a+b\0"), errorHandler)
-				this.expect(lexer.next(), Is.Not().NullOrUndefined())
-				this.expect(lexer.next(), Is.Not().NullOrUndefined())
-				this.expect(lexer.next(), Is.Not().NullOrUndefined())
+				var lexer = new Lexer(new IO.StringReader("identifier"), errorHandler)
+				var identifier = lexer.next()
+				this.expect(identifier, Is.Not().NullOrUndefined())
+				this.expect(identifier.toString() === "identifier")
+				this.expect(identifier.isIdentifier())
+				this.expect(identifier.isIdentifier(identifier.toString()))
 			})
-			this.add("expression 2", () => {
+			/*this.add("expression 2", () => {
 				var lexer = new Lexer(new IO.StringReader("a+b\0"), errorHandler)
 				this.expect(lexer.next().isIdentifier())
 				this.expect(lexer.next().isOperator())
 				this.expect(lexer.next().isIdentifier())
-			})
+			})*/
 		}
 	}
 }

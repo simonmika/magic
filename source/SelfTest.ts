@@ -5,25 +5,36 @@
 /// <reference path="./Unit/Tests/UndefinedTest" />
 /// <reference path="./Unit/Tests/EqualTest" />
 /// <reference path="./Unit/Tests/NotTest" />
+/// <reference path="./Unit/Tests/EmptyTest" />
+/// <reference path="./IO/Tests/BufferedReaderTest" />
+/// <reference path="./IO/Tests/StringReaderTest" />
 /// <reference path="./Tokens/Tests/LexerTest" />
 
 module Magic {
 	export class SelfTest {
-		static run() {
+		static run(): boolean {
 			var tests: Unit.Fixture[] = [
-				// Unit/Tests
+				// Unit framework tests
 				new Unit.Tests.BooleanTest(),
 				new Unit.Tests.NullTest(),
 				new Unit.Tests.NullOrUndefinedTest(),
 				new Unit.Tests.UndefinedTest(),
 				new Unit.Tests.EqualTest(),
 				new Unit.Tests.NotTest(),
-				// Tokens/Tests
+				new Unit.Tests.EmptyTest(),
+				// IO tests
+				new IO.Tests.BufferedReaderTest(),
+				new IO.Tests.StringReaderTest(),
+				// Tokens tests
 				new Tokens.Tests.LexerTest()
 			]
+			var result = true
 			tests.forEach(test => {
-				test.run()
+				if (!test.run()) {
+					result = false
+				}
 			})
+			return result
 		}
 	}
 }

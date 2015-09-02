@@ -12,6 +12,7 @@ module Magic.Tokens {
 			var result: Token;
 			switch (source.peek()) {
 				case "\0":
+					source.mark()
 					source.read()
 					result = new EndOfFile(source.mark())
 					break

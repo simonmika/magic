@@ -98,7 +98,7 @@ module Magic.Tokens.Literals {
 		}
 		private static scanOctal(reader : IO.BufferedReader): Token {
 			var result: Token
-			if (reader.peek(2) == "0o") {
+			if (reader.peek(2) == "0c") {
 				var original = reader.read(2)
 				var value: number
 				var divisor: number

@@ -5,6 +5,7 @@
 /// <reference path="UndefinedConstraint" />
 /// <reference path="EqualModifier" />
 /// <reference path="NotModifier" />
+/// <reference path="EmptyConstraint" />
 
 module Magic.Unit.Constraints {
 	export class Is {
@@ -15,5 +16,6 @@ module Magic.Unit.Constraints {
 		static Undefined() { return new UndefinedConstraint() }
 		static Equal() { return new EqualModifier() }
 		static Not() { return new NotModifier() }
+		static Empty() { return new EmptyConstraint() }
 	}
 }
