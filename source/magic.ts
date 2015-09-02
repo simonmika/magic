@@ -8,9 +8,11 @@ var fs = require("fs")
 
 module Magic {
 	export class Program {
-		private defaultCommand = "self-test"//"compile"
+		private defaultCommand = "self-test"
 		constructor(private commands: string[]) {
-			this.runHelper(this.defaultCommand, null)
+			this.commands = this.commands.slice(2)
+			if (this.commands.length == 0)
+				this.commands.push(this.defaultCommand)
 		}
 		private openReader(path: string) {
 			return path.slice(-4) == ".ooc" ? new IO.FileReader(path) : new IO.FolderReader(path, "*.ooc")
@@ -21,16 +23,23 @@ module Magic {
 		private runHelper(command: string, commands: string[]) {
 			switch (command) {
 				case "compile":
+					console.log("compile")
 				case "verify":
+					console.log("verify")
 					var lexer = this.openLexer(commands.pop())
 					break
 				case "self-test":
-					SelfTest.run()
+					var result = SelfTest.run()
+					if (!result) {
+						console.log("\x1b[41m\x1b[37mmagic self-test failed\x1b[0m")
+						process.exit(1)
+					}
 					break
 				case "version":
 					console.log("magic " + this.getVersion())
 					break
 				case "help":
+					console.log("help")
 					break
 				default:
 					commands.push(command)
@@ -56,6 +65,7 @@ module Magic {
 
 try {
 	var magic = new Magic.Program(process.argv)
+	magic.run()
 	console.log("magic " + magic.getVersion())
 } catch (Error) {
 	console.log(Error.toString())

@@ -11,7 +11,7 @@
 
 module Magic {
 	export class SelfTest {
-		static run() {
+		static run(): boolean {
 			var tests: Unit.Fixture[] = [
 				// Unit framework tests
 				new Unit.Tests.BooleanTest(),
@@ -26,9 +26,13 @@ module Magic {
 				// Tokens tests
 				new Tokens.Tests.LexerTest()
 			]
+			var result = false
 			tests.forEach(test => {
-				test.run()
+				if (!test.run()) {
+					result = false
+				}
 			})
+			return result
 		}
 	}
 }
