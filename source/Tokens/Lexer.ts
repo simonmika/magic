@@ -30,7 +30,7 @@ module Magic.Tokens {
 				(result = Identifier.scan(this.source)) ||
 				false
 			))
-				this.source.raise("Unrecognized token.");
+				this.source.raise("[Lexer]: Unrecognized token.");
 			return result
 		}
 	}
