@@ -21,7 +21,7 @@ module Magic.IO {
 			return this.count >= this.content.length
 		}
 		read(): string {
-			var result: string = this.count < this.content.length ? this.content.charAt(this.count++) : null
+			var result: string = this.count < this.content.length ? this.content.charAt(this.count++) : "\0"
 			this.lastContent += result
 			if (result) {
 				if (result == "\n") {
