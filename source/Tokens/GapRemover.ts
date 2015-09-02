@@ -12,7 +12,7 @@ module Magic.Tokens {
 			this.backend = new Utilities.BufferedIterator(backend)
 		}
 		next(): Substance {
-			var pre = new Array<Gap>()
+			var pre: Gap[] = []
 			while (this.backend.peek() instanceof Gap) {
 				pre.push(this.backend.next())
 			}
@@ -20,7 +20,7 @@ module Magic.Tokens {
 			if (!(this.backend.peek() instanceof Substance))
 				throw "Lexical Error: Missing end of file token.";
 			result = <Substance>this.backend.next()
-			var post = new Array<Gap>()
+			var post: Gap[] = []
 			while (this.backend.peek() instanceof Gap) {
 				var next = this.backend.next()
 				post.push(next)
