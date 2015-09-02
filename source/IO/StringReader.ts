@@ -14,7 +14,7 @@ module Magic.IO {
 		private line: number = 1
 		private column: number = 1
 		private lastPosition: Error.Position
-		private lastContent: string
+		private lastContent: string = ""
 		constructor(private content: string, private path: string = "") {
 		}
 		isEmpty(): boolean {
