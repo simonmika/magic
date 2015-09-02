@@ -54,6 +54,7 @@
 
 		"source/Unit/Constraints/Modifier.ts",
 		"source/Unit/Constraints/Constraint.ts",
+		"source/Unit/Constraints/EmptyConstraint.ts",
 		"source/Unit/Constraints/CompareConstraint.ts",
 		"source/Unit/Constraints/EqualModifier.ts",
 		"source/Unit/Constraints/FalseConstraint.ts",
