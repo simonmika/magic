@@ -14,9 +14,6 @@ module Magic.Tokens {
 		isIdentifier(name: string = null): boolean {
 			return !name || name == this.name
 		}
-		toString() {
-			return this.getName()
-		}
 		static scan(source: Source): Token {
 			var result: string = ""
 			if (Identifier.isValidFirstCharacter(source.peek())) {
