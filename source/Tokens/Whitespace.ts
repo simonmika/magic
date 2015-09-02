@@ -12,11 +12,9 @@ module Magic.Tokens {
 		static scan(source: Source): Token {
 			var result: Token = null
 			if (Whitespace.isWhitespace(source.peek())) {
-				source.mark()
 				do {
 					switch (source.peek()) {
 						case "\n":
-							source.mark()
 							source.read()
 							result = new Whitespace(true, source.mark())
 							break
@@ -25,13 +23,13 @@ module Magic.Tokens {
 						case " ":
 							source.read()
 							continue
+							break
 						default:
 							result = new Whitespace(false, source.mark())
 							break
 					}
-				} while (false)
+				} while (!result)
 			}
-
 			return result
 		}
 		private static isWhitespace(character: string) {
