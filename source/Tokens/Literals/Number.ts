@@ -11,10 +11,10 @@ module Magic.Tokens.Literals {
 		getValue(): number { return this.value }
 		static scan(source: Source): Token {
 			var result: Token
-			result = this.scanBinary(source)
-			if (!result) result = this.scanOctal(source)
-			if (!result) result = this.scanHexadecimal(source)
-			if (!result) result = this.scanDecimal(source)
+			(result = this.scanBinary(source)) ||
+			(result = this.scanOctal(source)) ||
+			(result = this.scanHexadecimal(source)) ||
+			(result = this.scanDecimal(source))
 			return result
 		}
 		private static scanHexadecimal(reader: IO.BufferedReader): Token {
