@@ -34,7 +34,6 @@ module Magic {
 				new Tokens.Tests.OperatorTest(),
 				// Utilities tests
 				new Utilities.Tests.BufferedIteratorTest()
-
 			]
 			var result = true
 			tests.forEach(test => {

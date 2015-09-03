@@ -62,7 +62,6 @@ module Magic {
 	}
 }
 
-
 try {
 	var magic = new Magic.Program(process.argv)
 	magic.run()

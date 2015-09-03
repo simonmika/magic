@@ -8,7 +8,7 @@ module Magic.Tokens.Literals {
 		constructor(private value: string, region: Error.Region) {
 			super(region)
 		}
-		getValue() : string { return this.value }
+		getValue(): string { return this.value }
 		static scan(source: Source): Token {
 			var result: string;
 			if (source.peek() == "\"") {

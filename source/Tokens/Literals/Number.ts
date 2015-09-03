@@ -8,11 +8,11 @@ module Magic.Tokens.Literals {
 		constructor(private value: number, original: string, region: Error.Region) {
 			super(region)
 		}
-		getValue() : number { return this.value }
+		getValue(): number { return this.value }
 		static scan(source: Source): Token {
 			return Number.scanHexadecimal(source)
 		}
-		private static scanHexadecimal(reader : IO.BufferedReader): Token {
+		private static scanHexadecimal(reader: IO.BufferedReader): Token {
 			var result: Token
 			if (reader.peek(2) == "0x") {
 				var original = reader.read(2)
@@ -55,7 +55,7 @@ module Magic.Tokens.Literals {
 			}
 			return result
 		}
-		private static scanDecimal(reader : IO.BufferedReader): Token {
+		private static scanDecimal(reader: IO.BufferedReader): Token {
 			var result: Token
 			var c = reader.peek()
 			if (Number.isNumber(c) || c == "." && Number.isNumber(reader.peek(2).slice(1, 2))) {
@@ -96,7 +96,7 @@ module Magic.Tokens.Literals {
 		private static isNumber(character: string): boolean {
 			return character >= "0" && character <= "9"
 		}
-		private static scanOctal(reader : IO.BufferedReader): Token {
+		private static scanOctal(reader: IO.BufferedReader): Token {
 			var result: Token
 			if (reader.peek(2) == "0c") {
 				var original = reader.read(2)
@@ -131,7 +131,7 @@ module Magic.Tokens.Literals {
 			}
 			return result
 		}
-		private static scanBinary(reader : IO.BufferedReader): Token {
+		private static scanBinary(reader: IO.BufferedReader): Token {
 			var result: Token
 			if (reader.peek(2) == "0b") {
 				var original = reader.read(2)
