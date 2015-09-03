@@ -10,33 +10,30 @@ module Magic.Tokens.Literals {
 		}
 		getValue(): string { return this.value }
 		static scan(source: Source): Token {
-			var result: string;
+			var result: string
 			if (source.peek() == "\"") {
 				source.read()
 				result = ""
 				do {
-					if (source.peek() == "\"") {
+					if (source.peek() == "\\") {
 						switch (source.peek(2)) {
 							case "\\0":
-								result += "\0"
-								break
+								result += "\0"; break
 							case "\\\\":
-								result += "\\"
-								break
+								result += "\\"; break
 							case "\\\"":
-								result += "\""
-								break
+								result += "\""; break
 							case "\\n":
-								result += "\n"
-								break
+								result += "\n"; break
 							case "\\r":
-								result += "\r"
-								break
+								result += "\r"; break
 							default:
-								source.raise("Unrecognized escape sequence: \"" + source.peek(2) + "\"")
-								break
+								source.raise("Unrecognized escape sequence: \"" + source.peek(2) + "\""); break
 						}
 						source.read(2)
+					}
+					else if (source.peek() === "\"") {
+						continue
 					}
 					else {
 						result += source.read()
@@ -44,7 +41,7 @@ module Magic.Tokens.Literals {
 				} while (source.peek() != "\"")
 				source.read()
 			}
-			return result ? new String(result, source.mark()) : null
+			return result || result === "" ? new String(result, source.mark()) : null
 		}
 	}
 }
