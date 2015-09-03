@@ -14,34 +14,23 @@ module Magic.Tokens.Literals {
 			if (source.peek() == "\"") {
 				source.read()
 				result = ""
-				do {
+				while (source.peek() != "\"") {
 					if (source.peek() == "\\") {
 						switch (source.peek(2)) {
-							case "\\0":
-								result += "\0"; break
-							case "\\\\":
-								result += "\\"; break
-							case "\\\"":
-								result += "\""; break
-							case "\\n":
-								result += "\n"; break
-							case "\\r":
-								result += "\r"; break
-							default:
-								source.raise("Unrecognized escape sequence: \"" + source.peek(2) + "\""); break
+							case "\\0":	result += "\0"; break
+							case "\\\\": result += "\\"; break
+							case "\\\"": result += "\""; break
+							case "\\n":	result += "\n"; break
+							case "\\r":	result += "\r"; break
+							default: source.raise("Unrecognized escape sequence: \"" + source.peek(2) + "\""); break
 						}
 						source.read(2)
-					}
-					else if (source.peek() === "\"") {
-						continue
-					}
-					else {
+					} else
 						result += source.read()
-					}
-				} while (source.peek() != "\"")
-				source.read()
+				}
+				source.read() // Consume last "
 			}
-			return result || result === "" ? new String(result, source.mark()) : null
+			return result || result == "" ? new String(result, source.mark()) : null
 		}
 	}
 }
