@@ -26,4 +26,5 @@ module Magic.Unit.Tests {
 			})
 		}
 	}
+	Fixture.add(new NotTest())
 }

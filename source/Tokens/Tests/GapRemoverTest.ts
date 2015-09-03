@@ -57,4 +57,5 @@ module Magic.Tokens.Tests {
 			})
 		}
 	}
+	Unit.Fixture.add(new GapRemoverTest())
 }
