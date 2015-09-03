@@ -7,14 +7,14 @@ module Magic.Tokens {
 		toString() {
 			return this.region.toString()
 		}
-		isSeparator(symbol: string = null): boolean {
-			return false
+		isSeparator(symbol?: string): boolean {
+			throw "isSeparator() called from base"
 		}
-		isIdentifier(name: string = null): boolean {
-			return false
+		isIdentifier(name?: string): boolean {
+			throw "isIdentifier() called from base"
 		}
-		isOperator(symbol: string = null): boolean {
-			return false
+		isOperator(symbol?: string): boolean {
+			throw "isOperator() called from base"
 		}
 	}
 }
