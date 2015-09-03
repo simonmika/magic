@@ -21,4 +21,5 @@ module Magic.Unit.Tests {
 			})
 		}
 	}
+	Fixture.add(new EmptyTest())
 }

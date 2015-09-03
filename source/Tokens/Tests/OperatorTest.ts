@@ -10,7 +10,7 @@ module Magic.Tokens.Tests {
 	import Is = Unit.Constraints.Is
 	export class OperatorTest extends Unit.Fixture {
 		constructor() {
-			super("Operator")
+			super("OperatorToken")
 			var errorHandler = new Error.ConsoleHandler()
 			this.add("arithmetic", () => {
 				var source = new Source(new IO.StringReader("+-*/**%++***"), errorHandler)
@@ -82,4 +82,5 @@ module Magic.Tokens.Tests {
 			})
 		}
 	}
+	Unit.Fixture.add(new OperatorTest())
 }

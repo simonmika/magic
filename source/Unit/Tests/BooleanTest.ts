@@ -23,4 +23,5 @@ module Magic.Unit.Tests {
 			})
 		}
 	}
+	Fixture.add(new BooleanTest())
 }

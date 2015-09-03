@@ -2,17 +2,21 @@
 /// <reference path="Error/ConsoleHandler" />
 /// <reference path="Tokens/Lexer" />
 /// <reference path="IO/Reader" />
-/// <reference path="SelfTest" />
+/// <reference path="IO/FileReader" />
+/// <reference path="IO/FolderReader" />
+/// <reference path="Unit/Fixture" />
 
 var fs = require("fs")
 
 module Magic {
 	export class Program {
-		private defaultCommand = "self-test"
+		private defaultCommand = "compile"
 		constructor(private commands: string[]) {
 			this.commands = this.commands.slice(2)
-			if (this.commands.length == 0)
+			if (this.commands.length == 0) {
 				this.commands.push(this.defaultCommand)
+				this.commands.push(".")
+			}
 		}
 		private openReader(path: string) {
 			return path.slice(-4) == ".ooc" ? new IO.FileReader(path) : new IO.FolderReader(path, "*.ooc")
@@ -29,11 +33,7 @@ module Magic {
 					var lexer = this.openLexer(commands.pop())
 					break
 				case "self-test":
-					var result = SelfTest.run()
-					if (!result) {
-						console.log("\x1b[41m\x1b[37mmagic self-test failed\x1b[0m")
-						process.exit(1)
-					}
+					Unit.Fixture.run()
 					break
 				case "version":
 					console.log("magic " + this.getVersion())

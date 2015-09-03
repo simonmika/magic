@@ -55,4 +55,5 @@ module Magic.Utilities.Tests {
 			})
 		}
 	}
+	Unit.Fixture.add(new BufferedIteratorTest())
 }

@@ -38,4 +38,5 @@ module Magic.Unit.Tests {
 			})
 		}
 	}
+	Fixture.add(new EqualTest())
 }
