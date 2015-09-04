@@ -76,7 +76,6 @@
 		"source/Tokens/Literals/Tests/NumberTest.ts",
 		"source/Tokens/Literals/Tests/StringTest.ts",
 		"source/Tokens/Tests/GapRemoverTest.ts",
-		"source/Tokens/Tests/LexerTest.ts",
 		"source/Tokens/Tests/OperatorTest.ts",
 
 		"source/Utilities/Tests/BufferedIteratorTest.ts",

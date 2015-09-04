@@ -16,12 +16,14 @@ module Magic.Tokens.Literals.Tests {
 			this.add("empty", () => {
 				var s = "\"\""
 				var source = new Source(new IO.StringReader(s), errorHandler)
-				this.expect((token = String.scan(source)) instanceof String && (<String>token).getValue() === "")
+				this.expect((token = String.scan(source)) instanceof String, Is.True())
+				this.expect((<String>token).getValue(), Is.Equal().To(""))
 			})
 			this.add("string with escape sequence #1", () => {
 				var s = "\" \\\" \""
 				var source = new Source(new IO.StringReader(s), errorHandler)
-				this.expect((token = String.scan(source)) instanceof String && (<String>token).getValue() === " \" ")
+				this.expect((token = String.scan(source)) instanceof String, Is.True())
+				this.expect((<String>token).getValue(), Is.Equal().To(" \" "))
 			})
 		}
 	}
