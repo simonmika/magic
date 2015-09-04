@@ -1,12 +1,12 @@
-/// <reference path="../Fixture" />
-/// <reference path="../Constraints/Is" />
-/// <reference path="../Constraints/NotModifier" />
+/// <reference path="../../Fixture" />
+/// <reference path="../../Constraints/Is" />
+/// <reference path="../../Constraints/NotModifier" />
 
 module Magic.Unit.Tests {
 	import Is = Constraints.Is
 	export class EmptyTest extends Fixture {
 		constructor() {
-			super("Empty")
+			super("Unit.Constraints.Empty")
 			this.add("empty string", () => {
 				this.expect("", Is.Empty())
 			})

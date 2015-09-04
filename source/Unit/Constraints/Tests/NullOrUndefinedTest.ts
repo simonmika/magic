@@ -1,11 +1,11 @@
-/// <reference path="../Fixture" />
-/// <reference path="../Constraints/Is" />
+/// <reference path="../../Fixture" />
+/// <reference path="../../Constraints/Is" />
 
 module Magic.Unit.Tests {
 	import Is = Constraints.Is
 	export class NullOrUndefinedTest extends Fixture {
 		constructor() {
-			super("NullOrUndefined")
+			super("Unit.Constraints.NullOrUndefined")
 			this.add("null or undefined 1", () => {
 				this.expect(null, Is.NullOrUndefined())
 			})

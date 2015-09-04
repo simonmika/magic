@@ -66,17 +66,16 @@
 		"source/Unit/Constraints/TrueConstraint.ts",
 		"source/Unit/Constraints/Is.ts",
 
-		"source/Unit/Tests/BooleanTest.ts",
-		"source/Unit/Tests/EqualTest.ts",
-		"source/Unit/Tests/NotTest.ts",
-		"source/Unit/Tests/NullTest.ts",
-		"source/Unit/Tests/UndefinedTest.ts",
-		"source/Unit/Tests/NullOrUndefinedTest.ts",
+		"source/Unit/Constraints/Tests/BooleanTest.ts",
+		"source/Unit/Constraints/Tests/EqualTest.ts",
+		"source/Unit/Constraints/Tests/NotTest.ts",
+		"source/Unit/Constraints/Tests/NullTest.ts",
+		"source/Unit/Constraints/Tests/UndefinedTest.ts",
+		"source/Unit/Constraints/Tests/NullOrUndefinedTest.ts",
 
 		"source/Tokens/Literals/Tests/NumberTest.ts",
 		"source/Tokens/Literals/Tests/StringTest.ts",
 		"source/Tokens/Tests/GapRemoverTest.ts",
-		"source/Tokens/Tests/LexerTest.ts",
 		"source/Tokens/Tests/OperatorTest.ts",
 
 		"source/Utilities/Tests/BufferedIteratorTest.ts",
