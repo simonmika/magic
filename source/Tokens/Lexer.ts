@@ -3,11 +3,13 @@
 /// <reference path="../IO/Reader" />
 /// <reference path="Source" />
 /// <reference path="Token" />
+/// <reference path="Comment" />
 /// <reference path="EndOfFile" />
 /// <reference path="Identifier" />
-/// <reference path="Comment" />
 /// <reference path="Literal" />
 /// <reference path="Literals/String" />
+/// <reference path="Literals/Number" />
+/// <reference path="Operator" />
 /// <reference path="Separator" />
 /// <reference path="Whitespace" />
 

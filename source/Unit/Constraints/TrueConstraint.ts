@@ -6,7 +6,7 @@ module Magic.Unit.Constraints {
 			super(parent)
 		}
 		test(value: any): boolean {
-			return value === true
+			return value == true
 		}
 	}
 }

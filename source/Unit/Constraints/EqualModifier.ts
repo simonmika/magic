@@ -7,10 +7,7 @@ module Magic.Unit.Constraints {
 			super(parent)
 		}
 		To(correct: any): CompareConstraint {
-			var comparer = function(objectA: any, objectB: any) {
-				return objectA == objectB
-			}
-			return new CompareConstraint(correct, comparer, this)
+			return new CompareConstraint(correct, (left, right) => { return left == right }, this)
 		}
 	}
 }
