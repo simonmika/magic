@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Helper script.
+# Compiles and installs magic into ./temp and runs 'magic self-test', then deletes ./temp
+#
+./install ./temp
+./temp/magic self-test
+rm -rf ./temp
