@@ -21,6 +21,13 @@ module Magic.Tokens.Tests {
 				this.expect(operator2.isOperator(">"))
 				this.expect(operator2.isOperator("+"), Is.False())
 			})
+			this.add("scan operator", () => {
+				var source = new Source(new IO.StringReader("<==>"), errorHandler)
+				var operator = Operator.scan(source)
+				this.expect(operator instanceof Operator)
+				this.expect(operator.isOperator())
+				this.expect((<Operator>operator).getSymbol(), Is.Equal().To("<==>"))
+			})
 			this.add("arithmetic", () => {
 				var source = new Source(new IO.StringReader("+-*/**%++***"), errorHandler)
 				var op: Token
