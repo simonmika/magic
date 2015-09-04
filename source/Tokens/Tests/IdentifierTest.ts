@@ -16,16 +16,17 @@ module Magic.Tokens.Tests {
 				var identifier1 = new Identifier(null, null)
 				var identifier2 = new Identifier("bar", null)
 				this.expect(identifier1.isIdentifier())
+				this.expect(identifier1.isIdentifier(""), Is.True())
 				this.expect(identifier1.isIdentifier("foo"), Is.False())
 				this.expect(identifier2.isIdentifier())
 				this.expect(identifier2.isIdentifier("foo"), Is.False())
 			})
 			this.add("scan identifier", () => {
 				var source = new Source(new IO.StringReader("identifier"), errorHandler)
-				var identifier = Identifier.scan(source)
-				this.expect(identifier instanceof Identifier)
-				this.expect(identifier.isIdentifier())
-				this.expect((<Identifier>identifier).getName(), Is.Equal().To("identifier"))
+				var token = Identifier.scan(source)
+				this.expect(token instanceof Identifier)
+				this.expect(token.isIdentifier())
+				this.expect((<Identifier>token).getName(), Is.Equal().To("identifier"))
 			})
 		}
 	}
