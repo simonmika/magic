@@ -78,6 +78,7 @@
 		"source/Tokens/Tests/GapRemoverTest.ts",
 		"source/Tokens/Tests/IdentifierTest.ts",
 		"source/Tokens/Tests/OperatorTest.ts",
+		"source/Tokens/Tests/SeparatorTest.ts",
 
 		"source/Utilities/Tests/BufferedIteratorTest.ts",
 
