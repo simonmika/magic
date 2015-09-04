@@ -12,7 +12,7 @@ module Magic.Tokens {
 			return this.symbol
 		}
 		isOperator(symbol: string = null): boolean {
-			return !symbol && symbol == this.symbol
+			return !symbol || symbol == this.symbol
 		}
 		static scan(source: Source): Token {
 			var result: Token;
