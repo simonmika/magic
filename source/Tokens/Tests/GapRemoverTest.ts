@@ -11,7 +11,7 @@
 module Magic.Tokens.Tests {
 	export class GapRemoverTest extends Unit.Fixture {
 		constructor() {
-			super("GapRemover")
+			super("Tokens.GapRemover")
 			var errorHandler = new Error.ConsoleHandler()
 			this.add("common expression", () => {
 				var testString = "\t\ta := b / c\n"

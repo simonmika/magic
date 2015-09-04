@@ -10,7 +10,7 @@ module Magic.Tokens.Literals.Tests {
 	import Is = Unit.Constraints.Is
 	export class NumberTest extends Unit.Fixture {
 		constructor() {
-			super("NumberToken")
+			super("Tokens.Literals.Number")
 			var errorHandler = new Error.ConsoleHandler()
 			var token: Token
 			this.add("integer #1", () => {

@@ -17,7 +17,7 @@ module Magic.Utilities.Tests {
 	}
 	export class BufferedIteratorTest extends Unit.Fixture {
 		constructor() {
-			super("BufferedIterator")
+			super("Utilitites.BufferedIterator")
 			this.add("empty string", () => {
 				var bi = new BufferedIterator(new StringIterator(""))
 				this.expect(bi.next() === null)

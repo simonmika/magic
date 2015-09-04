@@ -11,7 +11,7 @@ module Magic.IO.Tests {
 	import Is = Unit.Constraints.Is
 	export class BufferedReaderTest extends Unit.Fixture {
 		constructor() {
-			super("BufferedReader")
+			super("IO.BufferedReader")
 			var errorHandler = new Error.ConsoleHandler()
 			this.add("empty", () => {
 				var br = new IO.BufferedReader(new IO.StringReader(""))

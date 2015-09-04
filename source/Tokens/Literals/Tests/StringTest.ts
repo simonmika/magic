@@ -10,7 +10,7 @@ module Magic.Tokens.Literals.Tests {
 	import Is = Unit.Constraints.Is
 	export class StringTest extends Unit.Fixture {
 		constructor() {
-			super("StringToken")
+			super("Tokens.Literals.String")
 			var errorHandler = new Error.ConsoleHandler()
 			var token: Token
 			this.add("empty", () => {

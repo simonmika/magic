@@ -17,7 +17,7 @@ module Magic.Tokens.Tests {
 	import Is = Unit.Constraints.Is
 	export class LexerTest extends Unit.Fixture {
 		constructor() {
-			super("Lexer")
+			super("Tokens.Lexer")
 			var errorHandler = new Error.ConsoleHandler()
 			this.add("eof", () => {
 				var lexer = new Lexer(new IO.StringReader(""), errorHandler)

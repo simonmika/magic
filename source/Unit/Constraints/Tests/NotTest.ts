@@ -1,11 +1,11 @@
-/// <reference path="../Fixture" />
-/// <reference path="../Constraints/Is" />
+/// <reference path="../../Fixture" />
+/// <reference path="../../Constraints/Is" />
 
 module Magic.Unit.Tests {
 	import Is = Constraints.Is
 	export class NotTest extends Fixture {
 		constructor() {
-			super("Not")
+			super("Unit.Constraints.Not")
 			this.add("foobar is not null", () => {
 				this.expect("foobar", Is.Not().Null())
 			})
