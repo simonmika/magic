@@ -7,7 +7,7 @@ module Magic.Unit.Constraints {
 			super(parent)
 		}
 		To(correct: any): CompareConstraint {
-			return new CompareConstraint(correct, (left, right) => { return left === right }, this)
+			return new CompareConstraint(correct, (left, right) => { return left == right }, this)
 		}
 	}
 }
