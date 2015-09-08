@@ -8,19 +8,20 @@ module Magic.Tokens {
 		constructor(private content: string, region: Error.Region) {
 			super(region)
 		}
+		getContent() { return this.content }
 		static scan(source: Source): Token {
 			var result: string;
 			switch (source.peek(2)) {
 				case "//":
 					result = ""
 					source.read(2)
-					while (source.peek() != "\n")
+					while (source.peek() != "\n" && source.peek() != "\0")
 						result += source.read()
 					break
 				case "/*":
 					result = ""
 					source.read(2)
-					while (source.peek(2) != "*/")
+					while (source.peek(2) != "*/" && source.peek() != "\0")
 						result += source.read()
 					break
 				default:
