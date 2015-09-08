@@ -82,6 +82,7 @@
 		"source/Tokens/Tests/IdentifierTest.ts",
 		"source/Tokens/Tests/OperatorTest.ts",
 		"source/Tokens/Tests/SeparatorTest.ts",
+		"source/Tokens/Tests/WhitespaceTest.ts",
 
 		"source/Utilities/Tests/BufferedIteratorTest.ts",
 
