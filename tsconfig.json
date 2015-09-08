@@ -77,6 +77,7 @@
 		"source/Tokens/Literals/Tests/NumberTest.ts",
 		"source/Tokens/Literals/Tests/StringTest.ts",
 		"source/Tokens/Tests/CommentTest.ts",
+		"source/Tokens/Tests/EndOfFileTest.ts",
 		"source/Tokens/Tests/GapRemoverTest.ts",
 		"source/Tokens/Tests/IdentifierTest.ts",
 		"source/Tokens/Tests/OperatorTest.ts",
