@@ -93,4 +93,5 @@ module Magic.IO.Tests {
 			})
 		}
 	}
+	Unit.Fixture.add(new StringReaderTest())
 }
