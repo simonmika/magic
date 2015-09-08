@@ -1,5 +1,6 @@
 /// <reference path="Test" />
 /// <reference path="TestFailedError" />
+/// <reference path="../Error/ConsoleHandler" />
 /// <reference path="./Constraints/Constraint" />
 /// <reference path="./Constraints/TrueConstraint" />
 /// <reference path="../Utilities/String" />
@@ -8,7 +9,9 @@ module Magic.Unit {
 	export class Fixture {
 		private tests: Test[] = []
 		private expectId = 0
+		private consoleHandler: Error.ConsoleHandler
 		constructor(private name: string, private reportOnPass = true) {
+			this.consoleHandler = new Error.ConsoleHandler()
 		}
 		getName(): string { return this.name }
 		add(name: string, action: () => void): void {
@@ -29,7 +32,7 @@ module Magic.Unit {
 						result = false
 					} else {
 						console.dir("[Fixture]", Error)
-						process.exit(1)
+						throw Error
 					}
 				}
 				this.expectId = 0
@@ -39,7 +42,9 @@ module Magic.Unit {
 
 			if (!result) {
 				failures.forEach(failure => {
-					console.log("  -> expect #" + failure.getExpectId() + " in '" + failure.getTest().toString() + "'")
+					var expectedMessage = "expected '" + failure.getConstraint().getExpectedValue().toString() + "', found '" + failure.getValue() + "'"
+					var whereMessage = "[expect #" + failure.getExpectId() + " in '" + failure.getTest().toString() + "']"
+					this.consoleHandler.raise("  -> " + expectedMessage + " " + whereMessage)
 				})
 			}
 			return result;

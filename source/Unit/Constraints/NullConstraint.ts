@@ -5,6 +5,7 @@ module Magic.Unit.Constraints {
 		constructor(parent: Modifier = null) {
 			super(parent)
 		}
+		getExpectedValue(): any { return null }
 		test(value: any): boolean {
 			return value === null
 		}
