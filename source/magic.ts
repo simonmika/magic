@@ -1,6 +1,9 @@
 /// <reference path="../typings/node/node" />
 /// <reference path="Error/ConsoleHandler" />
 /// <reference path="Tokens/Lexer" />
+/// <reference path="Tokens/GapRemover" />
+/// <reference path="Tokens/Consumer" />
+/// <reference path="LexicalRules/Verifier" />
 /// <reference path="IO/Reader" />
 /// <reference path="IO/FileReader" />
 /// <reference path="IO/FolderReader" />
@@ -21,16 +24,17 @@ module Magic {
 		private openReader(path: string) {
 			return path.slice(-4) == ".ooc" ? new IO.FileReader(path) : new IO.FolderReader(path, "*.ooc")
 		}
-		private openLexer(path: string) {
-			return new Tokens.Lexer(this.openReader(path), new Error.ConsoleHandler())
+		private openLexer(path: string, handler: Error.Handler) {
+			return new LexicalRules.Verifier(new Tokens.GapRemover(new Tokens.Lexer(this.openReader(path), handler)), handler)
 		}
 		private runHelper(command: string, commands: string[]) {
+			var handler = new Error.ConsoleHandler()
 			switch (command) {
 				case "compile":
 					console.log("compile")
 				case "verify":
 					console.log("verify")
-					var lexer = this.openLexer(commands.pop())
+					new Tokens.Consumer(this.openLexer(commands.pop(), handler)).run()
 					break
 				case "self-test":
 					Unit.Fixture.run()

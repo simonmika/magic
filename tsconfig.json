@@ -42,9 +42,19 @@
 		"source/Tokens/Whitespace.ts",
 		"source/Tokens/Lexer.ts",
 		"source/Tokens/GapRemover.ts",
-
 		"source/Tokens/Literals/String.ts",
 		"source/Tokens/Literals/Number.ts",
+		"source/Tokens/Consumer.ts",
+
+		"source/LexicalRules/Rule.ts",
+		"source/LexicalRules/Verifier.ts",
+
+		"source/SyntaxTree/Source.ts",
+		"source/SyntaxTree/Statement.ts",
+		"source/SyntaxTree/Declaration.ts",
+		"source/SyntaxTree/Declarations/Class.ts",
+		"source/SyntaxTree/Module.ts",
+		"source/SyntaxTree/Parser.ts",
 
 		"source/IO/Tests/StringReaderTest.ts",
 		"source/IO/Tests/BufferedReaderTest.ts",

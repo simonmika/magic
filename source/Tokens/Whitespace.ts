@@ -32,6 +32,9 @@ module Magic.Tokens {
 			}
 			return result
 		}
+		isWhitespace(content?: string): boolean {
+			return !content || content == this.getRegion().getContent()
+		}
 		private static isWhitespace(character: string) {
 			return character === "\n" || character === "\r" || character === "\t" || character === " "
 		}
