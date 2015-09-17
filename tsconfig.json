@@ -45,6 +45,13 @@
 
 		"source/Tokens/Literals/String.ts",
 		"source/Tokens/Literals/Number.ts",
+		
+		"source/SyntaxTree/Source.ts",
+		"source/SyntaxTree/Statement.ts",
+		"source/SyntaxTree/Declaration.ts",
+		"source/SyntaxTree/Declarations/Class.ts",
+		"source/SyntaxTree/Module.ts",
+		"source/SyntaxTree/Parser.ts",
 
 		"source/IO/Tests/StringReaderTest.ts",
 		"source/IO/Tests/BufferedReaderTest.ts",
