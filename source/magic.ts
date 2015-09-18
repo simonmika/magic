@@ -22,7 +22,7 @@ module Magic {
 			}
 		}
 		private openReader(path: string) {
-			return path.slice(-4) == ".ooc" ? new IO.FileReader(path) : new IO.FolderReader(path, "*.ooc")
+			return path.slice(-4) == ".ooc" ? new IO.FileReader(path) : new IO.FolderReader(path, ".ooc")
 		}
 		private openLexer(path: string, handler: Error.Handler) {
 			return new LexicalRules.Verifier(new Tokens.GapRemover(new Tokens.Lexer(this.openReader(path), handler)), handler)

@@ -13,9 +13,8 @@ module Magic.Tokens {
 		}
 		next(): Substance {
 			var pre: Gap[] = []
-			while (this.backend.peek() instanceof Gap) {
+			while (this.backend.peek() instanceof Gap)
 				pre.push(this.backend.next())
-			}
 			var result: Substance
 			if (!(this.backend.peek() instanceof Substance))
 				throw "Lexical Error: Missing end of file token.";
