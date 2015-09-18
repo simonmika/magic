@@ -8,7 +8,7 @@
 module Magic.Unit {
 	export class Fixture {
 		private tests: Test[] = []
-		private expectId = 0
+		private expectIdentifier = 0
 		private consoleHandler: Error.ConsoleHandler
 		constructor(private name: string, private reportOnPass = true) {
 			this.consoleHandler = new Error.ConsoleHandler()
@@ -20,14 +20,14 @@ module Magic.Unit {
 		run(): boolean {
 			var failures: TestFailedError[] = []
 			var result = true
-			this.tests.forEach(test => {
+			for (var i = 0; i < this.tests.length; i++) {
 				try {
-					test.run()
+					this.tests[i].run()
 				} catch (Error) {
 					if (Error instanceof TestFailedError) {
 						var e = <TestFailedError>Error
-						e.setTest(test)
-						e.setExpectId(this.expectId)
+						e.setTest(this.tests[i])
+						e.setExpectIdentifier(this.expectIdentifier)
 						failures.push(e)
 						result = false
 					} else {
@@ -35,22 +35,21 @@ module Magic.Unit {
 						throw Error
 					}
 				}
-				this.expectId = 0
-			})
+				this.expectIdentifier = 0
+			}
 			if ((result && this.reportOnPass) || !result)
 				this.prettyPrintTestResult(result)
 
-			if (!result) {
-				failures.forEach(failure => {
-					var expectedMessage = "expected '" + failure.getConstraint().getExpectedValue().toString() + "', found '" + failure.getValue() + "'"
-					var whereMessage = "[expect #" + failure.getExpectId() + " in '" + failure.getTest().toString() + "']"
+			if (!result)
+				for (var i = 0; i < failures.length; i++) {
+					var expectedMessage = "expected '" + failures[i].getConstraint().getExpectedValue().toString() + "', found '" + failures[i].getValue() + "'"
+					var whereMessage = "[expect #" + failures[i].getExpectIdentifier() + " in '" + failures[i].getTest().toString() + "']"
 					this.consoleHandler.raise("  -> " + expectedMessage + " " + whereMessage)
-				})
-			}
+				}
 			return result;
 		}
 		expect(value: any, constraint: Constraints.Constraint = null): void {
-			this.expectId++
+			this.expectIdentifier++
 			if (constraint == null)
 				constraint = new Constraints.TrueConstraint()
 			if (!constraint.verify(value))
@@ -73,7 +72,8 @@ module Magic.Unit {
 			Fixture.fixtures.push(fixture)
 		}
 		static run() {
-			Fixture.fixtures.forEach((fixture) => { fixture.run() })
+			for (var i = 0; i < Fixture.fixtures.length; i++)
+				Fixture.fixtures[i].run()
 		}
 	}
 }

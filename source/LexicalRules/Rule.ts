@@ -23,7 +23,8 @@ module Magic.LexicalRules {
 			Rule.rules.push(rule)
 		}
 		static verify(handler: Error.Handler, token: Tokens.Substance) {
-			Rule.rules.forEach(rule => rule.next(handler, token))
+			for (var i = 0; i < Rule.rules.length; i++)
+				Rule.rules[i].next(handler, token)
 		}
 	}
 }

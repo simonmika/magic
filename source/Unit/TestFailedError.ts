@@ -4,7 +4,7 @@ module Magic.Unit {
 	export class TestFailedError implements Error {
 		public name = "TestFailedError"
 		private test: Test
-		private expectId: number
+		private expectIdentifier: number
 		constructor(private value: any, private constraint: Constraints.Constraint, public message: string = null) {
 		}
 		getValue(): any { return this.value }
@@ -15,8 +15,8 @@ module Magic.Unit {
 			this.message = value.getName()
 			this.test = value
 		}
-		getExpectId() { return this.expectId }
-		setExpectId(value: number) { this.expectId = value }
+		getExpectIdentifier() { return this.expectIdentifier }
+		setExpectIdentifier(value: number) { this.expectIdentifier = value }
 		toString(): string {
 			return this.name + ": " + this.test.getName()
 		}
