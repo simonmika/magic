@@ -11,7 +11,7 @@ module Magic.LexicalRules {
 			super("Space After Operator", "Missing space after operator")
 		}
 		verifyNext(next: Tokens.Substance, current: Tokens.Substance): boolean {
-			return !current.isOperator() || next.getPregap()[0].isWhiteSpace(" ")
+			return !current.isOperator() || next.getPregap()[0].isWhitespace(" ")
 		}
 	}
 	Rule.add(new SpaceAfterOperator())

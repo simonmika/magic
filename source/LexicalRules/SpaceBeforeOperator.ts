@@ -10,7 +10,7 @@ module Magic.LexicalRules {
 			super("Space Before Operator", "Missing space before operator")
 		}
 		verify(current: Tokens.Substance): boolean {
-			return !current.isOperator() || current.getPregap()[0].isWhiteSpace(" ")
+			return !current.isOperator() || current.getPregap()[0].isWhitespace(" ")
 		}
 	}
 	Rule.add(new SpaceBeforeOperator())
