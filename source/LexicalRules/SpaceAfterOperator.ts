@@ -3,7 +3,6 @@
 /// <reference path="../Tokens/Substance" />
 /// <reference path="../Tokens/Gap" />
 /// <reference path="Rule" />
-/// <reference path="NextRule" />
 
 module Magic.LexicalRules {
 	export class SpaceAfterOperator extends Rule {

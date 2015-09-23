@@ -9,6 +9,7 @@
 /// <reference path="Literal" />
 /// <reference path="Literals/String" />
 /// <reference path="Literals/Number" />
+/// <reference path="Literals/Char" />
 /// <reference path="Operator" />
 /// <reference path="Separator" />
 /// <reference path="Whitespace" />
@@ -29,6 +30,7 @@ module Magic.Tokens {
 				(result = Separator.scan(this.source)) ||
 				(result = Literals.String.scan(this.source)) ||
 				(result = Literals.Number.scan(this.source)) ||
+				(result = Literals.Char.scan(this.source)) ||
 				(result = Identifier.scan(this.source)) ||
 				false
 			))
