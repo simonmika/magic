@@ -11,6 +11,9 @@ module Magic.SyntaxTree {
 		constructor(private statements: Statement[], private last: Tokens.EndOfFile) {
 			this.namespace = last.getRegion().getResource().split("/")
 		}
+		getStatement(index: number): Statement {
+			return index >= 0 && index < this.statements.length ? this.statements[index] : null
+		}
 		static parse(source: Source): Module {
 			var result = Statement.parseAll(source)
 			var last = <Tokens.EndOfFile>source.next()

@@ -96,6 +96,8 @@
 		"source/Tokens/Tests/SeparatorTest.ts",
 		"source/Tokens/Tests/WhitespaceTest.ts",
 
+		"source/SyntaxTree/Tests/ClassTest.ts",
+
 		"source/Utilities/Tests/BufferedIteratorTest.ts",
 
 		"source/magic.ts"

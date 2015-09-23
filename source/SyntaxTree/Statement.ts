@@ -13,16 +13,16 @@ module Magic.SyntaxTree {
 		static parse(source: Source): Statement {
 			var result: Statement
 			var i = 0
-			while (!(result = Statement.statementParsers[i]))
-				i++
+			do
+				result = Statement.statementParsers[i++](source)
+			while (!result && i < Statement.statementParsers.length);
 			return result
 		}
 		static parseAll(source: Source): Statement[] {
 			var result = new Array<Statement>()
 			var next: Statement
-			while (source.peek() &&	!(source.peek().isSeparator("}")) && (next = Statement.parse(source))) {
+			while (source.peek() &&	!(source.peek().isSeparator("}")) && (next = Statement.parse(source)))
 				result.push(next)
-			}
 			return result
 		}
 	}
