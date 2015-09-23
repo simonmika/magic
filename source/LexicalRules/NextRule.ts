@@ -12,6 +12,8 @@ module Magic.LexicalRules {
 			return true
 		}
 		verify(current: Tokens.Substance): boolean {
+			if (!this.last)
+				this.last = current
 			var result = this.verifyNext(current, this.last)
 			this.last = current
 			return result
