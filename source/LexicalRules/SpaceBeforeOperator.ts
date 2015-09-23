@@ -2,15 +2,15 @@
 /// <reference path="../Tokens/Token" />
 /// <reference path="../Tokens/Substance" />
 /// <reference path="../Tokens/Gap" />
-/// <reference path="Rule" />
+/// <reference path="NextRule" />
 
 module Magic.LexicalRules {
-	export class SpaceBeforeOperator extends Rule {
+	export class SpaceBeforeOperator extends NextRule {
 		constructor() {
 			super("Space Before Operator", "Missing space before operator")
 		}
-		verify(current: Tokens.Substance): boolean {
-			return !current.isOperator() || current.getPregap()[0].isWhitespace(" ")
+		verifyNext(next: Tokens.Substance, current: Tokens.Substance): boolean {
+			return !next.isOperator() || current.getPostgap().length > 0 && current.getPostgap()[0].isWhitespace(" ")
 		}
 	}
 	Rule.add(new SpaceBeforeOperator())

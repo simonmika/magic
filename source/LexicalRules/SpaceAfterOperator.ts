@@ -6,12 +6,12 @@
 /// <reference path="NextRule" />
 
 module Magic.LexicalRules {
-	export class SpaceAfterOperator extends NextRule {
+	export class SpaceAfterOperator extends Rule {
 		constructor() {
 			super("Space After Operator", "Missing space after operator")
 		}
-		verifyNext(next: Tokens.Substance, current: Tokens.Substance): boolean {
-			return !current.isOperator() || next.getPregap()[0].isWhitespace(" ")
+		verify(current: Tokens.Substance): boolean {
+			return !current.isOperator() || (current.getPostgap().length > 0 && current.getPostgap()[0].isWhitespace(" "))
 		}
 	}
 	Rule.add(new SpaceAfterOperator())
