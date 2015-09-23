@@ -18,14 +18,14 @@ module Magic.Tokens {
 			}
 			var result: Substance
 			if (!(this.backend.peek() instanceof Substance))
-				throw "Lexical Error: Missing end of file token.";
+				throw "Lexical Error: Missing end of file token."
 			result = <Substance>this.backend.next()
 			var post: Gap[] = []
 			while (this.backend.peek() instanceof Gap) {
 				var next = this.backend.next()
 				post.push(next)
 				if (next instanceof Whitespace && (<Whitespace>next).getEndsLine()) {
-					break;
+					break
 				}
 			}
 			result.setPregap(pre)

@@ -8,16 +8,16 @@ module Magic.Tokens {
 			return this.region.toString()
 		}
 		isSeparator(symbol?: string): boolean {
-			throw "isSeparator() called from base"
+			return false
 		}
 		isIdentifier(name?: string): boolean {
-			throw "isIdentifier() called from base"
+			return false
 		}
 		isOperator(symbol?: string): boolean {
-			throw "isOperator() called from base"
+			return false
 		}
 		isWhitespace(content?: string): boolean {
-			throw "isWhitespace() called from base"
+			return false
 		}
 	}
 }

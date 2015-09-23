@@ -18,7 +18,7 @@ module Magic.LexicalRules {
 			if (!this.verify(current))
 				handler.raise(this.getMessage() + " @ " + current)
 		}
-		private static rules = <Rule[]> new Array()
+		private static rules: Rule[] = []
 		static add(rule: Rule) {
 			Rule.rules.push(rule)
 		}

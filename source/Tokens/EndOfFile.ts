@@ -9,7 +9,7 @@ module Magic.Tokens {
 			super(region)
 		}
 		static scan(source: Source): Token {
-			var result: Token;
+			var result: Token
 			switch (source.peek()) {
 				case "\0":
 					source.mark()

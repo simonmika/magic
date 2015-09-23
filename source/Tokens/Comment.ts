@@ -23,6 +23,7 @@ module Magic.Tokens {
 					source.read(2)
 					while (source.peek(2) != "*/" && source.peek() != "\0")
 						result += source.read()
+					source.read(2)
 					break
 				default:
 					result = null

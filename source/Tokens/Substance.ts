@@ -4,8 +4,8 @@
 
 module Magic.Tokens {
 	export class Substance extends Token {
-		private pregap: Gap[]
-		private postgap: Gap[]
+		private pregap: Gap[] = []
+		private postgap: Gap[] = []
 		constructor(region: Error.Region) {
 			super(region)
 		}

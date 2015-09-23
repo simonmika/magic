@@ -48,6 +48,8 @@
 
 		"source/LexicalRules/Rule.ts",
 		"source/LexicalRules/Verifier.ts",
+		"source/LexicalRules/SpaceAfterOperator.ts",
+		"source/LexicalRules/SpaceBeforeOperator.ts",
 
 		"source/SyntaxTree/Source.ts",
 		"source/SyntaxTree/Statement.ts",

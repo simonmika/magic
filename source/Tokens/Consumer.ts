@@ -6,7 +6,7 @@ module Magic.Tokens {
 		constructor(private backend: Utilities.Iterator<Token>) {
 		}
 		run() {
-			while (this.backend.next())
+			while (!(this.backend.next() instanceof EndOfFile))
 				;
 		}
 	}
