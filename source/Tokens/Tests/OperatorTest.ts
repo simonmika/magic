@@ -52,7 +52,7 @@ module Magic.Tokens.Tests {
 				this.expect((<Operator>token).getSymbol(), Is.Equal().To("*"))
 			})
 			this.add("binary/bitwise and logical", () => {
-				var source = new Source(new IO.StringReader("<<>>^&|||&&"), errorHandler)
+				var source = new Source(new IO.StringReader("<<>>^&|||&&??"), errorHandler)
 				var token: Token
 				this.expect((token = Operator.scan(source)) instanceof Operator)
 				this.expect((<Operator>token).getSymbol(), Is.Equal().To("<<"))
@@ -68,6 +68,8 @@ module Magic.Tokens.Tests {
 				this.expect((<Operator>token).getSymbol(), Is.Equal().To("|"))
 				this.expect((token = Operator.scan(source)) instanceof Operator)
 				this.expect((<Operator>token).getSymbol(), Is.Equal().To("&&"))
+				this.expect((token = Operator.scan(source)) instanceof Operator)
+				this.expect((<Operator>token).getSymbol(), Is.Equal().To("??"))
 			})
 			this.add("assignment", () => {
 				var source = new Source(new IO.StringReader("=-=*=/=**=%=<<=>>=^=&=|=:=::="), errorHandler)
@@ -132,7 +134,7 @@ module Magic.Tokens.Tests {
 				this.expect((<Operator>token).getSymbol(), Is.Equal().To("?"))
 			})
 			this.add("misfits", () => {
-				var source = new Source(new IO.StringReader("..->=>"), errorHandler)
+				var source = new Source(new IO.StringReader("..->=>..."), errorHandler)
 				var token: Token
 				this.expect((token = Operator.scan(source)) instanceof Operator)
 				this.expect((<Operator>token).getSymbol(), Is.Equal().To(".."))
@@ -140,6 +142,8 @@ module Magic.Tokens.Tests {
 				this.expect((<Operator>token).getSymbol(), Is.Equal().To("->"))
 				this.expect((token = Operator.scan(source)) instanceof Operator)
 				this.expect((<Operator>token).getSymbol(), Is.Equal().To("=>"))
+				this.expect((token = Operator.scan(source)) instanceof Operator)
+				this.expect((<Operator>token).getSymbol(), Is.Equal().To("..."))
 			})
 		}
 	}

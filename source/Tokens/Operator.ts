@@ -115,7 +115,11 @@ module Magic.Tokens {
 				case ".":
 					switch (source.peek(2)) {
 						default: result = null /* separator */; break
-						case "..": result = new Operator(source.read(2), source.mark()); break
+						case "..":
+							switch(source.peek(3)) {
+								default: result = new Operator(source.read(2), source.mark()); break
+								case "...": result = new Operator(source.read(3), source.mark()); break
+							} break
 					} break
 				case "%":
 					switch (source.peek(2)) {
@@ -123,7 +127,12 @@ module Magic.Tokens {
 						case "%=": result = new Operator(source.read(2), source.mark()); break
 					} break
 				case "~": result = new Operator(source.read(), source.mark()); break
-				case "?": result = new Operator(source.read(), source.mark()); break
+				case "?":
+					switch(source.peek(2)) {
+						default: result = new Operator(source.read(), source.mark()); break
+						case "??": result = new Operator(source.read(2), source.mark()); break
+					} break
+
 				default: result = null; break
 			}
 			return result
