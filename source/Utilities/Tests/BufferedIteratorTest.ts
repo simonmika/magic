@@ -12,8 +12,7 @@ module Magic.Utilities.Tests {
 				content = ""
 		}
 		next(): string {
-			var ret = this.position < this.content.length ? this.content.charAt(this.position++) : null
-			return ret
+			return this.position < this.content.length ? this.content.charAt(this.position++) : undefined
 		}
 	}
 	export class BufferedIteratorTest extends Unit.Fixture {
