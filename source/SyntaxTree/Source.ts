@@ -11,7 +11,7 @@ module Magic.SyntaxTree {
 			super(backend)
 		}
 		raise(message: string | Error.Message, level = Error.Level.Critical, type = Error.Type.Gramatical, region?: Error.Region): void {
-			if (message instanceof String) {
+			if (typeof message == "string") {
 				if (!region) {
 					region = this.peek().getRegion()
 				}
