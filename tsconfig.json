@@ -20,6 +20,7 @@
 		"source/Error/ConsoleHandler.ts",
 
 		"source/Utilities/Iterator.ts",
+		"source/Utilities/ArrayIterator.ts",
 		"source/Utilities/BufferedIterator.ts",
 		"source/Utilities/String.ts",
 
@@ -99,6 +100,7 @@
 
 		"source/SyntaxTree/Tests/ClassTest.ts",
 
+		"source/Utilities/Tests/ArrayIteratorTest.ts",
 		"source/Utilities/Tests/BufferedIteratorTest.ts",
 
 		"source/magic.ts"
