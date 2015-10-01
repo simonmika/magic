@@ -8,7 +8,7 @@
 
 module Magic.SyntaxTree.Declarations {
 	export class Class extends Declaration {
-		constructor(private name: Tokens.Identifier, private extended: Tokens.Identifier, private implemented: Tokens.Identifier[], private statements: Statement[]) {
+		constructor(private name: Tokens.Identifier, private typeParameters: Tokens.Identifier[], private extended: Tokens.Identifier, private implemented: Tokens.Identifier[], private statements: Statement[]) {
 			super(name.getName())
 		}
 		static parse(source: Source): Class {
@@ -17,6 +17,16 @@ module Magic.SyntaxTree.Declarations {
 				var name = (<Tokens.Identifier>source.next())
 				source.next() // consume ":"
 				source.next() // consume "class"
+				var typeParameters: Tokens.Identifier[] = []
+				if (source.peek().isOperator("<")) {
+					do {
+						source.next() // consume "<" or ","
+						if (!source.peek().isIdentifier())
+							source.raise("Expected type parameter")
+						typeParameters.push(<Tokens.Identifier>source.next())
+					} while (source.peek().isSeparator(","))
+					source.next() // consume ">"
+				}
 				var extended: Tokens.Identifier
 				if (source.peek().isIdentifier("extends")) {
 					source.next() // consume "extends"
@@ -36,7 +46,7 @@ module Magic.SyntaxTree.Declarations {
 					source.raise("Expected \"{\"")
 				source.next() // consume "{"
 				var statements = Statement.parseAll(source)
-				result = new Class(name, extended, implemented, statements)
+				result = new Class(name, typeParameters, extended, implemented, statements)
 			}
 			return result
 		}
