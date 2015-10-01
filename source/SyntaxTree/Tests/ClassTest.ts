@@ -22,7 +22,7 @@ module Magic.SyntaxTree.Tests {
 				var handler = new Error.ConsoleHandler()
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("empty: class {\n}\n"), handler)), handler)
 				var module = parser.next()
-				var classDeclaration = <Declarations.Class> module.getStatement(0)
+				var classDeclaration = <Declarations.Class> module.getStatements().next()
 				this.expect(classDeclaration, Is.Not().NullOrUndefined())
 				this.expect(classDeclaration.getSymbol(), Is.Equal().To("empty"))
 			})

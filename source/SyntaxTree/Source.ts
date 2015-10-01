@@ -17,7 +17,7 @@ module Magic.SyntaxTree {
 				}
 				message = new Error.Message(<string>message, level, type, region)
 			}
-			console.log(message.toString())
+			this.errorHandler.raise(message.toString())
 		}
 	}
 }
