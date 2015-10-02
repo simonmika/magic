@@ -19,9 +19,8 @@ module Magic.SyntaxTree {
 		static parse(source: Source): Module {
 			var result = Statement.parseAll(source)
 			var last = <Tokens.EndOfFile>source.next()
-			if (!last) {
+			if (!last)
 				source.raise("Missing end of file.")
-			}
 			return new Module(result, last)
 		}
 	}

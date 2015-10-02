@@ -12,9 +12,8 @@ module Magic.SyntaxTree {
 		}
 		raise(message: string | Error.Message, level = Error.Level.Critical, type = Error.Type.Gramatical, region?: Error.Region): void {
 			if (typeof message == "string") {
-				if (!region) {
+				if (!region)
 					region = this.peek().getRegion()
-				}
 				message = new Error.Message(<string>message, level, type, region)
 			}
 			this.errorHandler.raise(message.toString())
