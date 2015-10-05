@@ -19,7 +19,7 @@ module Magic.SyntaxTree {
 			return result
 		}
 		static parseAll(source: Source): Statement[] {
-			var result = new Array<Statement>()
+			var result: Statement[] = []
 			var next: Statement
 			while (source.peek() &&	!(source.peek().isSeparator("}")) && (next = Statement.parse(source)))
 				result.push(next)
