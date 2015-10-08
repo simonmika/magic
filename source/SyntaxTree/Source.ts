@@ -9,8 +9,13 @@ module Magic.SyntaxTree {
 	export class Source implements Utilities.Iterator<Tokens.Substance>, Error.Handler {
 		private tokens: Utilities.BufferedIterator<Tokens.Substance>
 		private lastTokens: Tokens.Substance[] = []
-		constructor(backend: Utilities.Iterator<Tokens.Substance>, private errorHandler: Error.Handler) {
-			this.tokens = new Utilities.BufferedIterator(backend)
+		constructor(tokens: Utilities.Iterator<Tokens.Substance>, private errorHandler: Error.Handler) {
+			if (!(tokens instanceof Utilities.BufferedIterator))
+				tokens = new Utilities.BufferedIterator(tokens)
+			this.tokens = <Utilities.BufferedIterator<Tokens.Substance>> tokens
+		}
+		clone(): Source {
+			return new Source(this.tokens, this.errorHandler)
 		}
 		peek(position: number = 0): Tokens.Substance {
 			return this.tokens.peek(position)
