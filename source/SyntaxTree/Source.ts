@@ -8,6 +8,7 @@
 module Magic.SyntaxTree {
 	export class Source implements Utilities.Iterator<Tokens.Substance>, Error.Handler {
 		private tokens: Utilities.BufferedIterator<Tokens.Substance>
+		private lastTokens: Tokens.Substance[] = []
 		constructor(backend: Utilities.Iterator<Tokens.Substance>, private errorHandler: Error.Handler) {
 			this.tokens = new Utilities.BufferedIterator(backend)
 		}
@@ -15,7 +16,14 @@ module Magic.SyntaxTree {
 			return this.tokens.peek(position)
 		}
 		next(): Tokens.Substance {
-			return this.tokens.next()
+			var result = this.tokens.next()
+			this.lastTokens.push(result)
+			return result
+		}
+		mark(): Tokens.Substance[] {
+			var result = this.lastTokens
+			this.lastTokens = []
+			return result
 		}
 		raise(message: string | Error.Message, level = Error.Level.Critical, type = Error.Type.Gramatical, region?: Error.Region): void {
 			if (typeof message == "string") {
