@@ -5,42 +5,44 @@
 /// <reference path="../../Tokens/Substance" />
 /// <reference path="../Statement" />
 /// <reference path="../Declaration" />
+/// <reference path="../Type/Identifier" />
+/// <reference path="../Type/Name" />
 
 module Magic.SyntaxTree.Declarations {
 	export class Class extends Declaration {
-		constructor(private name: Tokens.Identifier, private typeParameters: Tokens.Identifier[], private extended: Tokens.Identifier, private implemented: Tokens.Identifier[], private statements: Statement[]) {
+		constructor(private name: Type.Name, private typeParameters: Type.Name[], private extended: Type.Identifier, private implemented: Type.Identifier[], private statements: Statement[]) {
 			super(name.getName())
 		}
 		static parse(source: Source): Class {
 			var result: Class
 			if (source.peek(0).isIdentifier() && source.peek(1).isSeparator(":") && source.peek(2).isIdentifier("class")) {
-				var name = (<Tokens.Identifier>source.next())
+				var name = Type.Name.parse(source.clone())
 				source.next() // consume ":"
 				source.next() // consume "class"
-				var typeParameters: Tokens.Identifier[] = []
+				var typeParameters: Type.Name[] = []
 				if (source.peek().isOperator("<")) {
 					do {
 						source.next() // consume "<" or ","
 						if (!source.peek().isIdentifier())
 							source.raise("Expected type parameter")
-						typeParameters.push(<Tokens.Identifier>source.next())
+						typeParameters.push(Type.Name.parse(source.clone()))
 					} while (source.peek().isSeparator(","))
 					source.next() // consume ">"
 				}
-				var extended: Tokens.Identifier
+				var extended: Type.Identifier
 				if (source.peek().isIdentifier("extends")) {
 					source.next() // consume "extends"
 					if (!source.peek().isIdentifier())
 						source.raise("Expected identifier with name of class to extend.")
-					extended = <Tokens.Identifier>source.next()
+					extended = Type.Identifier.parse(source.clone())
 				}
-				var implemented: Tokens.Identifier[] = []
-				if (source.peek() instanceof Tokens.Identifier && (<Tokens.Identifier>source.peek()).getName() == "implements")
+				var implemented: Type.Identifier[] = []
+				if (source.peek().isIdentifier("implements"))
 					do {
 						source.next() // consume "implements" or ","
 						if (!source.peek().isIdentifier())
 							source.raise("Expected identifier with name of interface to extend.")
-						implemented.push(<Tokens.Identifier>source.next())
+						implemented.push(Type.Identifier.parse(source.clone()))
 					} while (source.peek().isSeparator(","))
 				if (!source.peek().isSeparator("{"))
 					source.raise("Expected \"{\"")
