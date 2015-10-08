@@ -7,9 +7,8 @@ module Magic.Utilities {
 		}
 		peek(position: number = 0): T {
 			var next: T = null
-			while (position > this.buffer.length - 1 && (next = this.backend.next())) {
+			while (position > this.buffer.length - 1 && (next = this.backend.next()))
 				this.buffer.push(next)
-			}
 			return position > this.buffer.length - 1 ? null : this.buffer[position]
 		}
 		next(): T {
