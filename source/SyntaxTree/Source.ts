@@ -6,9 +6,16 @@
 /// <reference path="../Tokens/Substance" />
 
 module Magic.SyntaxTree {
-	export class Source extends Utilities.BufferedIterator<Tokens.Substance> implements Error.Handler {
+	export class Source implements Utilities.Iterator<Tokens.Substance>, Error.Handler {
+		private tokens: Utilities.BufferedIterator<Tokens.Substance>
 		constructor(backend: Utilities.Iterator<Tokens.Substance>, private errorHandler: Error.Handler) {
-			super(backend)
+			this.tokens = new Utilities.BufferedIterator(backend)
+		}
+		peek(position: number = 0): Tokens.Substance {
+			return this.tokens.peek(position)
+		}
+		next(): Tokens.Substance {
+			return this.tokens.next()
 		}
 		raise(message: string | Error.Message, level = Error.Level.Critical, type = Error.Type.Gramatical, region?: Error.Region): void {
 			if (typeof message == "string") {
