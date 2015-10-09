@@ -6,7 +6,7 @@ module Magic.SyntaxTree {
 	export class Statement {
 		constructor() {
 		}
-		private static statementParsers = <((source: Source) => Statement)[]> new Array()
+		private static statementParsers: ((source: Source) => Statement)[] = []
 		static addParser(parser: (source: Source) => Statement) {
 			Statement.statementParsers.push(parser)
 		}
