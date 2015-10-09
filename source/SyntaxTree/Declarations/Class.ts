@@ -13,8 +13,23 @@ module Magic.SyntaxTree.Declarations {
 		constructor(private name: Type.Name, private typeParameters: Type.Name[], private extended: Type.Identifier, private implemented: Type.Identifier[], private statements: Statement[]) {
 			super(name.getName())
 		}
+		isAbstract(): boolean {
+			throw "isAbstract() Not implemented yet."
+		}
+		getTypeParameters(): Type.Name[] {
+			return this.typeParameters
+		}
+		getExtended(): Type.Identifier {
+			return this.extended
+		}
+		getImplemented(): Type.Identifier[] {
+			return this.implemented
+		}
 		static parse(source: Source): Class {
 			var result: Class
+			//
+			// TODO: Handle 'abstract'
+			//
 			if (source.peek(0).isIdentifier() && source.peek(1).isSeparator(":") && source.peek(2).isIdentifier("class")) {
 				var name = Type.Name.parse(source.clone())
 				source.next() // consume ":"
