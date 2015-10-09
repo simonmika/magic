@@ -10,8 +10,8 @@
 
 module Magic.SyntaxTree.Declarations {
 	export class Class extends Declaration {
-		constructor(private name: Type.Name, private typeParameters: Type.Name[], private extended: Type.Identifier, private implemented: Type.Identifier[], private statements: Statement[]) {
-			super(name.getName())
+		constructor(symbol: Type.Name, private typeParameters: Type.Name[], private extended: Type.Identifier, private implemented: Type.Identifier[], private statements: Statement[], tokens: Tokens.Substance[]) {
+			super(symbol.getName(), tokens)
 		}
 		isAbstract(): boolean {
 			throw "isAbstract() Not implemented yet."
@@ -63,7 +63,7 @@ module Magic.SyntaxTree.Declarations {
 					source.raise("Expected \"{\"")
 				source.next() // consume "{"
 				var statements = Statement.parseAll(source)
-				result = new Class(name, typeParameters, extended, implemented, statements)
+				result = new Class(name, typeParameters, extended, implemented, statements, source.mark())
 			}
 			return result
 		}
