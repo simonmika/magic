@@ -8,20 +8,27 @@
 /// <reference path="Declarations/Class" />
 
 module Magic.SyntaxTree {
-	export class Module {
+	export class Module extends Node {
 		private namespace: string[]
-		constructor(private statements: Statement[], private last: Tokens.EndOfFile) {
-			this.namespace = last.getRegion().getResource().split("/")
+		constructor(private statements: Statement[], tokens: Tokens.Substance[]) {
+			super(tokens)
+			this.namespace = tokens[0].getRegion().getResource().split("/")
 		}
 		getStatements(): Utilities.Iterator<Statement> {
 			return new Utilities.ArrayIterator(this.statements)
 		}
 		static parse(source: Source): Module {
-			var result = Statement.parseAll(source)
-			var last = <Tokens.EndOfFile>source.next()
-			if (!last)
-				source.raise("Missing end of file.")
-			return new Module(result, last)
+			var result: Module
+			if (source.peek()) {
+				var statements: Statement[] = []
+				var next: Statement
+				while (next = Statement.parse(source.clone()))
+					statements.push(next)
+				if (!<Tokens.EndOfFile>source.next())
+					source.raise("Missing end of file.")
+				result = new Module(statements, source.mark())
+			}
+			return result
 		}
 	}
 }

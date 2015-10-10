@@ -1,12 +1,14 @@
 /// <reference path="../Source" />
+/// <reference path="../Node" />
 /// <reference path="../../Tokens/Substance" />
+/// <reference path="../../Utilities/Iterator" />
+/// <reference path="../../Utilities/ArrayIterator" />
+
 
 module Magic.SyntaxTree.Type {
-	export class Expression {
-		constructor(private tokens: Tokens.Substance[]) {
-		}
-		getTokens(): Tokens.Substance[] {
-			return this.tokens
+	export class Expression extends Node {
+		constructor(tokens: Tokens.Substance[]) {
+			super(tokens)
 		}
 		private static typeParsers: ((source: Source) => Expression)[] = []
 		static addParser(parser: (source: Source) => Expression) {
@@ -16,7 +18,7 @@ module Magic.SyntaxTree.Type {
 			var result: Expression
 			var i = 0
 			do
-				result = Expression.typeParsers[i++](source)
+				result = Expression.typeParsers[i++](source.clone())
 			while (!result && i < Expression.typeParsers.length);
 			return result
 		}
