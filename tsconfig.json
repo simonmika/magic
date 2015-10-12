@@ -53,14 +53,18 @@
 		"source/LexicalRules/SpaceBeforeOperator.ts",
 
 		"source/SyntaxTree/Source.ts",
+		"source/SyntaxTree/Node.ts",
 		"source/SyntaxTree/Type/Expression.ts",
 		"source/SyntaxTree/Type/Name.ts",
 		"source/SyntaxTree/Type/Identifier.ts",
 		"source/SyntaxTree/Type/Tuple.ts",
 		"source/SyntaxTree/Type/Function.ts",
 		"source/SyntaxTree/Statement.ts",
+		"source/SyntaxTree/Block.ts",
 		"source/SyntaxTree/Declaration.ts",
 		"source/SyntaxTree/Declarations/Class.ts",
+		"source/SyntaxTree/Declarations/Argument.ts",
+		"source/SyntaxTree/Declarations/Function.ts",
 		"source/SyntaxTree/Module.ts",
 		"source/SyntaxTree/Parser.ts",
 

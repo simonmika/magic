@@ -1,10 +1,12 @@
 /// <reference path="Source" />
+/// <reference path="Node" />
 /// <reference path="../Tokens/Token" />
 /// <reference path="../Tokens/EndOfFile" />
 
 module Magic.SyntaxTree {
-	export class Statement {
-		constructor() {
+	export class Statement extends Node {
+		constructor(tokens: Tokens.Substance[]) {
+			super(tokens)
 		}
 		private static statementParsers: ((source: Source) => Statement)[] = []
 		static addParser(parser: (source: Source) => Statement) {
@@ -15,14 +17,7 @@ module Magic.SyntaxTree {
 			var i = 0
 			do
 				result = Statement.statementParsers[i++](source)
-			while (!result && i < Statement.statementParsers.length);
-			return result
-		}
-		static parseAll(source: Source): Statement[] {
-			var result: Statement[] = []
-			var next: Statement
-			while (source.peek() &&	!(source.peek().isSeparator("}")) && (next = Statement.parse(source.clone())))
-				result.push(next)
+			while (!result && i < Statement.statementParsers.length)
 			return result
 		}
 	}

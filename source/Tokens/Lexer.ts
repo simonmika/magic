@@ -21,8 +21,10 @@ module Magic.Tokens {
 			this.source = new Source(reader, errorHandler)
 		}
 		next(): Token {
-			var result: Token = null
-			if (!(
+			var result: Token
+			if (!this.source)
+				result = undefined
+			else if (!(
 				(result = EndOfFile.scan(this.source)) ||
 				(result = Whitespace.scan(this.source)) ||
 				(result = Comment.scan(this.source)) ||

@@ -1,13 +1,16 @@
 /// <reference path="Expression" />
 /// <reference path="Name" />
+/// <reference path="../../Utilities/Iterator" />
+/// <reference path="../../Utilities/ArrayIterator" />
+
 
 module Magic.SyntaxTree.Type {
 	export class Identifier extends Name {
 		constructor(name: string, private typeParameters: Identifier[], tokens: Tokens.Substance[]) {
 			super(name, tokens)
 		}
-		getTypeParameters(): Identifier[] {
-			return this.typeParameters
+		getTypeParameters(): Utilities.Iterator<Identifier> {
+			return new Utilities.ArrayIterator(this.typeParameters)
 		}
 		static parse(source: Source): Identifier {
 			var result: Identifier
