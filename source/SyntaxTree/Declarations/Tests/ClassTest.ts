@@ -57,7 +57,7 @@ module Magic.SyntaxTree.Tests {
 				var classDeclaration = <Declarations.Class> parser.next().getStatements().next()
 				this.expect(classDeclaration.getExtended().getName(), Is.Equal().To("Full"))
 			})
-/*			this.add("class implements", () => {
+			this.add("class implements", () => {
 				var handler = new Error.ConsoleHandler()
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: class implements Enumerable, Enumerator {\n}\n"), handler)), handler)
 				var module = parser.next()
@@ -65,6 +65,7 @@ module Magic.SyntaxTree.Tests {
 				var implemented = classDeclaration.getImplemented()
 				this.expect(implemented.next().getName(), Is.Equal().To("Enumerable"))
 				this.expect(implemented.next().getName(), Is.Equal().To("Enumerator"))
+				this.expect(implemented.next(), Is.NullOrUndefined())
 			})
 			this.add("generic class implements generic interfaces", () => {
 				var handler = new Error.ConsoleHandler()
@@ -77,13 +78,23 @@ module Magic.SyntaxTree.Tests {
 				var typeParameters1 = interface1.getTypeParameters()
 				this.expect(typeParameters1.next().getName(), Is.Equal().To("T"))
 				this.expect(typeParameters1.next().getName(), Is.Equal().To("S"))
+				this.expect(typeParameters1.next(), Is.NullOrUndefined())
 				var interface2 = implemented.next()
-				this.expect(interface1.getName(), Is.Equal().To("Interface2"))
+				this.expect(interface2.getName(), Is.Equal().To("Interface2"))
 				var typeParameters2 = interface2.getTypeParameters()
 				this.expect(typeParameters2.next().getName(), Is.Equal().To("T"))
 				this.expect(typeParameters2.next().getName(), Is.Equal().To("S"))
+				this.expect(typeParameters2.next(), Is.NullOrUndefined())
+				this.expect(implemented.next(), Is.NullOrUndefined())
 			})
-*/		}
+			this.add("abstract class", () => {
+				var handler = new Error.ConsoleHandler()
+				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: abstract class {\n}\n"), handler)), handler)
+				var module = parser.next()
+				var classDeclaration = <Declarations.Class> module.getStatements().next()
+				this.expect(classDeclaration.isAbstract(), Is.True())
+			})
+		}
 	}
 	Unit.Fixture.add(new ClassTest())
 }
