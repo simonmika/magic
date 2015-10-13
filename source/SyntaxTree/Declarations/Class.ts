@@ -41,7 +41,7 @@ module Magic.SyntaxTree.Declarations {
 					source.next() // consume "abstract"
 				}
 				source.next() // consume "class"
-				var typeParameters = Declaration.parseTypeParameters(source)
+				var typeParameters = Declaration.parseTypeParameters(source.clone())
 				var extended: Type.Identifier
 				if (source.peek().isIdentifier("extends")) {
 					source.next() // consume "extends"
@@ -57,7 +57,7 @@ module Magic.SyntaxTree.Declarations {
 							source.raise("Expected identifier with name of interface to extend.")
 						implemented.push(Type.Identifier.parse(source.clone()))
 					} while (source.peek().isSeparator(","))
-				var block = Block.parse(source)
+				var block = Block.parse(source.clone())
 				result = new Class(symbol, isAbstract, typeParameters, extended, implemented, block, source.mark())
 			}
 			return result
