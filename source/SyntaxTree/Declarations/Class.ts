@@ -12,11 +12,11 @@
 
 module Magic.SyntaxTree.Declarations {
 	export class Class extends Declaration {
-		constructor(symbol: Type.Name, private typeParameters: Type.Name[], private extended: Type.Identifier, private implemented: Type.Identifier[], private block: Block, tokens: Tokens.Substance[]) {
+		constructor(symbol: Type.Name, private isAbstractClass: boolean, private typeParameters: Type.Name[], private extended: Type.Identifier, private implemented: Type.Identifier[], private block: Block, tokens: Tokens.Substance[]) {
 			super(symbol.getName(), tokens)
 		}
 		isAbstract(): boolean {
-			throw "isAbstract() Not implemented yet."
+			return this.isAbstractClass
 		}
 		getTypeParameters(): Utilities.Iterator<Type.Name> {
 			return new Utilities.ArrayIterator(this.typeParameters)
@@ -32,12 +32,14 @@ module Magic.SyntaxTree.Declarations {
 		}
 		static parse(source: Source): Class {
 			var result: Class
-			//
-			// TODO: Handle 'abstract'
-			//
-			if (source.peek(0).isIdentifier() && source.peek(1).isSeparator(":") && source.peek(2).isIdentifier("class")) {
+			var isAbstract = false
+			if (source.peek(0).isIdentifier() && source.peek(1).isSeparator(":") && (source.peek(2).isIdentifier("class") || source.peek(3).isIdentifier("class"))) {
 				var symbol = Type.Name.parse(source.clone())
 				source.next() // consume ":"
+				if (source.peek().isIdentifier("abstract")) {
+					isAbstract = true
+					source.next() // consume "abstract"
+				}
 				source.next() // consume "class"
 				var typeParameters = Declaration.parseTypeParameters(source)
 				var extended: Type.Identifier
@@ -56,7 +58,7 @@ module Magic.SyntaxTree.Declarations {
 						implemented.push(Type.Identifier.parse(source.clone()))
 					} while (source.peek().isSeparator(","))
 				var block = Block.parse(source)
-				result = new Class(symbol, typeParameters, extended, implemented, block, source.mark())
+				result = new Class(symbol, isAbstract, typeParameters, extended, implemented, block, source.mark())
 			}
 			return result
 		}
