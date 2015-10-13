@@ -4,7 +4,6 @@
 /// <reference path="../../Utilities/Iterator" />
 /// <reference path="../../Utilities/ArrayIterator" />
 
-
 module Magic.SyntaxTree.Type {
 	export class Expression extends Node {
 		constructor(tokens: Tokens.Substance[]) {
@@ -16,10 +15,12 @@ module Magic.SyntaxTree.Type {
 		}
 		static parse(source: Source): Expression {
 			var result: Expression
-			var i = 0
-			do
-				result = Expression.typeParsers[i++](source.clone())
-			while (!result && i < Expression.typeParsers.length);
+			if (Expression.typeParsers.length > 0) {
+				var i = 0
+				do
+					result = Expression.typeParsers[i++](source.clone())
+				while (!result && i < Expression.typeParsers.length);
+			}
 			return result
 		}
 	}
