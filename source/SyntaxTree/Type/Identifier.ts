@@ -2,6 +2,8 @@
 /// <reference path="Name" />
 /// <reference path="../../Utilities/Iterator" />
 /// <reference path="../../Utilities/ArrayIterator" />
+/// <reference path="../../Tokens/Identifier" />
+
 
 
 module Magic.SyntaxTree.Type {
