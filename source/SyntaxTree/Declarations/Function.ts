@@ -24,6 +24,9 @@ module Magic.SyntaxTree.Declarations {
 		getBody(): Block {
 			return this.body
 		}
+		getArguments(): Argument[] {
+			return this.argumentList
+		}
 		static parse(source: Source): Function {
 			var result: Function
 			// TODO: add support for modifiers: override, virtual, abstract, static
@@ -39,7 +42,7 @@ module Magic.SyntaxTree.Declarations {
 				var returnType: Type.Expression
 				if (source.peek().isOperator("->")) {
 					source.next() // consume "->"
-					returnType = Type.Expression.parse(source)
+					returnType = Type.Expression.parse(source) // Why is the return type an Expression?
 				}
 				var body = Block.parse(source)
 				result = new Function(symbol, typeParameters, argumentList, returnType, body, source.mark())
