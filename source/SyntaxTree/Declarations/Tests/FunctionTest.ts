@@ -24,6 +24,20 @@ module Magic.SyntaxTree.Tests {
 				var functionDeclaration = <Declarations.Function> statements.next()
 				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
 			})
+			this.add("empty function with parameters", () => {
+				var handler = new Error.ConsoleHandler()
+				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func (i: Int, j: Float, k: Double)\n"), handler)), handler)
+				var statements = parser.next().getStatements()
+				var functionDeclaration = <Declarations.Function> statements.next()
+				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
+			})
+			this.add("empty function with parameters reduced", () => {
+				var handler = new Error.ConsoleHandler()
+				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func (i, j, k: Int)\n"), handler)), handler)
+				var statements = parser.next().getStatements()
+				var functionDeclaration = <Declarations.Function> statements.next()
+				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
+			})
 			this.add("empty function with return type", () => {
 				var handler = new Error.ConsoleHandler()
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func -> Full\n"), handler)), handler)
