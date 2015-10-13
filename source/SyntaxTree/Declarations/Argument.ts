@@ -30,6 +30,8 @@ module Magic.SyntaxTree.Declarations {
 			var result: Argument[] = []
 			if (source.peek().isSeparator("(")) {
 				do {
+					// TODO: We need to look at the separator to see if it's a ':' or ','
+					// ':' means that a type name must follow, ',' means that the next argument identifier must follow
 					source.next() // consume: ( or ,
 					result.push(Argument.parse(source.clone()))
 				} while (source.peek().isSeparator(","))
@@ -39,5 +41,5 @@ module Magic.SyntaxTree.Declarations {
 			return result
 		}
 	}
-	Statement.addParser(Argument.parse)
+	//Statement.addParser(Argument.parse)
 }
