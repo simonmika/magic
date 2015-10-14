@@ -9,7 +9,6 @@
 /// <reference path="../Type/Name" />
 /// <reference path="../Block" />
 
-
 module Magic.SyntaxTree.Declarations {
 	export class Class extends Declaration {
 		constructor(symbol: Type.Name, private isAbstractClass: boolean, private typeParameters: Type.Name[], private extended: Type.Identifier, private implemented: Type.Identifier[], private block: Block, tokens: Tokens.Substance[]) {
