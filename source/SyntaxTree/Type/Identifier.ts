@@ -33,4 +33,5 @@ module Magic.SyntaxTree.Type {
 			return result
 		}
 	}
+	Expression.addParser(Identifier.parse)
 }

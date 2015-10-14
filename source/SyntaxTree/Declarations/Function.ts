@@ -42,7 +42,7 @@ module Magic.SyntaxTree.Declarations {
 				var returnType: Type.Expression
 				if (source.peek().isOperator("->")) {
 					source.next() // consume "->"
-					returnType = Type.Expression.parse(source) // Why is the return type an Expression?
+					returnType = Type.Expression.parse(source)
 				}
 				var body = Block.parse(source)
 				result = new Function(symbol, typeParameters, argumentList, returnType, body, source.mark())
