@@ -14,8 +14,9 @@ module Magic.SyntaxTree {
 				source.next() // consume: {
 				var statements: Statement[] = []
 				var next: Statement
-				while (source.peek() &&	!source.peek().isSeparator("}") && (next = Statement.parse(source.clone())))
+				while (source.peek() &&	!source.peek().isSeparator("}") && (next = Statement.parse(source.clone()))) {
 					statements.push(next)
+				}
 				if (!source.next().isSeparator("}"))
 					source.raise("Expected \"}\"")
 				result = new Block(statements, source.mark())
