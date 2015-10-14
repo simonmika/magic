@@ -5,6 +5,7 @@ module Magic.SyntaxTree.Type {
 		constructor(private argumentList: Expression[], private result: Expression, tokens: Tokens.Substance[]) {
 			super(tokens)
 		}
+		// TODO: Return Iterator
 		getArguments(): Expression[] {
 			return this.argumentList
 		}

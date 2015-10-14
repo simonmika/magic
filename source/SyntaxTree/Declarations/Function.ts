@@ -9,14 +9,16 @@
 /// <reference path="../Type/Name" />
 /// <reference path="Argument" />
 /// <reference path="../Block" />
+/// <reference path="../../Utilities/Iterator" />
+/// <reference path="../../Utilities/ArrayIterator" />
 
 module Magic.SyntaxTree.Declarations {
 	export class Function extends Declaration {
 		constructor(symbol: Type.Name, private typeParameters: Type.Name[], private argumentList: Argument[], private returnType: Type.Expression, private body: Block, tokens: Tokens.Substance[]) {
 			super(symbol.getName(), tokens)
 		}
-		getTypeParameters(): Type.Name[] {
-			return this.typeParameters
+		getTypeParameters(): Utilities.Iterator<Type.Name> {
+			return new Utilities.ArrayIterator(this.typeParameters)
 		}
 		getReturnType(): Type.Expression {
 			return this.returnType
@@ -24,8 +26,8 @@ module Magic.SyntaxTree.Declarations {
 		getBody(): Block {
 			return this.body
 		}
-		getArguments(): Argument[] {
-			return this.argumentList
+		getArguments(): Utilities.Iterator<Argument> {
+			return new Utilities.ArrayIterator(this.argumentList)
 		}
 		static parse(source: Source): Function {
 			var result: Function
