@@ -20,8 +20,12 @@ module Magic.SyntaxTree.Declarations {
 			var result: Argument
 			// TODO: add support for syntactical sugar: .argument, =argument, argument := value
 			if (source.peek(0).isIdentifier()) {
+				var type: Type.Expression
 				var symbol = (<Tokens.Identifier>source.next()).getName()
-				var type = Type.Expression.parse(source)
+				if (source.peek().isSeparator(":")) {
+					source.next() // consume ":"
+					type = Type.Expression.parse(source.clone())
+				}
 				result = new Argument(symbol, type, source.mark())
 			}
 			return result
@@ -30,13 +34,24 @@ module Magic.SyntaxTree.Declarations {
 			var result: Argument[] = []
 			if (source.peek().isSeparator("(")) {
 				do {
-					// TODO: We need to look at the separator to see if it's a ':' or ','
-					// ':' means that a type name must follow, ',' means that the next argument identifier must follow
 					source.next() // consume: ( or ,
 					result.push(Argument.parse(source.clone()))
 				} while (source.peek().isSeparator(","))
 				if (!source.next().isSeparator(")"))
-					source.raise("Expected \",\" or \")\"")
+					source.raise("Expected \")\"")
+				//
+				// Iterate through the argument list and assign a type to arguments whose type are not set explicitly.
+				// This is useful for cases when an argument list is written in reduced form.
+				// 	Example: foo: func (width, height: Int, x, y, z: Float)
+				//
+				var previousArgumentType = result[result.length - 1].getType()
+				for (var i = result.length - 1; i >= 0; i--) {
+					var currentArgumentType = result[i].getType()
+					if (currentArgumentType && currentArgumentType !== previousArgumentType)
+						previousArgumentType = currentArgumentType
+					if (!currentArgumentType)
+						result[i].type = previousArgumentType
+				}
 			}
 			return result
 		}
