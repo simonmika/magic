@@ -19,18 +19,17 @@ module Magic.SyntaxTree.Tests {
 	export class FunctionTest extends Unit.Fixture {
 		constructor() {
 			super("SyntaxTree.Declarations.Function")
+			var handler = new Error.ConsoleHandler()
 			//
 			// TODO: Construct a test for an argument list with no explicitly set types (type inference)
 			//
 			this.add("empty function", () => {
-				var handler = new Error.ConsoleHandler()
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func\n"), handler)), handler)
 				var statements = parser.next().getStatements()
 				var functionDeclaration = <Declarations.Function> statements.next()
 				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
 			})
 			this.add("empty function with parameters", () => {
-				var handler = new Error.ConsoleHandler()
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func (i: Int, j: Float, k: Double)\n"), handler)), handler)
 				var statements = parser.next().getStatements()
 				var functionDeclaration = <Declarations.Function> statements.next()
@@ -44,7 +43,6 @@ module Magic.SyntaxTree.Tests {
 				this.expect((<Type.Identifier>functionArguments[2].getType()).getName(), Is.Equal().To("Double"))
 			})
 			this.add("empty function with parameters reduced", () => {
-				var handler = new Error.ConsoleHandler()
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func (w, h: Int, x, y, z: Float)\n"), handler)), handler)
 				var statements = parser.next().getStatements()
 				var functionDeclaration = <Declarations.Function> statements.next()
@@ -62,7 +60,6 @@ module Magic.SyntaxTree.Tests {
 				this.expect((<Type.Identifier>functionArguments[4].getType()).getName(), Is.Equal().To("Float"))
 			})
 			this.add("empty function with return type", () => {
-				var handler = new Error.ConsoleHandler()
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func -> ReturnType\n"), handler)), handler)
 				var statements = parser.next().getStatements()
 				var functionDeclaration = <Declarations.Function> statements.next()
@@ -70,11 +67,10 @@ module Magic.SyntaxTree.Tests {
 				this.expect((<Type.Identifier>functionDeclaration.getReturnType()).getName(), Is.Equal().To("ReturnType"))
 			})
 			this.add("empty function with return type tuple", () => {
-				var handler = new Error.ConsoleHandler()
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func -> (Int, Float, Double)\n"), handler)), handler)
 				var statements = parser.next().getStatements()
 				var functionDeclaration = <Declarations.Function> statements.next()
-				var returnType = functionDeclaration.getReturnType() as Type.Tuple
+				var returnType = <Type.Tuple>functionDeclaration.getReturnType()
 				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
 				this.expect((<Type.Identifier>(returnType).getChildren()[0]).getName(), Is.Equal().To("Int"))
 				this.expect((<Type.Identifier>(returnType).getChildren()[1]).getName(), Is.Equal().To("Float"))
