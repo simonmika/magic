@@ -41,7 +41,7 @@ module Magic.SyntaxTree.Declarations {
 					source.raise("Expected \")\"")
 				//
 				// Iterate through the argument list and assign a type to arguments whose type are not set explicitly.
-				// This is useful for cases when an argument list is written in reduced form.
+				// This is useful for cases where the argument list is written in reduced form.
 				// 	Example: foo: func (width, height: Int, x, y, z: Float)
 				//
 				var previousArgumentType = result[result.length - 1].getType()

@@ -1,5 +1,7 @@
 /// <reference path="Expression" />
 /// <reference path="../Source" />
+/// <reference path="../../Utilities/Iterator" />
+/// <reference path="../../Utilities/ArrayIterator" />
 
 
 module Magic.SyntaxTree.Type {
@@ -7,8 +9,8 @@ module Magic.SyntaxTree.Type {
 		constructor(private children: Expression[], tokens: Tokens.Substance[]) {
 			super(tokens)
 		}
-		getChildren(): Expression[] {
-			return this.children
+		getChildren(): Utilities.Iterator<Expression> {
+			return new Utilities.ArrayIterator(this.children)
 		}
 		static parse(source: Source): Expression {
 			var result: Expression
