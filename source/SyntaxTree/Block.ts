@@ -2,11 +2,16 @@
 /// <reference path="../Tokens/Token" />
 /// <reference path="../Tokens/EndOfFile" />
 /// <reference path="Statement" />
+/// <reference path="../Utilities/Iterator" />
+/// <reference path="../Utilities/ArrayIterator" />
 
 module Magic.SyntaxTree {
 	export class Block extends Statement {
 		constructor(private statements: Statement[], tokens: Tokens.Substance[]) {
 			super(tokens)
+		}
+		getStatements(): Utilities.Iterator<Statement> {
+			return new Utilities.ArrayIterator(this.statements)
 		}
 		static parse(source: Source): Block {
 			var result: Block
