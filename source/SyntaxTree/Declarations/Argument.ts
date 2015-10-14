@@ -41,5 +41,4 @@ module Magic.SyntaxTree.Declarations {
 			return result
 		}
 	}
-	//Statement.addParser(Argument.parse)
 }
