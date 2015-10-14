@@ -108,6 +108,7 @@
 		"source/Tokens/Tests/WhitespaceTest.ts",
 
 		"source/SyntaxTree/Declarations/Tests/ClassTest.ts",
+		"source/SyntaxTree/Declarations/Tests/FunctionTest.ts",
 
 		"source/Utilities/Tests/ArrayIteratorTest.ts",
 		"source/Utilities/Tests/BufferedIteratorTest.ts",

@@ -5,7 +5,6 @@
 /// <reference path="../Tokens/Substance" />
 /// <reference path="../Tokens/EndOfFile" />
 /// <reference path="Statement" />
-/// <reference path="Declarations/Class" />
 
 module Magic.SyntaxTree {
 	export class Module extends Node {
