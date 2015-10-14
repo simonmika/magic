@@ -59,6 +59,16 @@ module Magic.SyntaxTree.Tests {
 				this.expect(functionArguments[4].getSymbol(), Is.Equal().To("z"))
 				this.expect((<Type.Identifier>functionArguments[4].getType()).getName(), Is.Equal().To("Float"))
 			})
+			this.add("empty generic function with generic parameter types", () => {
+				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func <T, S> (a, b: Generic<T>, x, y: Generic<S>)\n"), handler)), handler)
+				var statements = parser.next().getStatements()
+				var functionDeclaration = <Declarations.Function> statements.next()
+				var functionArguments = functionDeclaration.getArguments()
+				this.expect(functionDeclaration.getTypeParameters()[0].getName(), Is.Equal().To("T"))
+				this.expect((<Type.Identifier>functionArguments[0].getType()).getTypeParameters().next().getName(), Is.Equal().To("T"))
+				this.expect(functionDeclaration.getTypeParameters()[1].getName(), Is.Equal().To("S"))
+				this.expect((<Type.Identifier>functionArguments[2].getType()).getTypeParameters().next().getName(), Is.Equal().To("S"))
+			})
 			this.add("empty function with return type", () => {
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func -> ReturnType\n"), handler)), handler)
 				var statements = parser.next().getStatements()
