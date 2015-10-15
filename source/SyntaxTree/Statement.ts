@@ -14,10 +14,12 @@ module Magic.SyntaxTree {
 		}
 		static parse(source: Source): Statement {
 			var result: Statement
-			var i = 0
-			do
-				result = Statement.statementParsers[i++](source)
-			while (!result && i < Statement.statementParsers.length)
+			if (Statement.statementParsers.length > 0) {
+				var i = 0
+				do
+					result = Statement.statementParsers[i++](source)
+				while (!result && i < Statement.statementParsers.length)
+			}
 			return result
 		}
 	}

@@ -13,7 +13,6 @@
 /// <reference path="../../Utilities/ArrayIterator" />
 /// <reference path="FunctionModifier" />
 
-
 module Magic.SyntaxTree.Declarations {
 	export class Function extends Declaration {
 		constructor(symbol: Type.Name, private modifier: FunctionModifier, private typeParameters: Type.Name[], private argumentList: Argument[], private returnType: Type.Expression, private body: Block, tokens: Tokens.Substance[]) {

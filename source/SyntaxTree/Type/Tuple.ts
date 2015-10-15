@@ -18,7 +18,7 @@ module Magic.SyntaxTree.Type {
 				var children: Expression[] = []
 				do {
 					source.next() // consume "(" or ","
-					children.push(Expression.parse(source))
+					children.push(Expression.parse(source.clone()))
 				} while (source.peek().isSeparator(","))
 				if (!source.next().isSeparator(")"))
 					source.raise("Expected \")\"")
