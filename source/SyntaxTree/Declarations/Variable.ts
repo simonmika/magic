@@ -11,7 +11,7 @@
 
 module Magic.SyntaxTree.Declarations {
 	export class Variable extends Declaration {
-		constructor(private name: Type.Name, private static_: boolean, private constant: boolean, private type: Type.Expression, tokens: Tokens.Substance[]) {
+		constructor(name: Type.Name, private static_: boolean, private constant: boolean, private type: Type.Expression, tokens: Tokens.Substance[]) {
 			super(name.getName(), tokens)
 		}
 		isStatic(): boolean {
