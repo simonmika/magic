@@ -65,6 +65,8 @@
 		"source/SyntaxTree/Declarations/Class.ts",
 		"source/SyntaxTree/Declarations/Argument.ts",
 		"source/SyntaxTree/Declarations/Function.ts",
+		"source/SyntaxTree/Declarations/FunctionModifier.ts",
+		"source/SyntaxTree/Declarations/Variable.ts",
 		"source/SyntaxTree/Module.ts",
 		"source/SyntaxTree/Parser.ts",
 
@@ -109,6 +111,7 @@
 
 		"source/SyntaxTree/Declarations/Tests/ClassTest.ts",
 		"source/SyntaxTree/Declarations/Tests/FunctionTest.ts",
+		"source/SyntaxTree/Declarations/Tests/VariableTest.ts",
 
 		"source/Utilities/Tests/ArrayIteratorTest.ts",
 		"source/Utilities/Tests/BufferedIteratorTest.ts",

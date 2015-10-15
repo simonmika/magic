@@ -36,7 +36,7 @@ module Magic.SyntaxTree {
 					region = this.peek().getRegion()
 				message = new Error.Message(<string>message, level, type, region)
 			}
-			this.errorHandler.raise(message.toString())
+			this.errorHandler.raise(<Error.Message>message)
 		}
 	}
 }

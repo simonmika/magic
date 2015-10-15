@@ -7,7 +7,7 @@
 module Magic.Error {
 	export class ConsoleHandler implements Handler {
 		raise(message: string | Message, level?: Level, type?: Type, region?: Region): void {
-			if (message instanceof String) {
+			if (typeof message == "string") {
 				message = new Message(<string>message, level, type, region)
 			}
 			console.log(message.toString())

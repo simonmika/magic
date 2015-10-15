@@ -10,7 +10,9 @@
 /// <reference path="../../../Unit/Constraints/Is" />
 /// <reference path="../../Parser" />
 /// <reference path="../../Module" />
+/// <reference path="../../Statement" />
 /// <reference path="../../Declarations/Function" />
+/// <reference path="../../Declarations/FunctionModifier" />
 /// <reference path="../../Type/Identifier" />
 /// <reference path="../../Type/Tuple" />
 
@@ -24,15 +26,27 @@ module Magic.SyntaxTree.Tests {
 			// TODO: Construct a test for an argument list with no explicitly set types (type inference)
 			//
 			this.add("empty function", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var functionDeclaration = <Declarations.Function> statements.next()
+				var functionDeclaration = this.createDeclaration("Empty: func\n", handler)
 				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
 			})
+			this.add("static function", () => {
+				var functionDeclaration = this.createDeclaration("Empty: static func\n", handler)
+				this.expect(functionDeclaration.getModifier(), Is.Equal().To(Declarations.FunctionModifier.Static))
+			})
+			this.add("abstract function", () => {
+				var functionDeclaration = this.createDeclaration("Empty: abstract func\n", handler)
+				this.expect(functionDeclaration.getModifier(), Is.Equal().To(Declarations.FunctionModifier.Abstract))
+			})
+			this.add("virtual function", () => {
+				var functionDeclaration = this.createDeclaration("Empty: virtual func\n", handler)
+				this.expect(functionDeclaration.getModifier(), Is.Equal().To(Declarations.FunctionModifier.Virtual))
+			})
+			this.add("override function", () => {
+				var functionDeclaration = this.createDeclaration("Empty: override func\n", handler)
+				this.expect(functionDeclaration.getModifier(), Is.Equal().To(Declarations.FunctionModifier.Override))
+			})
 			this.add("empty function with parameters", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func (i: Int, j: Float, k: Double)\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var functionDeclaration = <Declarations.Function> statements.next()
+				var functionDeclaration = this.createDeclaration("Empty: func (i: Int, j: Float, k: Double)\n", handler)
 				var functionArguments = functionDeclaration.getArguments()
 				var currentArgument: Declarations.Argument
 				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
@@ -47,9 +61,7 @@ module Magic.SyntaxTree.Tests {
 				this.expect((<Type.Identifier>currentArgument.getType()).getName(), Is.Equal().To("Double"))
 			})
 			this.add("empty function with parameters reduced", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func (w, h: Int, x, y, z: Float)\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var functionDeclaration = <Declarations.Function> statements.next()
+				var functionDeclaration = this.createDeclaration("Empty: func (w, h: Int, x, y, z: Float)\n", handler)
 				var functionArguments = functionDeclaration.getArguments()
 				var currentArgument: Declarations.Argument
 				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
@@ -70,9 +82,7 @@ module Magic.SyntaxTree.Tests {
 				this.expect((<Type.Identifier>currentArgument.getType()).getName(), Is.Equal().To("Float"))
 			})
 			this.add("empty generic function with generic parameter types", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func <T, S> (a, b: Generic<T>, x, y: Generic<S>)\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var functionDeclaration = <Declarations.Function> statements.next()
+				var functionDeclaration = this.createDeclaration("Empty: func <T, S> (a, b: Generic<T>, x, y: Generic<S>)\n", handler)
 				var typeParameters = functionDeclaration.getTypeParameters()
 				var functionArguments = functionDeclaration.getArguments()
 				var currentArgument = functionArguments.next()
@@ -84,22 +94,23 @@ module Magic.SyntaxTree.Tests {
 				this.expect((<Type.Identifier>currentArgument.getType()).getTypeParameters().next().getName(), Is.Equal().To("S"))
 			})
 			this.add("empty function with return type", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func -> ReturnType\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var functionDeclaration = <Declarations.Function> statements.next()
+				var functionDeclaration = this.createDeclaration("Empty: func -> ReturnType\n", handler)
 				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
 				this.expect((<Type.Identifier>functionDeclaration.getReturnType()).getName(), Is.Equal().To("ReturnType"))
 			})
 			this.add("empty function with return type tuple", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: func -> (Int, Float, Double)\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var functionDeclaration = <Declarations.Function> statements.next()
+				var functionDeclaration = this.createDeclaration("Empty: func -> (Int, Float, Double)\n", handler)
 				var tupleChildren = (<Type.Tuple>functionDeclaration.getReturnType()).getChildren()
 				this.expect(functionDeclaration.getSymbol(), Is.Equal().To("Empty"))
 				this.expect((<Type.Identifier>tupleChildren.next()).getName(), Is.Equal().To("Int"))
 				this.expect((<Type.Identifier>tupleChildren.next()).getName(), Is.Equal().To("Float"))
 				this.expect((<Type.Identifier>tupleChildren.next()).getName(), Is.Equal().To("Double"))
 			})
+		}
+		createDeclaration(sourceString: string, errorHandler: Error.Handler): Declarations.Function {
+			var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader(sourceString), errorHandler)), errorHandler)
+			var statements = parser.next().getStatements()
+			return <Declarations.Function> statements.next()
 		}
 	}
 	Unit.Fixture.add(new FunctionTest())

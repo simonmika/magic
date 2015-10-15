@@ -8,7 +8,7 @@ module Magic.Tokens {
 			super(reader)
 		}
 		raise(message: string | Error.Message, level = Error.Level.Critical, type = Error.Type.Lexical, region?: Error.Region): void {
-			if (message instanceof String) {
+			if (typeof message == "string") {
 				if (!region) {
 					region = this.getRegion()
 				}
