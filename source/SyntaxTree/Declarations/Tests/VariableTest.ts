@@ -2,6 +2,7 @@
 /// <reference path="../../../Error/Position" />
 /// <reference path="../../../Error/Location" />
 /// <reference path="../../../Error/Region" />
+/// <reference path="../../../Error/Handler" />
 /// <reference path="../../../IO/BufferedReader" />
 /// <reference path="../../../IO/StringReader" />
 /// <reference path="../../../Tokens/Lexer" />
@@ -21,37 +22,34 @@ module Magic.SyntaxTree.Tests {
 			super("SyntaxTree.Declarations.Variable")
 			var handler = new Error.ConsoleHandler()
 			this.add("simple declaration", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("i: Int\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var variableDeclaration = <Declarations.Variable> statements.next()
+				var variableDeclaration = this.createDeclaration("i: Int\n", handler)
 				this.expect(variableDeclaration.getSymbol(), Is.Equal().To("i"))
 				this.expect((<Type.Identifier>variableDeclaration.getType()).getName(), Is.Equal().To("Int"))
 			})
 			this.add("static variable", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("i: static Int\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var variableDeclaration = <Declarations.Variable> statements.next()
+				var variableDeclaration = this.createDeclaration("i: static Int\n", handler)
 				this.expect(variableDeclaration.getSymbol(), Is.Equal().To("i"))
 				this.expect(variableDeclaration.isStatic(), Is.True())
 				this.expect((<Type.Identifier>variableDeclaration.getType()).getName(), Is.Equal().To("Int"))
 			})
 			this.add("constant", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("i: const Int\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var variableDeclaration = <Declarations.Variable> statements.next()
+				var variableDeclaration = this.createDeclaration("i: const Int\n", handler)
 				this.expect(variableDeclaration.getSymbol(), Is.Equal().To("i"))
 				this.expect(variableDeclaration.isConstant(), Is.True())
 				this.expect((<Type.Identifier>variableDeclaration.getType()).getName(), Is.Equal().To("Int"))
 			})
 			this.add("static const", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("i: static const Int\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var variableDeclaration = <Declarations.Variable> statements.next()
+				var variableDeclaration = this.createDeclaration("i: static const Int\n", handler)
 				this.expect(variableDeclaration.getSymbol(), Is.Equal().To("i"))
 				this.expect(variableDeclaration.isStatic(), Is.True())
 				this.expect(variableDeclaration.isConstant(), Is.True())
 				this.expect((<Type.Identifier>variableDeclaration.getType()).getName(), Is.Equal().To("Int"))
 			})
+		}
+		createDeclaration(sourceString: string, errorHandler: Error.Handler): Declarations.Variable {
+			var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader(sourceString), errorHandler)), errorHandler)
+			var statements = parser.next().getStatements()
+			return <Declarations.Variable> statements.next()
 		}
 	}
 	Unit.Fixture.add(new VariableTest())

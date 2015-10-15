@@ -19,54 +19,40 @@ module Magic.SyntaxTree.Tests {
 			super("SyntaxTree.Declarations.Class")
 			var handler = new Error.ConsoleHandler()
 			this.add("empty class", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: class {\n}\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var classDeclaration = <Declarations.Class> statements.next()
+				var classDeclaration = this.createDeclaration("Empty: class {\n}\n", handler)
 				this.expect(classDeclaration, Is.Not().NullOrUndefined())
 				this.expect(classDeclaration.getSymbol(), Is.Equal().To("Empty"))
-				this.expect(statements.next(), Is.NullOrUndefined())
 				// TODO: Fix finishing
 //				var m = parser.next()
 //				this.expect(m, Is.NullOrUndefined())
 			})
 			this.add("generic class #1", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: class <T> {\n}\n"), handler)), handler)
-				var module = parser.next()
-				var statements = module.getStatements()
-				var classDeclaration = <Declarations.Class> statements.next()
+				var classDeclaration = this.createDeclaration("Empty: class <T> {\n}\n", handler)
 				this.expect(classDeclaration, Is.Not().NullOrUndefined())
 				this.expect(classDeclaration.getTypeParameters().next().getName(), Is.Equal().To("T"))
 //				this.expect(statements.next(), Is.NullOrUndefined()) // TODO: Fix
 			})
 			this.add("generic class #2", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: class <T, S> {\n}\n"), handler)), handler)
-				var statements = parser.next().getStatements()
-				var classDeclaration = <Declarations.Class> statements.next()
+				var classDeclaration = this.createDeclaration("Empty: class <T, S> {\n}\n", handler)
 				this.expect(classDeclaration, Is.Not().NullOrUndefined())
 				var typeParameters = classDeclaration.getTypeParameters()
 				this.expect(typeParameters.next().getName(), Is.Equal().To("T"))
 				this.expect(typeParameters.next().getName(), Is.Equal().To("S"))
-				this.expect(statements.next(), Is.NullOrUndefined())
 //				this.expect(parser.next(), Is.NullOrUndefined()) // TODO: fix
 			})
 			this.add("class extends", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: class extends Full {\n}\n"), handler)), handler)
-				var classDeclaration = <Declarations.Class> parser.next().getStatements().next()
+				var classDeclaration = this.createDeclaration("Empty: class extends Full {\n}\n", handler)
 				this.expect(classDeclaration.getExtended().getName(), Is.Equal().To("Full"))
 			})
 			this.add("class implements", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: class implements Enumerable, Enumerator {\n}\n"), handler)), handler)
-				var module = parser.next()
-				var classDeclaration = <Declarations.Class> module.getStatements().next()
+				var classDeclaration = this.createDeclaration("Empty: class implements Enumerable, Enumerator {\n}\n", handler)
 				var implemented = classDeclaration.getImplemented()
 				this.expect(implemented.next().getName(), Is.Equal().To("Enumerable"))
 				this.expect(implemented.next().getName(), Is.Equal().To("Enumerator"))
 				this.expect(implemented.next(), Is.NullOrUndefined())
 			})
 			this.add("generic class implements generic interfaces", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: class <T, S> implements Interface1<T, S>, Interface2<T, S> {\n}\n"), handler)), handler)
-				var module = parser.next()
-				var classDeclaration = <Declarations.Class> module.getStatements().next()
+				var classDeclaration = this.createDeclaration("Empty: class <T, S> implements Interface1<T, S>, Interface2<T, S> {\n}\n", handler)
 				var implemented = classDeclaration.getImplemented()
 				var interface1 = implemented.next()
 				this.expect(interface1.getName(), Is.Equal().To("Interface1"))
@@ -83,11 +69,14 @@ module Magic.SyntaxTree.Tests {
 				this.expect(implemented.next(), Is.NullOrUndefined())
 			})
 			this.add("abstract class", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("Empty: abstract class {\n}\n"), handler)), handler)
-				var module = parser.next()
-				var classDeclaration = <Declarations.Class> module.getStatements().next()
+				var classDeclaration = this.createDeclaration("Empty: abstract class {\n}\n", handler)
 				this.expect(classDeclaration.isAbstract(), Is.True())
 			})
+		}
+		createDeclaration(sourceString: string, errorHandler: Error.Handler): Declarations.Class {
+			var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader(sourceString), errorHandler)), errorHandler)
+			var statements = parser.next().getStatements()
+			return <Declarations.Class> statements.next()
 		}
 	}
 	Unit.Fixture.add(new ClassTest())
