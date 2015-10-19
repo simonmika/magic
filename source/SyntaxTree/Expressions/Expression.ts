@@ -7,7 +7,10 @@ module Magic.SyntaxTree.Expressions {
 		constructor(tokens: Tokens.Substance[]) {
 			super(tokens)
 		}
-		private static parsers: ((source: Source) => Expression)[] = []
+		private static parsers: ((source: Source) => Expression)[] = [];
+		static addParser(parser: (source: Source) => Expression) {
+			Expression.parsers.push(parser)
+		}
 		static parse(source: Source): Expression {
 			var result: Expression
 			if (Expression.parsers.length > 0) {
@@ -19,4 +22,5 @@ module Magic.SyntaxTree.Expressions {
 			return result
 		}
 	}
+	Statement.addParser(Expression.parse)
 }

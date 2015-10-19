@@ -1,10 +1,11 @@
 /// <reference path="../../Tokens/Substance" />
+/// <reference path="../../Tokens/Literal" />
 /// <reference path="../Source" />
 /// <reference path="Expression" />
 
 module Magic.SyntaxTree.Expressions {
 	export class Literal extends Expression {
-		constructor(private literal: Tokens.Substance, tokens: Tokens.Substance[]) {
+		constructor(private literal: Tokens.Literal, tokens: Tokens.Substance[]) {
 			super(tokens)
 		}
 		getLiteral(): Tokens.Substance {

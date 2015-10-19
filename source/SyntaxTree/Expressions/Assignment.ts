@@ -2,6 +2,7 @@
 /// <reference path="Expression" />
 /// <reference path="../Source" />
 /// <reference path="../Type/Name" />
+/// <reference path="Literal" />
 
 module Magic.SyntaxTree.Expressions {
 	export class Assignment extends Expression {

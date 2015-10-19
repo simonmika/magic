@@ -18,11 +18,12 @@ module Magic.SyntaxTree.Tests {
 		constructor() {
 			super("SyntaxTree.Expressions.Assignment")
 			var handler = new Error.ConsoleHandler()
-			this.add("a = b", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("a = 5"), handler)), handler)
+			this.add("literal", () => {
+				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("a = 10"), handler)), handler)
 				var statements = parser.next().getStatements()
-				var result = <Expressions.Assignment> statements.next()
-				//console.log(result)
+				var result = <Expressions.Assignment>statements.next()
+				this.expect(result.getLeft().getName(), Is.Equal().To("a"))
+				this.expect((<Expressions.Literal>result.getRight()).getLiteral().getRegion().getContent(), Is.Equal().To("10"))
 			})
 		}
 	}
