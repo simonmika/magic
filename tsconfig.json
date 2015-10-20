@@ -69,7 +69,8 @@
 		"source/SyntaxTree/Declarations/Variable.ts",
 		"source/SyntaxTree/Expressions/Expression.ts",
 		"source/SyntaxTree/Expressions/Assignment.ts",
-		"source/SyntaxTree/Expressions/Literal.ts",
+		"source/SyntaxTree/Expressions/Identifier",
+		"source/SyntaxTree/Expressions/Literals/CharacterLiteral.ts",
 		"source/SyntaxTree/Module.ts",
 		"source/SyntaxTree/Parser.ts",
 
