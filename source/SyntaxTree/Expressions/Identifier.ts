@@ -25,5 +25,5 @@ module Magic.SyntaxTree.Expressions {
 			return result
 		}
 	}
-	Expression.addParser(Identifier.parse)
+	//Expression.addParser(Identifier.parse)
 }
