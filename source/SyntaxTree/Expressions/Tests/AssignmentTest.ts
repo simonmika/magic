@@ -10,7 +10,9 @@
 /// <reference path="../../../Unit/Constraints/Is" />
 /// <reference path="../../Parser" />
 /// <reference path="../../Module" />
-/// <reference path="../../Expressions/Assignment" />
+/// <reference path="../Assignment" />
+/// <reference path="../Identifier" />
+/// <reference path="../Literals/CharacterLiteral" />
 
 module Magic.SyntaxTree.Tests {
 	import Is = Unit.Constraints.Is
@@ -19,11 +21,11 @@ module Magic.SyntaxTree.Tests {
 			super("SyntaxTree.Expressions.Assignment")
 			var handler = new Error.ConsoleHandler()
 			this.add("literal", () => {
-				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("a = 10"), handler)), handler)
+				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("a = 'b'"), handler)), handler)
 				var statements = parser.next().getStatements()
 				var result = <Expressions.Assignment>statements.next()
 				this.expect(result.getLeft().getName(), Is.Equal().To("a"))
-				this.expect((<Expressions.Literal>result.getRight()).getLiteral().getRegion().getContent(), Is.Equal().To("10"))
+				this.expect((<Expressions.Literals.CharacterLiteral>result.getRight()).getValue(), Is.Equal().To("b"))
 			})
 		}
 	}
