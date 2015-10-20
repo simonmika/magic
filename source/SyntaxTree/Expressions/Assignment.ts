@@ -1,15 +1,14 @@
 /// <reference path="../../Tokens/Substance" />
-/// <reference path="Expression" />
 /// <reference path="../Source" />
-/// <reference path="../Type/Name" />
-/// <reference path="Literal" />
+/// <reference path="Expression" />
+/// <reference path="Identifier" />
 
 module Magic.SyntaxTree.Expressions {
 	export class Assignment extends Expression {
-		constructor(private left: Type.Name, private right: Expression, tokens: Tokens.Substance[]) {
+		constructor(private left: Identifier, private right: Expression, tokens: Tokens.Substance[]) {
 			super(tokens)
 		}
-		getLeft(): Type.Name {
+		getLeft(): Identifier {
 			return this.left
 		}
 		getRight(): Expression {
@@ -18,7 +17,7 @@ module Magic.SyntaxTree.Expressions {
 		static parse(source: Source): Assignment {
 			var result: Assignment
 			if (source.peek().isIdentifier() && source.peek(1).isOperator("=")) {
-				var left = Type.Name.parse(source.clone())
+				var left = Identifier.parse(source.clone())
 				source.next() // consume "="
 				var right = Expression.parse(source.clone())
 				result = new Assignment(left, right, source.mark())
