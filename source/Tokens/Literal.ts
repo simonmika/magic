@@ -3,7 +3,7 @@
 /// <reference path="Substance" />
 
 module Magic.Tokens {
-	export class Literal extends Substance {
+	export abstract class Literal extends Substance {
 		constructor(region: Error.Region) {
 			super(region)
 		}

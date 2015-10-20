@@ -3,6 +3,8 @@
 /// <reference path="../Tokens/Token" />
 /// <reference path="../Tokens/EndOfFile" />
 /// <reference path="Type/Name" />
+/// <reference path="Statement" />
+
 
 module Magic.SyntaxTree {
 	export class Declaration extends Statement {

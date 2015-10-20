@@ -3,7 +3,7 @@
 /// <reference path="../Source" />
 
 module Magic.SyntaxTree.Expressions {
-	export class Expression extends Statement {
+	export abstract class Expression extends Statement {
 		constructor(tokens: Tokens.Substance[]) {
 			super(tokens)
 		}
