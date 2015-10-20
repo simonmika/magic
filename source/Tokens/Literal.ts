@@ -7,5 +7,8 @@ module Magic.Tokens {
 		constructor(region: Error.Region) {
 			super(region)
 		}
+		isLiteral(): boolean {
+			return true
+		}
 	}
 }

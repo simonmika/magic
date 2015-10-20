@@ -4,8 +4,6 @@
 /// <reference path="../../Utilities/ArrayIterator" />
 /// <reference path="../../Tokens/Identifier" />
 
-
-
 module Magic.SyntaxTree.Type {
 	export class Identifier extends Name {
 		constructor(name: string, private typeParameters: Identifier[], tokens: Tokens.Substance[]) {

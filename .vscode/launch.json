@@ -8,6 +8,7 @@
 			"name": "Self-test",
 			// Type of configuration. Possible values: "node", "mono".
 			"type": "node",
+			"preLaunchTask": "tsc",
 			// Workspace relative or absolute path to the program.
 			"program": "build/magic.js",
 			// Automatically stop program after launch.

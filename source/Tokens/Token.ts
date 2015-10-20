@@ -19,5 +19,8 @@ module Magic.Tokens {
 		isWhitespace(content?: string): boolean {
 			return false
 		}
+		isLiteral(): boolean {
+			return false
+		}
 	}
 }
