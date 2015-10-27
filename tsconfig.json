@@ -71,6 +71,8 @@
 		"source/SyntaxTree/Expressions/Assignment.ts",
 		"source/SyntaxTree/Expressions/Identifier",
 		"source/SyntaxTree/Expressions/Literals/CharacterLiteral.ts",
+		"source/SyntaxTree/Expressions/Literals/NumberLiteral.ts",
+		"source/SyntaxTree/Expressions/Literals/StringLiteral.ts",
 		"source/SyntaxTree/Module.ts",
 		"source/SyntaxTree/Parser.ts",
 
@@ -117,6 +119,9 @@
 		"source/SyntaxTree/Declarations/Tests/FunctionTest.ts",
 		"source/SyntaxTree/Declarations/Tests/VariableTest.ts",
 		"source/SyntaxTree/Expressions/Tests/AssignmentTest.ts",
+		"source/SyntaxTree/Expressions/Literals/Tests/CharacterLiteralTest.ts",
+		"source/SyntaxTree/Expressions/Literals/Tests/NumberLiteralTest.ts",
+		"source/SyntaxTree/Expressions/Literals/Tests/StringLiteralTest.ts",
 
 		"source/Utilities/Tests/ArrayIteratorTest.ts",
 		"source/Utilities/Tests/BufferedIteratorTest.ts",
