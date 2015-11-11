@@ -13,7 +13,7 @@ var fs = require("fs")
 
 module Magic {
 	export class Program {
-		private defaultCommand = "compile"
+		private defaultCommand = "build"
 		constructor(private commands: string[]) {
 			this.commands = this.commands.slice(2)
 			if (this.commands.length == 0) {
@@ -30,10 +30,10 @@ module Magic {
 		private runHelper(command: string, commands: string[]) {
 			var handler = new Error.ConsoleHandler()
 			switch (command) {
-				case "compile":
-					console.log("compile")
-				case "verify":
-					console.log("verify")
+				case "build":
+					console.log("build")
+				case "analyze":
+					console.log("analyze")
 					new Tokens.Consumer(this.openLexer(commands.pop(), handler)).run()
 					break
 				case "self-test":
