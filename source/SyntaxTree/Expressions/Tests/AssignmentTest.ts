@@ -27,6 +27,13 @@ module Magic.SyntaxTree.Tests {
 				this.expect(result.getLeft().getName(), Is.Equal().To("a"))
 				this.expect((<Expressions.Literals.CharacterLiteral>result.getRight()).getValue(), Is.Equal().To("b"))
 			})
+			this.add("variable", () => {
+				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("a = b"), handler)), handler)
+				var statements = parser.next().getStatements()
+				var result = <Expressions.Assignment>statements.next()
+				this.expect(result.getLeft().getName(), Is.Equal().To("a"))
+				this.expect((<Expressions.Identifier>result.getRight()).getName(), Is.Equal().To("b"))
+			})
 		}
 	}
 	Unit.Fixture.add(new AssignmentTest())
