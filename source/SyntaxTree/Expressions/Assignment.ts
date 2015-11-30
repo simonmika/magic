@@ -17,7 +17,7 @@ module Magic.SyntaxTree.Expressions {
 		static parse(source: Source): Assignment {
 			var result: Assignment
 			if (source.peek().isIdentifier() && source.peek(1).isOperator("=")) {
-				var left = Identifier.parse(source.clone())
+				var left = new Identifier((<Tokens.Identifier>source.next()).getName(), source.mark())
 				source.next() // consume "="
 				var right = Expression.parse(source.clone())
 				result = new Assignment(left, right, source.mark())

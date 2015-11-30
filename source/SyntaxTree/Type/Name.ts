@@ -1,4 +1,5 @@
 /// <reference path="Expression" />
+/// <reference path="../../Tokens/Identifier" />
 
 module Magic.SyntaxTree.Type {
 	export class Name extends Expression {
