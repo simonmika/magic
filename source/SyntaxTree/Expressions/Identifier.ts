@@ -20,11 +20,10 @@ module Magic.SyntaxTree.Expressions {
 		}
 		static parse(source: Source): Identifier {
 			var result: Identifier
-			// is the isOperator() check enough?
-			if (source.peek().isIdentifier() && !source.peek(1).isOperator("="))
+			if (source.peek().isIdentifier() /*&& !source.peek(1).isOperator() && !source.peek(1).isSeparator()*/)
 				result = new Identifier((<Tokens.Identifier>source.next()).getName(), source.mark())
 			return result
 		}
 	}
-	Expression.addParser(Identifier.parse)
+	Expression.addParser(Identifier.parse, 10)
 }

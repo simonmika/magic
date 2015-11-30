@@ -7,20 +7,24 @@ module Magic.SyntaxTree.Expressions {
 		constructor(tokens: Tokens.Substance[]) {
 			super(tokens)
 		}
-		private static parsers: ((source: Source) => Expression)[] = [];
-		static addParser(parser: (source: Source) => Expression) {
-			Expression.parsers.push(parser)
+		private static expressionParsers: { parse: ((source: Source) => Expression), priority: number }[] = [];
+		static addParser(parser: (source: Source) => Expression, priority: number = 0) {
+			Expression.expressionParsers.push({
+				parse: parser,
+				priority: priority
+			})
+			Expression.expressionParsers.sort((left, right) => left.priority < right.priority ? -1 : left.priority > right.priority ? 1 : 0);
 		}
 		static parse(source: Source): Expression {
 			var result: Expression
-			if (Expression.parsers.length > 0) {
+			if (Expression.expressionParsers.length > 0) {
 				var i = 0
 				do
-					result = Expression.parsers[i++](source.clone())
-				while (!result && i < Expression.parsers.length);
+					result = Expression.expressionParsers[i++].parse(source.clone())
+				while (!result && i < Expression.expressionParsers.length);
 			}
 			return result
 		}
 	}
-	Statement.addParser(Expression.parse)
+	Statement.addParser(Expression.parse, 10)
 }
