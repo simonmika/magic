@@ -11,6 +11,12 @@
 /// <reference path="../../Parser" />
 /// <reference path="../../Module" />
 /// <reference path="../Class" />
+/// <reference path="../Assignment" />
+/// <reference path="../Function" />
+/// <reference path="../Argument" />
+
+/// <reference path="../../Expressions/Literals/NumberLiteral" />
+/// <reference path="../../Expressions/Identifier" />
 
 module Magic.SyntaxTree.Declarations.Tests {
 	import Is = Unit.Constraints.Is
@@ -19,40 +25,35 @@ module Magic.SyntaxTree.Declarations.Tests {
 			super("SyntaxTree.Declarations.Class")
 			var handler = new Error.ConsoleHandler()
 			this.add("empty class", () => {
-				var classDeclaration = this.createDeclaration("Empty: class {\n}\n", handler)
+				var classDeclaration = this.createDeclaration("Empty: class {}\n", handler)
 				this.expect(classDeclaration, Is.Not().NullOrUndefined())
 				this.expect(classDeclaration.getSymbol(), Is.Equal().To("Empty"))
-				// TODO: Fix finishing
-//				var m = parser.next()
-//				this.expect(m, Is.NullOrUndefined())
 			})
 			this.add("generic class #1", () => {
-				var classDeclaration = this.createDeclaration("Empty: class <T> {\n}\n", handler)
+				var classDeclaration = this.createDeclaration("Empty: class <T> {}\n", handler)
 				this.expect(classDeclaration, Is.Not().NullOrUndefined())
 				this.expect(classDeclaration.getTypeParameters().next().getName(), Is.Equal().To("T"))
-//				this.expect(statements.next(), Is.NullOrUndefined()) // TODO: Fix
 			})
 			this.add("generic class #2", () => {
-				var classDeclaration = this.createDeclaration("Empty: class <T, S> {\n}\n", handler)
+				var classDeclaration = this.createDeclaration("Empty: class <T, S> {}\n", handler)
 				this.expect(classDeclaration, Is.Not().NullOrUndefined())
 				var typeParameters = classDeclaration.getTypeParameters()
 				this.expect(typeParameters.next().getName(), Is.Equal().To("T"))
 				this.expect(typeParameters.next().getName(), Is.Equal().To("S"))
-//				this.expect(parser.next(), Is.NullOrUndefined()) // TODO: fix
 			})
 			this.add("class extends", () => {
-				var classDeclaration = this.createDeclaration("Empty: class extends Full {\n}\n", handler)
+				var classDeclaration = this.createDeclaration("Empty: class extends Full {}\n", handler)
 				this.expect(classDeclaration.getExtended().getName(), Is.Equal().To("Full"))
 			})
 			this.add("class implements", () => {
-				var classDeclaration = this.createDeclaration("Empty: class implements Enumerable, Enumerator {\n}\n", handler)
+				var classDeclaration = this.createDeclaration("Empty: class implements Enumerable, Enumerator {}\n", handler)
 				var implemented = classDeclaration.getImplemented()
 				this.expect(implemented.next().getName(), Is.Equal().To("Enumerable"))
 				this.expect(implemented.next().getName(), Is.Equal().To("Enumerator"))
 				this.expect(implemented.next(), Is.NullOrUndefined())
 			})
 			this.add("generic class implements generic interfaces", () => {
-				var classDeclaration = this.createDeclaration("Empty: class <T, S> implements Interface1<T, S>, Interface2<T, S> {\n}\n", handler)
+				var classDeclaration = this.createDeclaration("Empty: class <T, S> implements Interface1<T, S>, Interface2<T, S> {}\n", handler)
 				var implemented = classDeclaration.getImplemented()
 				var interface1 = implemented.next()
 				this.expect(interface1.getName(), Is.Equal().To("Interface1"))
@@ -69,8 +70,61 @@ module Magic.SyntaxTree.Declarations.Tests {
 				this.expect(implemented.next(), Is.NullOrUndefined())
 			})
 			this.add("abstract class", () => {
-				var classDeclaration = this.createDeclaration("Empty: abstract class {\n}\n", handler)
+				var classDeclaration = this.createDeclaration("Empty: abstract class {}\n", handler)
 				this.expect(classDeclaration.isAbstract(), Is.True())
+			})
+			this.add("member fields", () => {
+				var program: string =
+					`
+					Foobar: class {
+						i: Int = 10
+						f := 50.5f
+					}
+					`
+				var classDeclaration = this.createDeclaration(program, handler);
+				var statements = classDeclaration.getBlock().getStatements()
+				var firstField = <Assignment>statements.next()
+				this.expect(firstField.getLeft().getName(), Is.Equal().To("i"))
+				this.expect(firstField.getType().getName(), Is.Equal().To("Int"))
+				this.expect((<Expressions.Literals.NumberLiteral>firstField.getRight()).getValue(), Is.Equal().To(10))
+				var secondField = <Assignment>statements.next()
+				this.expect(secondField.getLeft().getName(), Is.Equal().To("f"))
+				this.expect(secondField.getType(), Is.NullOrUndefined())
+				this.expect((<Expressions.Literals.NumberLiteral>secondField.getRight()).getValue(), Is.Equal().To(50.5))
+				this.expect(statements.next(), Is.NullOrUndefined())
+			})
+			this.add("member functions", () => {
+				var program: string =
+					`
+					Foobar: class {
+						count: Int = 0
+						init: func
+						updateCount: func (newCount: Int) {
+							count = newCount
+						}
+						getCount: func -> Int {
+							count
+						}
+					}
+					`
+				var classDeclaration = this.createDeclaration(program, handler);
+				var statements = classDeclaration.getBlock().getStatements()
+				var countField = statements.next()
+				var constructor = <Function>statements.next()
+				this.expect(constructor.getSymbol(), Is.Equal().To("init"))
+				this.expect(constructor.getBody(), Is.NullOrUndefined())
+				this.expect(constructor.getReturnType(), Is.NullOrUndefined())
+				var updateCountFunction = <Function>statements.next()
+				this.expect(updateCountFunction.getSymbol(), Is.Equal().To("updateCount"))
+				var updateCountArgument = <Argument>updateCountFunction.getArguments().next()
+				this.expect(updateCountArgument.getSymbol(), Is.Equal().To("newCount"))
+				this.expect((<Type.Identifier>updateCountArgument.getType()).getName(), Is.Equal().To("Int"))
+				this.expect(updateCountFunction.getReturnType(), Is.NullOrUndefined())
+				var getCountFunction = <Function>statements.next()
+				this.expect(getCountFunction.getSymbol(), Is.Equal().To("getCount"))
+				this.expect((<Type.Identifier>getCountFunction.getReturnType()).getName(), Is.Equal().To("Int"))
+				var getCountFunctionStatement = <Expressions.Identifier>getCountFunction.getBody().getStatements().next()
+				this.expect(getCountFunctionStatement.getName(), Is.Equal().To("count"))
 			})
 		}
 		createDeclaration(sourceString: string, errorHandler: Error.Handler): Declarations.Class {
