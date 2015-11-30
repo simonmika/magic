@@ -12,7 +12,7 @@
 /// <reference path="../../../Module" />
 /// <reference path="../../Literals/CharacterLiteral" />
 
-module Magic.SyntaxTree.Tests {
+module Magic.SyntaxTree.Expressions.Literals.Tests {
 	import Is = Unit.Constraints.Is
 	export class CharacterLiteralTest extends Unit.Fixture {
 		constructor() {

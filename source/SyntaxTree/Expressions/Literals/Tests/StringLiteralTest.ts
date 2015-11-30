@@ -12,11 +12,11 @@
 /// <reference path="../../../Module" />
 /// <reference path="../../Literals/StringLiteral" />
 
-module Magic.SyntaxTree.Tests {
+module Magic.SyntaxTree.Expressions.Literals.Tests {
 	import Is = Unit.Constraints.Is
 	export class StringLiteralTest extends Unit.Fixture {
 		constructor() {
-			super("SyntaxTree.Expressions.Literals.CharacterLiteral")
+			super("SyntaxTree.Expressions.Literals.StringLiteral")
 			var handler = new Error.ConsoleHandler()
 			this.add("literal", () => {
 				var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader("\"\\\"string\\\"\""), handler)), handler)

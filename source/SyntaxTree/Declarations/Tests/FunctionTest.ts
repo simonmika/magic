@@ -11,12 +11,12 @@
 /// <reference path="../../Parser" />
 /// <reference path="../../Module" />
 /// <reference path="../../Statement" />
-/// <reference path="../../Declarations/Function" />
-/// <reference path="../../Declarations/FunctionModifier" />
+/// <reference path="../Function" />
+/// <reference path="../FunctionModifier" />
 /// <reference path="../../Type/Identifier" />
 /// <reference path="../../Type/Tuple" />
 
-module Magic.SyntaxTree.Tests {
+module Magic.SyntaxTree.Declarations.Tests {
 	import Is = Unit.Constraints.Is
 	export class FunctionTest extends Unit.Fixture {
 		constructor() {

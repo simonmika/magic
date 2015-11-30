@@ -11,11 +11,11 @@
 /// <reference path="../../../Unit/Constraints/Is" />
 /// <reference path="../../Parser" />
 /// <reference path="../../Module" />
-/// <reference path="../../Declarations/Variable" />
+/// <reference path="../Variable" />
 /// <reference path="../../Type/Identifier" />
 /// <reference path="../../Type/Tuple" />
 
-module Magic.SyntaxTree.Tests {
+module Magic.SyntaxTree.Declarations.Tests {
 	import Is = Unit.Constraints.Is
 	export class VariableTest extends Unit.Fixture {
 		constructor() {

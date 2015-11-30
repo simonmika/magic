@@ -10,9 +10,9 @@
 /// <reference path="../../../Unit/Constraints/Is" />
 /// <reference path="../../Parser" />
 /// <reference path="../../Module" />
-/// <reference path="../../Declarations/Class" />
+/// <reference path="../Class" />
 
-module Magic.SyntaxTree.Tests {
+module Magic.SyntaxTree.Declarations.Tests {
 	import Is = Unit.Constraints.Is
 	export class ClassTest extends Unit.Fixture {
 		constructor() {
