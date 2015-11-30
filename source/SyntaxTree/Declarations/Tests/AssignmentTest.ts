@@ -14,6 +14,7 @@
 /// <reference path="../Assignment" />
 /// <reference path="../../Type/Name" />
 /// <reference path="../../Expressions/Identifier" />
+/// <reference path="../../Expressions/Literals/NumberLiteral" />
 
 module Magic.SyntaxTree.Declarations.Tests {
 	import Is = Unit.Constraints.Is
@@ -25,6 +26,18 @@ module Magic.SyntaxTree.Declarations.Tests {
 				var declareAssignStatement = this.createDeclaration("a := b", handler)
 				this.expect(declareAssignStatement.getLeft().getName(), Is.Equal().To("a"))
 				this.expect((<Expressions.Identifier>declareAssignStatement.getRight()).getName(), Is.Equal().To("b"))
+			})
+			this.add("foo: Type = bar", () => {
+				var declareAssignStatement = this.createDeclaration("foo: Type = bar", handler)
+				this.expect(declareAssignStatement.getLeft().getName(), Is.Equal().To("foo"))
+				this.expect(declareAssignStatement.getType().getName(), Is.Equal().To("Type"))
+				this.expect((<Expressions.Identifier>declareAssignStatement.getRight()).getName(), Is.Equal().To("bar"))
+			})
+			this.add("foo: Float = 0.50f", () => {
+				var declareAssignStatement = this.createDeclaration("f: Float = 0.50f", handler)
+				this.expect(declareAssignStatement.getLeft().getName(), Is.Equal().To("f"))
+				this.expect(declareAssignStatement.getType().getName(), Is.Equal().To("Float"))
+				this.expect((<Expressions.Literals.NumberLiteral>declareAssignStatement.getRight()).getValue(), Is.Equal().To(0.5))
 			})
 		}
 		createDeclaration(sourceString: string, errorHandler: Error.Handler): Declarations.Assignment {
