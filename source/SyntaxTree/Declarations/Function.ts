@@ -40,6 +40,9 @@ module Magic.SyntaxTree.Declarations {
 				var modifier = FunctionModifier.None
 				source.next() // consume ":"
 				if (!source.peek().isIdentifier("func")) {
+					//
+					// TODO: what about 'unmangled'? A function can be 'static unmangled'
+					//
 					switch ((<Tokens.Identifier>source.peek()).getName()) {
 						case "static":
 							modifier = FunctionModifier.Static

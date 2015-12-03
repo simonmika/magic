@@ -7,6 +7,7 @@
 /// <reference path="../Declaration" />
 /// <reference path="../Type/Name" />
 /// <reference path="../Type/Expression" />
+/// <reference path="Assignment" />
 
 module Magic.SyntaxTree.Declarations {
 	export class Argument extends Declaration {
@@ -18,15 +19,33 @@ module Magic.SyntaxTree.Declarations {
 		}
 		static parse(source: Source): Argument {
 			var result: Argument
-			// TODO: add support for syntactical sugar: .argument, =argument, argument := value
-			if (source.peek(0).isIdentifier()) {
-				var type: Type.Expression
+			var assignment: Assignment
+			if ((assignment = Assignment.parse(source.clone()))) {
+				//
+				// handles syntactic sugar case "argument := value", since this is a declare-assign operation,
+				// we let the Assignment parser handle it.
+				//
+				// TODO: Is this the correct way to go?
+				//
+				result = new Argument(assignment.getSymbol(), assignment.getRight(), source.mark())
+			} else if (source.peek().isIdentifier()) {
+				//
+				// handles cases "x" and "x: Type"
+				//
 				var symbol = (<Tokens.Identifier>source.next()).getName()
+				var type: Type.Expression;
 				if (source.peek().isSeparator(":")) {
 					source.next() // consume ":"
 					type = Type.Expression.parse(source.clone())
 				}
 				result = new Argument(symbol, type, source.mark())
+			} else if (source.peek().isOperator("=") || source.peek().isSeparator(".")) {
+				//
+				// Handles syntactic sugar cases ".argument" and "=argument"
+				// The type of the argument will have to be resolved later
+				//
+				source.next() // consume "=" or "."
+				result = new Argument((<Tokens.Identifier>source.next()).getName(), undefined, source.mark())
 			}
 			return result
 		}

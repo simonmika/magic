@@ -75,12 +75,11 @@ module Magic.SyntaxTree.Declarations.Tests {
 			})
 			this.add("member fields", () => {
 				var program: string =
-					`
-					Foobar: class {
-						i: Int = 10
-						f := 50.5f
-					}
-					`
+`Foobar: class {
+	i: Int = 10
+	f := 50.5f
+}
+`
 				var classDeclaration = this.createDeclaration(program, handler);
 				var statements = classDeclaration.getBlock().getStatements()
 				var firstField = <Assignment>statements.next()
@@ -95,18 +94,17 @@ module Magic.SyntaxTree.Declarations.Tests {
 			})
 			this.add("member functions", () => {
 				var program: string =
-					`
-					Foobar: class {
-						count: Int = 0
-						init: func
-						updateCount: func (newCount: Int) {
-							count = newCount
-						}
-						getCount: func -> Int {
-							count
-						}
-					}
-					`
+`Foobar: class {
+		count: Int = 0
+		init: func
+		updateCount: func (newCount: Int) {
+			count = newCount
+		}
+		getCount: func -> Int {
+			count
+		}
+	}
+`
 				var classDeclaration = this.createDeclaration(program, handler);
 				var statements = classDeclaration.getBlock().getStatements()
 				var countField = statements.next()

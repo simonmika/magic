@@ -106,6 +106,27 @@ module Magic.SyntaxTree.Declarations.Tests {
 				this.expect((<Type.Identifier>tupleChildren.next()).getName(), Is.Equal().To("Float"))
 				this.expect((<Type.Identifier>tupleChildren.next()).getName(), Is.Equal().To("Double"))
 			})
+			this.add("argument type copy", () => {
+				var functionDeclaration = this.createDeclaration("Empty: func (.arg)\n", handler)
+				var argument = <Argument>functionDeclaration.getArguments().next()
+				this.expect(argument.getSymbol(), Is.Equal().To("arg"))
+				this.expect(argument.getType(), Is.NullOrUndefined())
+			})
+			this.add("argument assign", () => {
+				var functionDeclaration = this.createDeclaration("Empty: func (=arg)\n", handler)
+				var argument = <Argument>functionDeclaration.getArguments().next()
+				this.expect(argument.getSymbol(), Is.Equal().To("arg"))
+				this.expect(argument.getType(), Is.NullOrUndefined())
+			})
+			this.add("argument declare-assign", () => {
+				var functionDeclaration = this.createDeclaration("Empty: func (arg := 10)\n", handler)
+				var argument = <Argument>functionDeclaration.getArguments().next()
+				this.expect(argument.getSymbol(), Is.Equal().To("arg"))
+				//
+				// TODO: Fix this test
+				//
+				this.expect(argument.getType(), Is.Not().NullOrUndefined())
+			})
 		}
 		createDeclaration(sourceString: string, errorHandler: Error.Handler): Declarations.Function {
 			var parser = new Parser(new Tokens.GapRemover(new Tokens.Lexer(new IO.StringReader(sourceString), errorHandler)), errorHandler)
